@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--———————————————————————————————————————————————————————组件扫描配置——————————————————————————————————————————————————————————-->
+    <!--    开启自动扫描组件，不让其扫描控制层的组件，在XML中配置了这个标签后，spring可以自动扫描base-package下面或者子包下面的java文件，如果扫描有@Component @Service @Controller等这些注解的类，则把这些类注册为bean。-->
+    <context:component-scan base-package="io.zhangjia.mall">
+        <!--        不扫描Controller注解-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <!--        不扫描ControllerAdvice注解-->
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!--———————————————————————————————————————————————————————数据库配置——————————————————————————————————————————————————————————-->
+
+    <!--导入jdbc.properties-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--  配置数据库连接池  -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" >
+        <property name="driverClassName" value="${jdbc.driver}"/> <!--    OGNL-->
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!--———————————————————————————————————————————————————————事务相关——————————————————————————————————————————————————————————-->
+    <!--    配置事务管理器-->
+    <!-- id必须是transactionManager   -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--    开启使用注解的方式配置事务-->
+    <tx:annotation-driven/>
+
+    <!--———————————————————————————————————————————————————————Mybatis相关配置——————————————————————————————————————————————————————————-->
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <!--Mybatis分页插件配置-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <props>
+                            <prop key="helperDialect">mysql</prop>
+                        </props>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+
+<!--******************Mybatis MapperScannerConfigurer 自动扫描 将Mapper接口生成代理注入到Spring****************-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+<!--数据层的接口路径-->
+        <property name="basePackage" value="io.zhangjia.mall.mapper"/>
+    </bean>
+</beans>
