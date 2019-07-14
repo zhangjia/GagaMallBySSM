@@ -4,37 +4,55 @@ package io.zhangjia.mall.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import io.zhangjia.mall.entity.Commodity;
+import io.zhangjia.mall.service.CommodityService;
 import io.zhangjia.mall.service.impl.CommodityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
 public class CommodityController {
     @Autowired
-    private CommodityServiceImpl commodityServiceImpl;
+    private CommodityService commodityService;
 
     @GetMapping("/index")
     public String index(){
         return "index";
     }
 
-    @GetMapping("/list")
-    public String list(Integer commodityId, String commodityName,
+    /**
+     * 查询商品
+     * @param commodityId 根据ID查询单个商品
+     * @param commodityName 根据名字模糊查询
+     * @param level1MenuId 根据一级菜单查询
+     * @param level2MenuId 根据二级菜单查询
+     * @param order 对查询结果进行排序
+     * @param model
+     * @param page 查询第几页的数据
+     * @return
+     */
+    @GetMapping("/commodities")
+    public String commodities(Integer commodityId, String commodityName,
                        Integer level1MenuId, Integer level2MenuId,
                        Integer order,  Model model,
                        @RequestParam(required = false,defaultValue = "1") Integer page){
         /*List<Map<String, Object>> commodities = commodityServiceImpl.query(commodityId,
                 commodityName, level1MenuId,level2MenuId,order);*/
-        List<Commodity> commodities = commodityServiceImpl.query(commodityId,
+        List<Commodity> commodities = commodityService.query(commodityId,
                 commodityName, level1MenuId,level2MenuId,order,page);
         model.addAttribute("commodities",commodities);
         System.out.println("commodities = " + commodities);
@@ -49,6 +67,35 @@ public class CommodityController {
             model.addAttribute("pageNum",pageNum);
             model.addAttribute("pages",pages);
         }
-        return "list";
+        return "commodities";
+    }
+
+
+    @GetMapping("/commodityDetail")
+
+    public String commodityDetail(Integer commodityId,Model model) {
+        List<Commodity> commodityDetail = commodityService.query(commodityId, null, null, null, null, null);
+        System.out.println("CommodityController.commodityDetail" + JSON.toJSONString(commodityDetail));
+        model.addAttribute("commodityDetail",commodityDetail.get(0));
+        String commodityAttribute = commodityDetail.get(0).getCommodityAttribute();
+        JSONObject specs = JSON.parseObject(commodityAttribute);
+        model.addAttribute("specs",specs);
+        System.out.println("specs = " + specs);
+        return "commodity-detail";
+//        return "test";
+
+
+    }
+
+    @PostMapping(value = "/queryCommoditySpecs",produces = "application/json;charset=utf-8")
+    @ResponseBody //如果不添加该注解，那么将会是json字符串.jsp
+
+    public String queryCommoditySpecs(String specs) {
+
+        Map<String,Object>  maps = commodityService.getCommoditySpecs(specs);
+        String s = JSON.toJSONString(maps);
+        System.out.println("s = " + s);
+        return s;
+
     }
 }

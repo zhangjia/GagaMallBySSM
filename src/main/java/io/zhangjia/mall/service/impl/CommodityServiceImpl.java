@@ -19,21 +19,25 @@ public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private CommodityMapper commodityMapper;
 
+
     @Override
     public List<Commodity> query(Integer commodityId, String commodityName,
                                  Integer level1MenuId, Integer level2MenuId,
-                                 Integer order,Integer page) {
+                                 Integer order, Integer page) {
     /*public List<Map<String, Object>> query(Integer commodityId,String commodityName,
                                            Integer level1MenuId,Integer level2MenuId,
                                            Integer order) {*/
-        Map<String,Object> params = new HashMap<>();
-        params.put("commodityId",commodityId);
-        params.put("commodityName",commodityName);
-        params.put("level1MenuId",level1MenuId);
-        params.put("level2MenuId",level2MenuId);
-        params.put("order",order);
+        Map<String, Object> params = new HashMap<>();
+        params.put("commodityId", commodityId);
+        params.put("commodityName", commodityName);
+        params.put("level1MenuId", level1MenuId);
+        params.put("level2MenuId", level2MenuId);
+        params.put("order", order);
 
-        PageHelper.startPage(page,4);
+//        查询商品详情的时候，page = null
+        if (page != null) {
+            PageHelper.startPage(page, 4);
+        }
 
         List<Commodity> commodities = commodityMapper.query(params);
         /*
@@ -44,5 +48,17 @@ public class CommodityServiceImpl implements CommodityService {
         System.out.println(commodities.getClass());
 
         return commodities;
+    }
+
+
+    /**
+     * 根据sku表的sku——value获取该商品的其他sku属性
+     *
+     * @param specs
+     * @return
+     */
+    @Override
+    public  Map<String,Object>  getCommoditySpecs(String specs) {
+        return commodityMapper.queryCommoditySpecs(specs);
     }
 }

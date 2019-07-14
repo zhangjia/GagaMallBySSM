@@ -62,7 +62,7 @@
 <%--<div class="thImg">
     <%--<div class="clearfix">
         <a href="vase_proList.jsp"><img src="${path}/static/img/i1.jpg"/></a>
-        <a href="list.jsp"><img src="${path}/static/img/i2.jpg"/></a>
+        <a href="commodities.jsp"><img src="${path}/static/img/i2.jpg"/></a>
         <a href="#2"><img src="${path}/static/img/i3.jpg"/></a>
     </div>
 </div>--%>

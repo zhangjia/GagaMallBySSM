@@ -214,15 +214,15 @@
 <%--    ${requestScope.commodities[0]}--%>
             <c:if test="${param.firstMenuId != null}">
             <span>/</span>
-                <a href="${path}/list?firstMenuId=${requestScope.commodities[0].firstMenuId}&page=1">${requestScope.commodities[0].firstMenuChineseName}</a>
+                <a href="${path}/commodities?firstMenuId=${requestScope.commodities[0].firstMenuId}&page=1">${requestScope.commodities[0].firstMenuChineseName}</a>
             </c:if>
 
 
             <c:if test="${param.firstMenuId == null}">
                 <span>/</span>
-                <a href="${path}/list?firstMenuId=${requestScope.commodities[0].firstMenuId}&page=1">${requestScope.firstMenuChineseName}</a>
+                <a href="${path}/commodities?firstMenuId=${requestScope.commodities[0].firstMenuId}&page=1">${requestScope.firstMenuChineseName}</a>
                 <span>/</span>
-                <a href="${path}/list?secMenuId=${requestScope.commodities[0].secMenuId}&page=1">${requestScope.commodities[0].secMenuChineseName}</a>
+                <a href="${path}/commodities?secMenuId=${requestScope.commodities[0].secMenuId}&page=1">${requestScope.commodities[0].secMenuChineseName}</a>
             </c:if>
         </div>
     </div>
@@ -267,11 +267,11 @@
 
 
             <ul class="select">
-                 <a href="${path}/list?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=5"><li class="">新品上市</li> </a>
-             <a href="${path}/list?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=2"><li class="">>销量从高到低 </li> </a>
-            <a href="${path}/list?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=1"><li class="">>销量从低到高</li>  </a>
-               <a href="${path}/list?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=4"><li class="">>价格从高到低</li>  </a>
-              <a href="${path}/list?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=3"><li class="">>价格从低到高 </li> </a>
+                 <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=5"><li class="">新品上市</li> </a>
+             <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=2"><li class="">>销量从高到低 </li> </a>
+            <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=1"><li class="">>销量从低到高</li>  </a>
+               <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=4"><li class="">>价格从高到低</li>  </a>
+              <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=3"><li class="">>价格从低到高 </li> </a>
 
 
             </ul>
@@ -281,7 +281,7 @@
 <!----------------proList------------------------->
 <ul class="proList wrapper clearfix">
     <%--<li>
-        <a href="proDetail.jsp">
+        <a href="commodity-detail.jsp">
             <dl>
                 <dt><img src="${path}/static/img/temp/pro01.jpg"></dt>
                 <dd>【最家】跳舞兰仿真花干花</dd>
@@ -331,7 +331,7 @@
     </div>
     <div class="proCon clearfix">
         <div class="proImg fl">
-            <img class="list" src="${path}/static/img/temp/proDet.jpg"/>
+            <img class="commodities" src="${path}/static/img/temp/proDet.jpg"/>
                 <img src="${path}/static/img/temp/proDet01.jpg" data-src="${path}/static/img/temp/proDet01_big.jpg">
             <div class="smallImg clearfix">
                 <img src="${path}/static/img/temp/proDet02.jpg" data-src="${path}/static/img/temp/proDet02_big.jpg">
@@ -366,7 +366,7 @@
             </div>
         </div>
     </div>
-    <a class="more" href="proDetail.jsp">查看更多细节</a>
+    <a class="more" href="commodity-detail.jsp">查看更多细节</a>
 </div>--%>
 <jsp:include page="include/right-sidebar.jsp"></jsp:include>
 <div class="msk"></div>
@@ -376,13 +376,13 @@
 
     <ul class="pagination">
 
-        <li class="page-item ${requestScope.pageNum == 1 ?"active" : ""}"><a class="page-link ip" href="${path}/list?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=1">首页</a></li>
+        <li class="page-item ${requestScope.pageNum == 1 ?"active" : ""}"><a class="page-link ip" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=1">首页</a></li>
         <c:forEach begin="1" end="${requestScope.pages}" varStatus="status">
             <%--下面参数中的所有if都必须放一行--%>
-            <li class="page-item  ${requestScope.pageNum == status.count ?"active" : ""}"><a class="page-link" href="${path}/list?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${status.count}">${status.count}</a></li>
+            <li class="page-item  ${requestScope.pageNum == status.count ?"active" : ""}"><a class="page-link" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${status.count}">${status.count}</a></li>
         </c:forEach>
 
-        <li class="page-item ${requestScope.pageNum == requestScope.pages ? "active" : "" }"><a class="page-link ip" href="${path}/list?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${requestScope.pages}">尾页</a></li>
+        <li class="page-item ${requestScope.pageNum == requestScope.pages ? "active" : "" }"><a class="page-link ip" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${requestScope.pages}">尾页</a></li>
     </ul>
 </div>
 <!--footer-->

@@ -1,26 +1,14 @@
-import io.zhangjia.mall.entity.Commodity;
-import io.zhangjia.mall.mapper.CommodityMapper;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.springframework.core.annotation.Order;
+import io.zhangjia.mall.api.mailcode.MailCode;
+import io.zhangjia.mall.api.verificationCode.PhoneCode;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String resource = "mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory build = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = build.openSession(true);
-        CommodityMapper mapper = sqlSession.getMapper(CommodityMapper.class);
+       /* PhoneCode phoneCode = new PhoneCode();
+        phoneCode.sendCode("15628791997");*/
 
-        mapper.query(null);
-
-
-        sqlSession.close();
-        inputStream.close();
+        MailCode mailCode = new MailCode();
+        mailCode.sample("zhangjia@188.com");
     }
 }

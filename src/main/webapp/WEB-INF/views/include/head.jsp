@@ -21,7 +21,7 @@
                       欢迎您：  <a href="${path}/personal" id="WelcomeUser">${sessionScope.user.userNick}</a>
                                             </p>
                 </c:if>
-                <form action="${path}/list" method="get" class="fl">
+                <form action="${path}/commodities" method="get" class="fl">
 
                     <input type="text" name="commodityName" value="${param.commodityName}" placeholder="搜索"/>
                     <input class="ssimg" type="submit" value="" />
@@ -40,12 +40,12 @@
             <c:forEach items="${requestScope.nav}" var="nav">
 <%--            <c:forEach items="${sessionScope.firstNav}" var="firstNav">--%>
                 <li>
-                    <a href="list?firstMenuId=${nav.firstMenuId}&page=1">${nav.firstMenuChineseName}</a>
+                    <a href="commodities?firstMenuId=${nav.firstMenuId}&page=1">${nav.firstMenuChineseName}</a>
 
                     <div class="sList">
                         <div class="wrapper  clearfix">
                             <c:forEach items="${nav.secMenu}" var="secNav">
-                                <a href="list?secMenuId=${secNav.SEC_MENU_ID}&page=1">
+                                <a href="commodities?secMenuId=${secNav.SEC_MENU_ID}&page=1">
                                     <dl>
 
                                         <dd>${secNav.SEC_MENU_CHINESE_NAME}</dd>
@@ -59,7 +59,7 @@
             </c:forEach>
 
             <li>
-                <a href="${path}/list?page=1">全部商品</a>
+                <a href="${path}/commodities?page=1">全部商品</a>
 
             </li>
         </ul>

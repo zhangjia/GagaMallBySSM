@@ -24,6 +24,7 @@ public class Commodity   {
 
     private List<Map<String, Object>> commodityImgs;
     private List<Map<String, Object>> commodityDetailImgs;
+    private List<String> commoditySpecs;
     private String level1MenuChineseName;
     private String level2MenuChineseName;
     private Integer commoditySales;
@@ -37,7 +38,13 @@ public class Commodity   {
     public Commodity() {
     }
 
+    public List<String> getCommoditySpecs() {
+        return commoditySpecs;
+    }
 
+    public void setCommoditySpecs(List<String> commoditySpecs) {
+        this.commoditySpecs = commoditySpecs;
+    }
 
     public Integer getCommodityId() {
         return commodityId;

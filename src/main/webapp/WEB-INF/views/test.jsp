@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html>
@@ -5,6 +6,9 @@
     <title>Title</title>
 </head>
 <body>
-<h1>你的名字：${requestScope.name}</h1>
+<%--<c:forEach items="${requestScope.commodityDetail.commodityImgs}" var="img">
+    ${img}
+</c:forEach>--%>
+${requestScope.commodityDetail.commodityInventory}
 </body>
 </html>
