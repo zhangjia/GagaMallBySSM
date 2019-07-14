@@ -71,7 +71,7 @@
 									});
 
 								}else if(res.error === "用户名不存在"){
-									layer.tips(res.error, 'input[name=\'account',{
+									layer.tips(res.error, 'input[name=\'userName',{
 										tips: [1, '#FF5722'],
 										anim: 6,
 										time:800
@@ -115,7 +115,7 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">账户：</label>
 					<div class="layui-input-block">
-						<input type="text" name="account" placeholder="请输入用户名/手机号/邮箱" autocomplete="off" class="layui-input">
+						<input type="text" name="userName" placeholder="请输入用户名/手机号/邮箱" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">

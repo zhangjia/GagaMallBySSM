@@ -59,6 +59,7 @@
 
 
 <!--******************Mybatis MapperScannerConfigurer 自动扫描 将Mapper接口生成代理注入到Spring****************-->
+    <!--因为加了MapperScannerConfigurer，所以Mapper层不用再加@Repository-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 <!--数据层的接口路径-->

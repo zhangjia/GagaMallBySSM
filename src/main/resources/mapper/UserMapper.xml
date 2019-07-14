@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.zhangjia.mall.mapper.UserMapper">
+
+    <select id="query" resultType="map">
+
+        SELECT * FROM users
+        <where>
+            users.user_status = 1
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="userName != null">
+                AND user_name = #{userName}
+            </if>
+            <if test="userPassword != null">
+                AND user_password = #{userPassword}
+            </if>
+
+            <if test="userPayPassword != null">
+                AND user_pay_password = #{userPayPassword}
+            </if>
+
+        </where>
+
+    </select>
+
+</mapper>
