@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.zhangjia.mall.mapper.ImgMapper">
+
+    <select id="queryCommodityImgs" resultType="map">
+
+        SELECT img_url, img_order, img_type,img_belong
+        FROM img
+        <where>
+            img_status = 1
+            AND img_belong = #{commodity_id}
+            AND img_type = '商品图'
+        </where>
+    </select>
+
+    <select id="queryCommodityDetailImgs" resultType="map">
+
+        SELECT img_url, img_order, img_type,img_belong
+        FROM img
+        <where>
+            img_status = 1
+            AND img_belong = #{commodity_id}
+            AND img_type = '商品详情图'
+        </where>
+    </select>
+
+
+
+
+</mapper>

@@ -2,8 +2,105 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.oaec.b2c.mapper.ProductMapper">
 
+<mapper namespace="io.zhangjia.mall.mapper.CommodityMapper">
+
+
+    <resultMap id="commodityResultMap" type="commodity">
+
+        <id column="commodity_id" property="commodityId"/>
+        <result column="commodity_name" property="commodityName"/>
+        <result column="commodity_attributes" property="commodityAttributes"/>
+        <result column="commodity_createTime" property="commodityCreateTime"/>
+        <result column="commodity_updateTIme" property="commodityUpdateTIme"/>
+        <result column="commodity_views" property="commodityViews"/>
+        <result column="level1_menu_id" property="level1MenuId"/>
+        <result column="level2_menu_id" property="level2MenuId"/>
+        <result column="commodityStatus" property="commodityStatus"/>
+        <result column="level1_menu_chinese_name" property="level1MenuChineseName"/>
+        <result column="level2_menu_chinese_name" property="level2MenuChineseName"/>
+        <result column="commodity_sales" property="commoditySales"/>
+        <result column="level2_menu_id" property="level2MenuId"/>
+        <result column="commodityStatus" property="commodityStatus"/>
+        <result column="commodity_inventory" property="commodityInventory"/>
+        <result column="commodity_min_original_price" property="commodityMinOriginalPrice"/>
+        <result column="commodity_max_original_price" property="commodityMaxOriginalPrice"/>
+        <result column="commodity_min_present_price" property="commodityMinPresentPrice"/>
+        <result column="commodity_max_present_price" property="commodityMaxPresentPrice"/>
+        <result column="commodity_max_mark_down" property="commodityMaxMarkDown"/>
+        <!--图片查询使用懒加载，因为只有打开商品详情的时候才需要详情图-->
+        <collection property="commodityImgs"
+                    ofType="map"
+                    select="io.zhangjia.mall.mapper.ImgMapper.queryCommodityImgs"
+                    column="commodity_id"/>
+
+        <collection property="commodityDetailImgs"
+                    ofType="map"
+                    select="io.zhangjia.mall.mapper.ImgMapper.queryCommodityDetailImgs"
+                    column="commodity_id"/>
+
+    </resultMap>
+
+    <select id="query" resultMap="commodityResultMap">
+        /*t1为商品表的所有商品，t2为每个商品规格表，将t1和t2关联，查询出
+        每个t1中每个商品所对应规格信息*/
+        SELECT *
+        FROM commodity t1,
+        (SELECT commodity_id cid,
+        SUM(commodity_specs_sales) commodity_sales,
+        SUM(commodity_specs_inventor) commodity_inventory,
+        MAX(commodity_specs_present_price) commodity_max_present_price,
+        MIN(commodity_specs_present_price) commodity_min_present_price,
+        MAX(commodity_specs_original_price) commodity_max_original_price,
+        MIN(commodity_specs_original_price) commodity_min_original_price,
+        MAX(commodity_specs_last_price - commodity_specs_present_price) commodity_max_mark_down
+        FROM commodity_specs
+        WHERE commodity_specs_status = 1
+        GROUP BY commodity_id) t2
+        <where>
+            t1.commodity_id = t2.cid
+            AND t1.commodity_status = 1
+            <if test="commodityId != null">
+                AND commodity_id = #{commodityId}
+            </if>
+            <if test="commodityName != null">
+                AND commodity_name LIKE CONCAT('%',#{commodityName},'%')
+            </if>
+            <if test="level1MenuId != null">
+                AND level1_menu_id = #{level1MenuId}
+            </if>
+
+            <if test="level2MenuId != null">
+                AND level2_menu_id = #{level2MenuId}
+            </if>
+
+        </where>
+        /* * 0:默认排序
+        * 1：按照销量从低到高
+        * 2：按照销量从高到低排序DESC
+        * 3：按照价格排序
+        * 4：按照价格从高到底排序DESC
+        * 5：按照时间排序*/
+
+        <choose>
+            <when test="order ==  1">
+                ORDER BY t2.commodity_sales
+            </when>
+            <when test="order ==  2">
+                ORDER BY t2.commodity_sales DESC
+            </when>
+            <when test="order ==  3">
+                ORDER BY t2.commodity_min_present_price
+            </when>
+            <when test="order ==  4">
+                ORDER BY t2.commodity_min_present_price DESC
+            </when>
+            <when test="order ==  5">
+                ORDER BY t1.commodity_update_time
+            </when>
+        </choose>
+
+    </select>
 
 
 </mapper>

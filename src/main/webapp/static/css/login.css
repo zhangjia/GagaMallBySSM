@@ -1,0 +1,141 @@
+
+html,body{
+	width:100%;
+	height:100%;
+}
+.reg{
+	width: 100%;
+	height: 100%;
+	background: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561395093640&di=59b96b6171711e0df9d26e819d5df81a&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201505%2F22%2F20150522032903_m8vsn.jpeg) no-repeat;
+	background-size: 500px;
+	background-repeat: no-repeat;
+	/* background-color: #ffff66; */
+	/* top: 200px; */
+	background-position: 300px;
+	background-position-y: -50px;
+}
+.login {
+	width: 100%;
+	height: 100%;
+	background: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561395093640&di=59b96b6171711e0df9d26e819d5df81a&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201505%2F22%2F20150522032903_m8vsn.jpeg) no-repeat;
+	background-size: 500px;
+	background-repeat: no-repeat;
+	/* background-color: #ffff66; */
+	/* top: 200px; */
+	background-position: 300px;
+	background-position-y: -50px;
+}
+.login img,.reg img{
+	width:auto;
+}
+.login form,.reg form{
+	position: fixed;
+	top:15%;
+	right:140px;
+	padding:20px 0;
+	text-align: center;
+	z-index: 10;
+	background: #fff;
+}
+.msg-warn{
+    position: relative;
+    background: #fef4e5;
+    color: #666;
+    display: inline-block;
+    border: 1px solid #f6c090;
+    padding: 3px 31px 3px 31px;
+    line-height: 15px;
+    height: auto;
+}
+.login form{
+	top:18%;
+	border:1px solid #dbdbdb;
+	width:440px;
+	height: 340px;
+	border-radius:10px;
+	padding: 20px 0 ;
+	padding-right: 50px;
+}
+.reg form {
+	width:480px;
+	height: 490px;
+	border:1px solid #dbdbdb;
+	border-radius:10px;
+	background: #fff;
+	padding: 20px 70px;
+}
+/*log*/
+.reg form h1,.login form h1{
+	/*border-bottom:1px solid #dbdbdb;*/
+	padding-bottom: 20px;
+}
+
+/*
+.reg form input,.login form input{
+	width:270px;
+	height:40px;
+	border-radius: 3px;
+	margin: 20px;
+}
+*/
+
+/*.reg form input[type="text"],.login form input[type="text"]{
+	border:1px solid #dbdbdb;
+	font-size: 20px;
+	padding-left:10px;
+}
+/*.reg input[type="submit"],.login input[type="submit"]{
+	width:280px;
+	background: #C10000;
+	font-size: 20px;
+	border:none;
+	color:#fff;
+}*/
+/*div.reg form input.code{
+	width:150px;
+}*/
+div.reg form p.txtL{
+	text-align: left;
+}
+div.reg form p.txtL img{
+	width:97px;
+	height:37px;
+	vertical-align: middle;
+}
+div.reg form p.txtL a{
+	color:#c10000;
+}
+.reg form p.txt,.login form p.txt{
+	/*width:280px;*/
+	margin:10px auto 0;
+	text-align: right;
+}
+.reg p.txt a,.login p.txt a{
+	color:#666;
+	text-decoration: underline;
+}
+div.login form p.txt a{
+	margin-left:20px;
+	cursor: pointer;
+}
+
+
+.form-control {
+    /*width:270px !important;*/
+    height:40px !important;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom:  5px;
+}
+.btn-block {
+    display: block;
+
+    margin: 0 auto;
+}
+.reg form p.txt, .login form p.txt {
+	/* width: 280px; */
+	/* margin: 10px auto 0; */
+	/* text-align: right; */
+	text-align: right;
+	margin-top: 25px;
+}

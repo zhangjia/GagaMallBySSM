@@ -1,0 +1,54 @@
+
+.btn-allocate.btn-normal.active {
+    color: #fff;
+    background: #317df4;
+    border: 1px solid #317df4;
+
+}
+.btn-allocate {
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    font-size: 12px;
+    display: inline-block;
+    border: 1px solid black;
+}
+dt.sku-key {
+    text-align: left;
+    float: left;
+    width: 66px;
+    padding-top: 5px;
+}
+p.inventorys {
+    float: left;
+    margin-right: 100px;
+    width: 200px;
+}
+
+.commodityCount p span{
+   color:red;
+}
+.add-cart {
+    border: 1px solid #000;
+    width: 170px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    float: right;
+}
+.jia-commodity-detail-num{
+    width: 30px;
+    /*float: left;*/
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+}
+
+.jia-commodity-detail-num::-webkit-outer-spin-button,
+.jia-commodity-detail-num::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.jia-commodity-detail-num[type="number"] {
+    -moz-appearance: textfield;
+}
