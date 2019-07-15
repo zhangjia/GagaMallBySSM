@@ -2,7 +2,6 @@ package io.zhangjia.mall.service.impl;
 
 
 
-import io.zhangjia.mall.entity.User;
 import io.zhangjia.mall.mapper.UserMapper;
 import io.zhangjia.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +42,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object>register(User user) {
-		/*User user2 = userDao.queryByUsername(user.getUserName());
+	public Map<String, Object>register(Map<String,Object> user) {
+		System.out.println("user123 = [" + user + "]");
+		Map<String,Object> userName = new HashMap<>();
+		userName.put("userName",user.get("userName"));
+		List<Map<String, Object>> users = userMapper.query(userName);
+
 		Map<String,Object> map = new HashMap<>();
-		if(user2 == null) {
-			int i = userDao.doInsert(user);
+
+		if(users.isEmpty()) {
+			Object userNames = user.get("userName");
+			System.out.println("userName1 = " + userNames);
+			int i = userMapper.doInsert((String)user.get("userName"),(String)user.get("userPassword"));
 			if(i != 0) {
-				map.put("user",user);
+				map.put("user",i);
 //				walletDao.doInsert(i);
 //				iouDao.doInsert(i);
 
@@ -60,8 +66,8 @@ public class UserServiceImpl implements UserService {
 			map.put("error","用户名已存在");
 		}
 
-		return map;*/
-		return  null;
+		return map;
+
 	}
 //
 //	@Override

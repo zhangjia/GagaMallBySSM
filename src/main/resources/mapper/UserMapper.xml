@@ -28,4 +28,20 @@
 
     </select>
 
+    <insert id="doInsert" parameterType="map">
+        INSERT INTO users (user_name, user_password, user_tel, user_mail, user_nick)
+         VALUES(#{userName},#{userPassword},#{userPayPassword},
+        <if test="userTel != null">
+            #{userTel},null
+        </if>
+        <if test="userMail != null">
+           null,#{userMail}
+        </if>
+
+        <if test="userMail == null and userTel == null">
+            null,null
+        </if>
+             #{userNick});
+    </insert>
+
 </mapper>

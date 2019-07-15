@@ -13,7 +13,7 @@
         }
 
         .jia-acc input {
-            width: 260px;
+            width: 259px;
         }
 
         .jia-register-code input {
@@ -43,9 +43,9 @@
           rel="stylesheet">
     <%------------------------------------资源引入结束-----------------------------------%>
     <script>
-        // function IscodesRight() {
+        // function IscodeRight() {
         //     var tel = $("input[name='userTel']").val();
-        //     var inputCode = $("input[name='codes']").val();
+        //     var inputCode = $("input[name='code']").val();
         //     if (inputCode == null || inputCode == '') {
         //         layer.msg("请输入验证码");
         //         return false;
@@ -54,7 +54,7 @@
         //         layer.msg("请输入手机号");
         //         return false;
         //     }
-        //     var userInputPhoneCode = $("input[name='codes']").val();
+        //     var userInputPhoneCode = $("input[name='code']").val();
         //         return true;
         //
         // }
@@ -73,12 +73,12 @@
 
                     data = $.param({'action':'userName'}) + '&' + $("form").serialize();
                 }
-                if(account =='userEmail'){
+                if(account =='userMail'){
 
-                    data = $.param({'action':'userEmail'}) + '&' + $("form").serialize();
+                    data = $.param({'action':'userMail'}) + '&' + $("form").serialize();
                 }
                 //将表单序列化
-                // if (!IscodesRight()) {
+                // if (!IscodeRight()) {
                 //     return false;
                 // }
                 console.log(data);
@@ -114,7 +114,7 @@
                                 $("input[name='account']").addClass("is-invalid");
                                 // $("input[name='account']").next("span").addClass("text-danger").text(res.error);
                             } else if (res.error === "验证码不正确") {
-                                layer.tips('验证码不正确', $("input[name='codes']"), {
+                                layer.tips('验证码不正确', $("input[name='code']"), {
                                     time: 800
                                 });
                             }
@@ -172,7 +172,7 @@
                     },
 
                     //验证邮箱
-                    userEmail: {
+                    userMail: {
                         validators: {
                             notEmpty: {
                                 message: '请输入邮箱'
@@ -218,7 +218,7 @@
 
                         }
                     },
-                    codes: {
+                    code: {
                         validators: {
                             stringLength: {
                                 min: 4,
@@ -240,9 +240,9 @@
             });
             /*---------------------------------表单验证结束------------------------------------*/
             /*---------------------------------选择用户名开始------------------------------------*/
-            $("input[name='userEmail']").hide();
+            $("input[name='userMail']").hide();
             $(".jia-register-get-code").hide();
-            $("input[name='codes']").hide();
+            $("input[name='code']").hide();
             $("input[name='userTel']").hide();
 
             $("select").change(function () {
@@ -252,8 +252,8 @@
                 var value = $(":selected").val();
                 if (value === 'userName') {
                     $(".jia-register-get-code").hide();
-                    $("input[name='userEmail']").hide();
-                    $("input[name='codes']").hide();
+                    $("input[name='userMail']").hide();
+                    $("input[name='code']").hide();
                     $("input[name='userTel']").hide();
                     $("input[name='userName']").attr("name", value);
                     $("input[name='userName']").show()
@@ -262,18 +262,18 @@
                 if (value === 'userTel') {
 
                     $("input[name='userName']").hide();
-                    $("input[name='userEmail']").hide();
+                    $("input[name='userMail']").hide();
                     $("input[name='userTel']").attr("name", value);
-                    $("input[name='codes']").show();
+                    $("input[name='code']").show();
                     $("input[name='userTel']").show();
                     $(".jia-register-get-code").show();
                 }
-                if (value === 'userEmail') {
+                if (value === 'userMail') {
                     $("input[name='userName']").hide();
                     $("input[name='userTel']").hide();
-                    $("input[name='userEmail']").attr("name", value);
-                    $("input[name='codes']").show();
-                    $("input[name='userEmail']").show()
+                    $("input[name='userMail']").attr("name", value);
+                    $("input[name='code']").show();
+                    $("input[name='userMail']").show()
                     $(".jia-register-get-code").show();
                 }
             });
@@ -286,12 +286,12 @@
                 var value = $(":selected").val();
                 if (value === 'userTel') {
                    url =  "${path}/getPhoneCode";
-                    type = $("input[name='userTel']").val();
+                   type = $("input[name='userTel']").val();
                 }
-                if (value === 'userEmail') {
-                   url = "${path}/getEmailCode";
+                if (value === 'userMail') {
+                   url = "${path}/getMailCode";
 
-                    type = $("input[name='userEmail']").val();
+                    type = $("input[name='userMail']").val();
                 }
 
 
@@ -351,7 +351,7 @@
                 <select class="input-group-text form-control jia-register-select-account" name="acc" id="sel1">
                     <option value="userName">用户名</option>
                     <option value="userTel">手机号</option>
-                    <option value="userEmail">邮箱</option>
+                    <option value="userMail">邮箱</option>
                 </select>
             </div>
             <div class="jia-acc">
@@ -359,7 +359,7 @@
                 <input class="form-control jia-register-user-name" id="jia-register-username" type="text"
                        name="userName" value="" placeholder="用户名">
                 <input class="form-control jia-register-user-tel" type="text" name="userTel" value="" placeholder="手机号">
-                <input class="form-control jia-register-user-email" type="text" name="userEmail" value=""
+                <input class="form-control jia-register-user-email" type="text" name="userMail" value=""
                        placeholder="邮箱">
             </div>
 
@@ -375,7 +375,7 @@
         </div>
         <div class="form-group jia-register-code">
 
-            <input class="form-control jia-register-input-code" type="text" name="codes" value=""
+            <input class="form-control jia-register-input-code" type="text" name="code" value=""
                    placeholder="验证码">
             <button type="button" class="btn btn-primary btn-lg jia-register-get-code ">获取验证码</button>
         </div>

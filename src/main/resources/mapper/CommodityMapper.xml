@@ -6,28 +6,28 @@
 <mapper namespace="io.zhangjia.mall.mapper.CommodityMapper">
 
 
-    <resultMap id="commodityResultMap" type="commodity">
+    <resultMap id="commodityResultMap" type="map">
 
         <id column="commodity_id" property="commodityId"/>
-        <result column="commodity_name" property="commodityName"/>
-        <result column="commodity_attributes" property="commodityAttributes"/>
-        <result column="commodity_createTime" property="commodityCreateTime"/>
-        <result column="commodity_updateTIme" property="commodityUpdateTIme"/>
-        <result column="commodity_views" property="commodityViews"/>
-        <result column="level1_menu_id" property="level1MenuId"/>
-        <result column="level2_menu_id" property="level2MenuId"/>
-        <result column="commodityStatus" property="commodityStatus"/>
-        <result column="level1_menu_chinese_name" property="level1MenuChineseName"/>
-        <result column="level2_menu_chinese_name" property="level2MenuChineseName"/>
-        <result column="commodity_sales" property="commoditySales"/>
-        <result column="level2_menu_id" property="level2MenuId"/>
-        <result column="commodityStatus" property="commodityStatus"/>
-        <result column="commodity_inventory" property="commodityInventory"/>
-        <result column="commodity_min_original_price" property="commodityMinOriginalPrice"/>
-        <result column="commodity_max_original_price" property="commodityMaxOriginalPrice"/>
-        <result column="commodity_min_present_price" property="commodityMinPresentPrice"/>
-        <result column="commodity_max_present_price" property="commodityMaxPresentPrice"/>
-        <result column="commodity_max_mark_down" property="commodityMaxMarkDown"/>
+<!--        <result column="commodity_name" property="commodityName"/>-->
+<!--        <result column="commodity_attributes" property="commodityAttributes"/>-->
+<!--        <result column="commodity_createTime" property="commodityCreateTime"/>-->
+<!--        <result column="commodity_updateTIme" property="commodityUpdateTIme"/>-->
+<!--        <result column="commodity_views" property="commodityViews"/>-->
+<!--        <result column="level1_menu_id" property="level1MenuId"/>-->
+<!--        <result column="level2_menu_id" property="level2MenuId"/>-->
+<!--        <result column="commodityStatus" property="commodityStatus"/>-->
+<!--        <result column="level1_menu_chinese_name" property="level1MenuChineseName"/>-->
+<!--        <result column="level2_menu_chinese_name" property="level2MenuChineseName"/>-->
+<!--        <result column="commodity_sales" property="commoditySales"/>-->
+<!--        <result column="level2_menu_id" property="level2MenuId"/>-->
+<!--        <result column="commodityStatus" property="commodityStatus"/>-->
+<!--        <result column="commodity_inventory" property="commodityInventory"/>-->
+<!--        <result column="commodity_min_original_price" property="commodityMinOriginalPrice"/>-->
+<!--        <result column="commodity_max_original_price" property="commodityMaxOriginalPrice"/>-->
+<!--        <result column="commodity_min_present_price" property="commodityMinPresentPrice"/>-->
+<!--        <result column="commodity_max_present_price" property="commodityMaxPresentPrice"/>-->
+<!--        <result column="commodity_max_mark_down" property="commodityMaxMarkDown"/>-->
         <!--图片查询使用懒加载，因为只有打开商品详情的时候才需要详情图-->
         <collection property="commodityImgs"
                     ofType="map"

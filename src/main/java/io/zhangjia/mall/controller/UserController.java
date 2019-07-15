@@ -2,6 +2,7 @@ package io.zhangjia.mall.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import io.zhangjia.mall.service.MailCodeService;
 import io.zhangjia.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +17,15 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MailCodeService mailCodeService;
+
+
 
     @GetMapping("/login")
     public String login() {
@@ -68,4 +73,85 @@ public class UserController {
         //去登录页面
        return "redirect:index";
     }
+
+    @GetMapping("/register")
+    public String register() {
+
+        return "register";
+    }
+
+    @PostMapping( value = "/register",produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String doregister(String userPassword, String action, String code, HttpSession session, HttpServletRequest requestuest) {
+
+        Map<String,Object> json = new HashMap<>();
+        Map<String,Object> user = new HashMap<>();
+
+        user.put("userName",requestuest.getParameter(action));
+
+//        判断是不是手机注册
+
+        if(action.equals("userTel")){
+            System.out.println("\"是手机号登录\" = " + "是手机号登录");
+//            判断输入的验证码是否正确
+            boolean isTruePhoneCode = !code.equals(session.getAttribute("phoneCode"));
+            if(isTruePhoneCode) {
+                System.out.println("\"不正确\" = " + "是手机号登录");
+                json.put("result",false);
+                json.put("error","验证码不正确");
+                return JSON.toJSONString(json);
+            } else {
+               user.put("userTel",requestuest.getParameter(action));
+            }
+        }
+
+//        判断是不是邮箱注册
+        if(action.equals("userMail")){
+            System.out.println("\"是Mail登录\" = " + "是Mail登录");
+            //            判断输入的验证码是否正确
+            boolean isTrueMailCode = !code.equals(session.getAttribute("mailCode"));
+            if(isTrueMailCode) {
+                System.out.println("\"不正确\" = " + "是Mail录");
+                json.put("result",false);
+                json.put("error","验证码不正确");
+               return JSON.toJSONString(json);
+            } else {
+                user.put("userMail",requestuest.getParameter(action));
+            }
+        }
+
+//        String uri = request.getParameter("uri");
+//        User user = new User(username,password,null,null,null,null,null,null,null,null,null,null);
+        System.out.println("userregister = " + user);
+        Map<String, Object> map = userService.register(user);
+        System.out.println("验证");
+        /*如果注册成功*/
+        if(map.containsKey("user")){
+
+            session.setAttribute("user",map.get("user"));
+            json.put("result",true);
+            System.out.println("UserController.doregister");
+            /*if(uri != null){
+                json.put("uri",uri);
+            }*/
+        }else{
+            Object error = map.get("error");
+            json.put("result",false);
+            json.put("error",error);
+        }
+        return JSON.toJSONString(json);
+    }
+
+
+    @GetMapping(value = "/getMailCode",produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public  String getMailCode(HttpServletRequest request) {
+        String mail = request.getParameter("type");
+        System.out.println("mail = " + mail);
+        String mailCode = mailCodeService.getMailCode(mail);
+        request.getSession().setAttribute("mailCode",mailCode);
+
+        boolean result = mailCode != null;
+        return  "{\"success\":"+result+"}";
+   }
 }

@@ -1,8 +1,5 @@
 package io.zhangjia.mall.service;
 
-import io.zhangjia.mall.entity.User;
-
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,10 +17,9 @@ public interface UserService {
 
 	/**
 	 * 用户注册
-	 * @param user 要注册的用户
-	 * @return 注册结果
+
 	 */
-	Map<String, Object> register(User user);
+	Map<String, Object> register(Map<String,Object> user);
 
 //	User getUserInformation(String userName);
 //
