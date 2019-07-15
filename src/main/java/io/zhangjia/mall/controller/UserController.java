@@ -38,7 +38,7 @@ public class UserController {
 
     @PostMapping( value = "/login",produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String doLogin(String userName, String userPassword, Model model, HttpSession session) {
+    public String doLogin(String userName, String userPassword,String uri, Model model, HttpSession session) {
         System.out.println("UserController.doLogin");
         Map<String, Object> map = userService.login(userName, userPassword);
         Map<String,Object> json = new HashMap<>();
@@ -47,9 +47,9 @@ public class UserController {
             session.setAttribute("user",map.get("user"));
             json.put("result",true);
             //不过不是直接登录，将原地址存入uri
-           /* if(uri != null){
+            if(uri != null){
                 json.put("uri",uri);
-            }*/
+            }
         }else{
             Object error = map.get("error");
             json.put("result",false);
