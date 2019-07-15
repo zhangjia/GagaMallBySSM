@@ -307,10 +307,10 @@
                         </div>
                     </dt>
 <%--                    <dd>${commodity.commodity_name}</dd>--%>
-                    <dd>${commodity.commodityName}</dd>
+                    <dd>${commodity.commodity_name}</dd>
 
-                    <span class="pro-price">￥${commodity.commodityMinPresentPrice}</span>
-                    <span class="pro-sales">销量：${commodity.commoditySales}件</span>
+                    <span class="pro-price">￥${commodity.commodity_min_present_price}</span>
+                    <span class="pro-sales">销量：${commodity.commodity_sales}件</span>
 
 
                 </dl>

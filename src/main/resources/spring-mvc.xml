@@ -27,5 +27,11 @@
     <!--配置默认组件-->
     <mvc:annotation-driven/>  <!--如果不配置这个，那么静态资源可以访问，Controller无法访问-->
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
 
+            <ref bean="menuInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

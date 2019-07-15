@@ -268,14 +268,14 @@
             </div>
             <div class="fr intro">
                 <div class="title">
-                    <h4>${requestScope.commodityDetail.commodityName}</h4>
+                    <h4>${requestScope.commodityDetail.commodity_name}</h4>
                     <%--					<p>【破损补寄】【适合放室内、卧室、书房、餐桌、办公室、客厅、电视柜等地方】【无理由退换货】【包邮】【白色现代简约花瓶】</p>--%>
                     <p></p>
-                    <c:if test="${requestScope.commodityDetail.commodityMaxPresentPrice == requestScope.commodityDetail.commodityMinPresentPrice}">
-                        <span class="commodity-price">￥${requestScope.commodityDetail.commodityMaxPresentPrice}</span>
+                    <c:if test="${requestScope.commodityDetail.commodity_max_present_price == requestScope.commodityDetail.commodity_min_present_price}">
+                        <span class="commodity-price">￥${requestScope.commodityDetail.commodity_max_present_price}</span>
                     </c:if>
-                    <c:if test="${requestScope.commodityDetail.commodityMaxPresentPrice != requestScope.commodityDetail.commodityMinPresentPrice}">
-                        <span class="commodity-price">￥${requestScope.commodityDetail.commodityMinPresentPrice}~￥${requestScope.commodityDetail.commodityMaxPresentPrice}</span>
+                    <c:if test="${requestScope.commodityDetail.commodity_max_present_price != requestScope.commodityDetail.commodity_min_present_price}">
+                        <span class="commodity-price">￥${requestScope.commodityDetail.commodity_min_present_price}~￥${requestScope.commodityDetail.commodity_max_present_price}</span>
                     </c:if>
                 </div>
                 <div class="proIntro">
@@ -316,10 +316,10 @@
 
                     <div class="commodityCount">
                         <p class="inventorys">库存 <span
-                                class="inventory">${requestScope.commodityDetail.commodityInventory}</span> 件
+                                class="inventory">${requestScope.commodityDetail.commodity_inventory}</span> 件
                         </p>
 
-                        <p class="sales">销量 <span class="sale">${requestScope.commodityDetail.commoditySales}</span>件
+                        <p class="sales">销量 <span class="sale">${requestScope.commodityDetail.commodity_sales}</span>件
                         </p>
                     </div>
 

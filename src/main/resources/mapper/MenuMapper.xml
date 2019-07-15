@@ -5,4 +5,38 @@
 
 <mapper namespace="io.zhangjia.mall.mapper.MenuMapper">
 
+    <resultMap id="level2MenuResultMap" type="map">
+
+        <id column="level1_menu_id" property="level1MenuId"/>
+
+        <collection property="level2Menu"
+                    ofType="map"
+                    select="queryLevel2Menu"
+                    column="level1_menu_id"/>
+        <!--<association property="level2Menu"
+                     select="queryLevel2Menu"
+                     column="level1_menu_id"/>-->
+    </resultMap>
+
+    <select id="queryLevel1Menu" resultMap="level2MenuResultMap">
+        SELECT DISTINCT f.*
+        FROM commodity c,
+             level1_menu f
+        WHERE c.level1_menu_id = f.level1_menu_id
+        ORDER BY level1_menu_id
+    </select>
+
+    <select id="queryLevel2Menu" parameterType="int" resultType="map">
+        SELECT *
+        FROM level2_menu s,
+             (SELECT DISTINCT f.*, c.level2_menu_id level2_menu_id
+              FROM commodity c,
+                   level1_menu f
+              WHERE c.level1_menu_id = f.level1_menu_id
+              ORDER BY level1_menu_id) n
+        WHERE s.level2_menu_id = n.level2_menu_id
+          AND n.level1_menu_id = #{level1_menu_id}
+    </select>
+
+
 </mapper>

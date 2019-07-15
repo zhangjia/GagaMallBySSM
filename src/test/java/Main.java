@@ -1,3 +1,4 @@
+import com.alibaba.fastjson.JSON;
 import io.zhangjia.mall.api.mailcode.MailCode;
 import io.zhangjia.mall.api.verificationCode.PhoneCode;
 import io.zhangjia.mall.mapper.CommodityMapper;
@@ -16,6 +17,7 @@ public class Main {
         map.put("commodityName","apple");
         List<Map<String, Object>> query = bean.query(map);
         System.out.println("query = " + query);
+        System.out.println("JSON.toJSONString(query) = " + JSON.toJSONString(query));
         for (Map<String, Object> stringObjectMap : query) {
             System.out.println(stringObjectMap);
 

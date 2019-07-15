@@ -6,9 +6,7 @@ package io.zhangjia.mall.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
-import io.zhangjia.mall.entity.Commodity;
 import io.zhangjia.mall.service.CommodityService;
-import io.zhangjia.mall.service.impl.CommodityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,13 +46,12 @@ public class CommodityController {
                        Integer level1MenuId, Integer level2MenuId,
                        Integer order,  Model model,
                        @RequestParam(required = false,defaultValue = "1") Integer page){
-        /*List<Map<String, Object>> commodities = commodityServiceImpl.query(commodityId,
-                commodityName, level1MenuId,level2MenuId,order);*/
-        List<Commodity> commodities = commodityService.query(commodityId,
+
+        List<Map<String,Object>> commodities = commodityService.query(commodityId,
                 commodityName, level1MenuId,level2MenuId,order,page);
         model.addAttribute("commodities",commodities);
-        System.out.println("commodities = " + commodities);
-        System.out.println("commoditiesClass = " + commodities.getClass());
+//        System.out.println("commodities = " + commodities);
+//        System.out.println("commoditiesClass = " + commodities.getClass());
         if(commodities instanceof Page){
             Page productPage = (Page) commodities;
             System.out.println("CommodityController.list" + JSON.toJSONString(productPage));
@@ -74,10 +69,10 @@ public class CommodityController {
     @GetMapping("/commodityDetail")
 
     public String commodityDetail(Integer commodityId,Model model) {
-        List<Commodity> commodityDetail = commodityService.query(commodityId, null, null, null, null, null);
+        List<Map<String,Object>> commodityDetail = commodityService.query(commodityId, null, null, null, null, null);
         System.out.println("CommodityController.commodityDetail" + JSON.toJSONString(commodityDetail));
         model.addAttribute("commodityDetail",commodityDetail.get(0));
-        String commodityAttribute = commodityDetail.get(0).getCommodityAttribute();
+        String commodityAttribute = (String)commodityDetail.get(0).get("commodity_attribute");
         JSONObject specs = JSON.parseObject(commodityAttribute);
         model.addAttribute("specs",specs);
         System.out.println("specs = " + specs);

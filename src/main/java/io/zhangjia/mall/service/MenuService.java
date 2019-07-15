@@ -1,13 +1,11 @@
 package io.zhangjia.mall.service;
 
-import io.zhangjia.mall.entity.FirstMenu;
-
 import java.util.List;
+import java.util.Map;
 
 public interface MenuService {
-
-    List<FirstMenu> getNav();
+//commodity_attribute
 //
 //
-//    String getFirstMenuChineseName(String fid);
+ List<Map<String,Object>> getMenu();
 }

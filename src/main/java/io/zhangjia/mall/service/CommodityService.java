@@ -1,8 +1,6 @@
 package io.zhangjia.mall.service;
 
 
-import io.zhangjia.mall.entity.Commodity;
-
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +23,7 @@ public interface CommodityService {
      * @param page 查询第几页的数据
      * @return
      */
-    List<Commodity> query(Integer commodityId, String commodityName,
+    List<Map<String,Object>> query(Integer commodityId, String commodityName,
                           Integer level1MenuId, Integer level2MenuId,
                           Integer order,Integer page);
 
