@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +94,21 @@ public class CommodityController {
         String s = JSON.toJSONString(maps);
         System.out.println("s = " + s);
         return s;
+
+    }
+
+    @GetMapping(value = "/updateCount2CommodityDetail",produces = "application/json;charset=utf-8")
+    @ResponseBody
+    private String updateCount2CommodityDetail(String action,Integer commoditySpecsId,
+                                               Integer count,Integer val,HttpServletRequest request) {
+        System.out.println("action = [" + action + "], commoditySpecsId = [" + commoditySpecsId + "], count = [" + count + "], val = [" + val + "], request = [" + request + "]");
+        HttpSession session = request.getSession();
+        Map<String,Object> user =   (Map<String,Object>)session.getAttribute("user");
+        Integer userId = (Integer)user.get("userId");
+
+        Map<String, Object> stringObjectMap = commodityService.updateCount2CommodityDetail(action, userId, commoditySpecsId,count,val);
+
+        return (JSON.toJSONString(stringObjectMap));
 
     }
 }

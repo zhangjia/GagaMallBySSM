@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.zhangjia.mall.mapper.CartMapper">
+
+    <select id="query" resultType="map">
+        SELECT *
+        FROM commodity_specs t1,
+             COMMODITY t2,
+             cart t3,
+             img t4
+        WHERE t1.COMMODITY_ID = t2.COMMODITY_ID
+          AND t3.commodity_specs_id = t1.commodity_specs_id
+          AND t3.USER_ID = ?
+          AND t4.IMG_BELONG = t1.COMMODITY_ID
+          AND t4.IMG_ORDER = 1
+          AND t4.IMG_TYPE = '商品图'
+    </select>
+
+
+    <select id="queryByUserIdAndCommoditySpecsId" resultType="map">
+        SELECT  * FROM CART WHERE USER_ID = #{userId} AND commodity_specs_id = #{commoditySpecsId}
+    </select>
+
+</mapper>

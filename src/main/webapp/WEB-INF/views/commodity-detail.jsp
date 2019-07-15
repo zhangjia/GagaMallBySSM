@@ -31,7 +31,7 @@
             $.ajax({});
             var selectjson;
 
-            var skuId;
+            var commoditySpecsId;
 
 
             $(document).on('click', '.btn-allocate.btn-normal', function () {//对于静态和动态创建的标签都好使
@@ -74,7 +74,7 @@
                         success: function (res) {
 
                            console.log(res);
-                            skuId = res.commodity_specs_id;
+                            commoditySpecsId = res.commodity_specs_id;
                            $(".commodity-price").text('￥' + res.commodity_specs_present_price);
                            $(".inventory").text(res.commodity_specs_inventor);
                            $(".sale").text(res.commodity_specs_sales);
@@ -141,7 +141,7 @@
                     url: "${path}/updateCount2CommodityDetail",
                     type: "get",
                     data: {
-                        SKUId: skuId,
+                        commoditySpecsId: commoditySpecsId,
                         action: action,
                         count: count,
                         val: val

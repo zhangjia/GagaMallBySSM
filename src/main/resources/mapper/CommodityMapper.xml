@@ -90,4 +90,10 @@
     </select>
 
 
+
+    <select id="queryCommoditySpecsInventory" resultType="int">
+        SELECT commodity_specs_inventor  FROM commodity_specs  WHERE  commodity_specs_id = #{commoditySpecsId}
+    </select>
+
+
 </mapper>

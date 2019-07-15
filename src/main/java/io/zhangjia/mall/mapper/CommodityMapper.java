@@ -18,4 +18,11 @@ public interface CommodityMapper {
      * @return
      */
     Map<String, Object> queryCommoditySpecs(String specs);
+
+    /**
+     * 根据某个商品规格查询该商品的库存
+     * @param commoditySpecsId
+     * @return
+     */
+    int queryCommoditySpecsInventory(Integer commoditySpecsId);
 }

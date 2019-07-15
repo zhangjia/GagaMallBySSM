@@ -1,12 +1,6 @@
-/*
 package io.zhangjia.mall.service.impl;
 
-import io.zhangjia.mall.dao.CartDao;
-import io.zhangjia.mall.dao.CommodityDao;
-import io.zhangjia.mall.dao.SKUDao;
-import io.zhangjia.mall.dao.impl.CartDaoImpl;
-import io.zhangjia.mall.dao.impl.CommodityDaoImpl;
-import io.zhangjia.mall.dao.impl.SKUDaoImpl;
+
 import io.zhangjia.mall.service.CarService;
 
 import java.math.BigDecimal;
@@ -16,7 +10,7 @@ import java.util.Map;
 
 
 public class CartServiceImpl implements CarService {
-    private CartDao cartDao = new CartDaoImpl();
+  /*  private CartDao cartDao = new CartDaoImpl();
     private SKUDao skuDao = new SKUDaoImpl();
     private CommodityDao commodityDao = new CommodityDaoImpl();
 
@@ -93,13 +87,12 @@ public class CartServiceImpl implements CarService {
             System.out.println("SKUIds = " + sid);
 
 
-            */
-/*思路整理：
+思路整理：
              * 先获取当前商品的库存
              * 再获取当前商品在当前用户的购物车中数量
              * 如果购物车中的数量+1 大于 库存，则失败
              * 如果购物车中的数量-1 = 0 。则失败
-             * *//*
+             *
 
 
 //        获取当前商品的库存
@@ -175,6 +168,5 @@ public class CartServiceImpl implements CarService {
         } else {
             return null;
         }
-    }
+    }*/
 }
-*/

@@ -36,10 +36,11 @@
         </mvc:interceptor>
 
         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/login"/>
-            <ref bean="loginInterceptor" />
+            <mvc:mapping path="/personal"/>
+            <mvc:mapping path="/cart"/>
+            <mvc:mapping path="/updateCount2CommodityDetail"/>
 
+            <ref bean="loginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>

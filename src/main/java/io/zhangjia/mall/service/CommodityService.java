@@ -35,4 +35,16 @@ public interface CommodityService {
      * @return 该规格相关的数据
      */
     Map<String,Object>  getCommoditySpecs(String specs);
+
+
+    /**
+     * 在商品详情页更改个数
+     * @param action 添加还是喊出
+     * @param userId 用户ID
+     * @param commoditySpecsId 规格ID
+     * @param count 个数
+     * @param val 输入框值
+     * @return
+     */
+    Map<String, Object> updateCount2CommodityDetail(String action, Integer userId, Integer commoditySpecsId,Integer count,Integer val);
 }
