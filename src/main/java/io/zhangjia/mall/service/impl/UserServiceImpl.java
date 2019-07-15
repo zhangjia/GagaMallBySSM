@@ -45,17 +45,17 @@ public class UserServiceImpl implements UserService {
 	public Map<String, Object>register(Map<String,Object> user) {
 		System.out.println("user123 = [" + user + "]");
 		Map<String,Object> userName = new HashMap<>();
+//		保证只根据用户名查
 		userName.put("userName",user.get("userName"));
 		List<Map<String, Object>> users = userMapper.query(userName);
 
 		Map<String,Object> map = new HashMap<>();
 
 		if(users.isEmpty()) {
-			Object userNames = user.get("userName");
-			System.out.println("userName1 = " + userNames);
-			int i = userMapper.doInsert((String)user.get("userName"),(String)user.get("userPassword"));
+			System.out.println("用户名不存在");
+			int i = userMapper.doInsert(user);
 			if(i != 0) {
-				map.put("user",i);
+				map.put("user",user);
 //				walletDao.doInsert(i);
 //				iouDao.doInsert(i);
 
@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
 				map.put("error","注册失败");
 			}
 		} else {
+			System.out.println("用户名已经存在");
 			map.put("error","用户名已存在");
 		}
 

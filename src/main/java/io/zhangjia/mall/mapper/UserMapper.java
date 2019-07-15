@@ -14,11 +14,9 @@ public interface UserMapper {
 
     /**
      * 用户注册
-     * @param userName
-     * @param userPassword
-     * @return
+
      */
-    int doInsert(String userName, String userPassword);
+    int doInsert(Map<String,Object> user);
 
 //    /**
 //     * 更新用户信息

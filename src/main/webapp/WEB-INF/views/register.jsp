@@ -59,15 +59,24 @@
         //
         // }
 
-        function register(){
-            // $(".jia-btn-register").click(function () {
+
+
+        $(function () {
+
+
+            var index;
+
+            $(":submit").click(function () {
+
+            // $("form").submit(function () {
+                // $(".jia-btn-register").click(function () {
                 // function register(){
                 var account = $(".jia-register-select-account").children("option:selected").val();
                 var data;
                 console.log(account)
                 if(account =='userTel'){
 
-                     data = $.param({'action':'userTel'}) + '&' + $("form").serialize();
+                    data = $.param({'action':'userTel'}) + '&' + $("form").serialize();
                 }
                 if(account =='userName'){
 
@@ -93,11 +102,11 @@
 
                         if (res.result) {
                             //成功，跳转到index.jsp
-                            var c = layer.msg('注册成功', {time: 1000, anim: 2, icon: 6}, function () {
+                            layer.msg('注册成功', {time: 1000, anim: 2, icon: 6}, function () {
                                 if (res.uri) {
-                                    location = res.uri;
+                                    // location = res.uri;
                                 } else {
-                                    location = "${path}/login";
+                                    <%--location = "${path}/login";--%>
                                 }
                             })
 
@@ -108,7 +117,7 @@
                                 $("input[name='userPassword']").addClass("is-invalid");
                                 $("input[name='userPassword']").next("span").addClass("text-danger").text(res.error);
                             } else if (res.error === "用户名已存在") {
-                                 layer.tips('用户名已存在', $(".jia-register-select-account"), {
+                                layer.tips('用户名已存在', $(".jia-register-select-account"), {
                                     time: 800
                                 });
                                 $("input[name='account']").addClass("is-invalid");
@@ -123,18 +132,7 @@
                 });
                 return false;
 
-            // });
-        }
-
-        $(function () {
-
-
-            var index;
-
-            // $(":submit").click(function () {
-
-            $("form").submit(function () {
-               return  register()
+                // });
             });
 
             $("input[type=text]").focus(function () {
@@ -230,10 +228,8 @@
                             },
 
                         }
-                    },
-                    submitHandler:function(form) {
-                        $(form).register();
                     }
+
 
                 }
 

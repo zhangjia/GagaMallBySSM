@@ -3,6 +3,7 @@ package io.zhangjia.mall.controller;
 
 import com.alibaba.fastjson.JSON;
 import io.zhangjia.mall.service.MailCodeService;
+import io.zhangjia.mall.service.PhoneCodeService;
 import io.zhangjia.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ public class UserController {
     @Autowired
     private MailCodeService mailCodeService;
 
+    @Autowired
+    private PhoneCodeService phoneCodeService;
 
 
     @GetMapping("/login")
@@ -82,12 +85,12 @@ public class UserController {
 
     @PostMapping( value = "/register",produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String doregister(String userPassword, String action, String code, HttpSession session, HttpServletRequest requestuest) {
+    public String doRegister(String userPassword, String action, String code, HttpSession session, HttpServletRequest request) {
+
+        System.out.println("调用了doRegisger");
 
         Map<String,Object> json = new HashMap<>();
         Map<String,Object> user = new HashMap<>();
-
-        user.put("userName",requestuest.getParameter(action));
 
 //        判断是不是手机注册
 
@@ -101,7 +104,7 @@ public class UserController {
                 json.put("error","验证码不正确");
                 return JSON.toJSONString(json);
             } else {
-               user.put("userTel",requestuest.getParameter(action));
+               user.put("userTel",request.getParameter(action));
             }
         }
 
@@ -116,15 +119,19 @@ public class UserController {
                 json.put("error","验证码不正确");
                return JSON.toJSONString(json);
             } else {
-                user.put("userMail",requestuest.getParameter(action));
+                user.put("userMail",request.getParameter(action));
             }
         }
 
 //        String uri = request.getParameter("uri");
 //        User user = new User(username,password,null,null,null,null,null,null,null,null,null,null);
-        System.out.println("userregister = " + user);
+
+
+        user.put("userName",request.getParameter(action));
+        user.put("userPassword",userPassword);
+
         Map<String, Object> map = userService.register(user);
-        System.out.println("验证");
+
         /*如果注册成功*/
         if(map.containsKey("user")){
 
@@ -154,4 +161,17 @@ public class UserController {
         boolean result = mailCode != null;
         return  "{\"success\":"+result+"}";
    }
+
+
+    @GetMapping(value = "/getPhoneCode",produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public  String getPhoneCode(HttpServletRequest request) {
+        String tel = request.getParameter("type");
+        System.out.println("tel = " + tel);
+        String phoneCode = phoneCodeService.getPhoneCode(tel);
+        request.getSession().setAttribute("phoneCode",phoneCode);
+
+        boolean result = phoneCode != null;
+        return  "{\"success\":"+result+"}";
+    }
 }
