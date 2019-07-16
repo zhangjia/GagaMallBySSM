@@ -7,19 +7,15 @@
 
 
     <resultMap id="commodityResultMap" type="map">
-
         <id column="commodity_id" property="commodityId"/>
-
         <collection property="commodityImgs"
                     ofType="map"
                     select="io.zhangjia.mall.mapper.ImgMapper.queryCommodityImgs"
                     column="commodity_id"/>
-
         <collection property="commodityDetailImgs"
                     ofType="map"
                     select="io.zhangjia.mall.mapper.ImgMapper.queryCommodityDetailImgs"
                     column="commodity_id"/>
-
     </resultMap>
 
     <select id="query" resultMap="commodityResultMap">
@@ -95,5 +91,14 @@
         SELECT commodity_specs_inventor  FROM commodity_specs  WHERE  commodity_specs_id = #{commoditySpecsId}
     </select>
 
+
+
+
+    <update id="updateCommoditySpecs4InventoryAndSales" >
+        UPDATE commodity_specs
+        SET commodity_specs_inventor = commodity_specs_inventor - #{commodityCount},
+            commodity_specs_sales    = commodity_specs_sales + #{commodityCount}
+        WHERE commodity_specs_id = #{commoditySpecsId}
+    </update>
 
 </mapper>

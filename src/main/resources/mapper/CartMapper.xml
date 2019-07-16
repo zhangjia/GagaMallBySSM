@@ -11,17 +11,86 @@
              COMMODITY t2,
              cart t3,
              img t4
-        WHERE t1.COMMODITY_ID = t2.COMMODITY_ID
+        WHERE t1.commodity_id = t2.commodity_id
           AND t3.commodity_specs_id = t1.commodity_specs_id
-          AND t3.USER_ID = ?
-          AND t4.IMG_BELONG = t1.COMMODITY_ID
-          AND t4.IMG_ORDER = 1
-          AND t4.IMG_TYPE = '商品图'
+          AND t3.user_id = #{userId}
+          AND t4.img_belong = t1.commodity_id
+          AND t4.img_order = 1
+          AND t4.img_type = '商品图'
     </select>
 
 
     <select id="queryByUserIdAndCommoditySpecsId" resultType="map">
-        SELECT  * FROM CART WHERE USER_ID = #{userId} AND commodity_specs_id = #{commoditySpecsId}
+        SELECT *
+        FROM CART
+        WHERE USER_ID = #{userId}
+          AND commodity_specs_id = #{commoditySpecsId}
     </select>
+
+
+    <insert id="doInsert">
+        INSERT INTO cart(user_id, commodity_specs_id, commodity_count)
+        VALUES (#{userId}, #{commoditySpecsId}, #{commodityCount});
+    </insert>
+
+    <update id="doUpdateCommodityCount">
+        UPDATE cart
+        SET commodity_count = commodity_count + #{commodityCount}
+        WHERE user_id = #{userId}
+          AND commodity_specs_id = #{commoditySpecsId}
+    </update>
+
+    <update id="doUpdateCartCount">
+        UPDATE cart
+        SET commodity_count = #{commodityCount}
+        WHERE user_id = #{userId}
+          AND commodity_specs_id = #{commoditySpecsId}
+    </update>
+
+    <update id="subCount">
+        UPDATE cart
+        SET commodity_count = commodity_count - 1
+        where user_id = #{userId}
+          AND commodity_specs_id = #{commoditySpecsId}
+    </update>
+
+    <update id="addCount">
+        UPDATE cart
+        SET commodity_count = commodity_count + 1
+        where user_id = #{userId}
+          AND commodity_specs_id = #{commoditySpecsId}
+    </update>
+
+
+
+
+
+    <select id="queryOrderFreightPrice" resultType="double" >
+        select IF( (sum(cart.commodity_count * commodity_specs_present_price) &lt; 1000), 10,0)
+        order_freight_price
+
+        from commodity_specs,
+        cart
+        where commodity_specs.commodity_specs_id = cart.commodity_specs_id
+        and cart_status != 5
+        and cart_status != 0
+        and user_id = #{userId}
+        and cart.commodity_specs_id in(
+        <foreach item="commoditySpecsId" collection="commoditySpecsId" separator=",">
+            #{commoditySpecsId}
+        </foreach>
+        )
+    </select>
+
+
+
+    <delete id="doDelete" parameterType="int">
+        DELETE FROM cart WHERE user_id = #{userId} AND commodity_specs_id IN
+            <foreach item="commoditySpecsId" collection="commoditySpecsId"
+                     open="(" separator="," close=")">
+                #{commoditySpecsId}
+            </foreach>
+
+    </delete>
 
 </mapper>

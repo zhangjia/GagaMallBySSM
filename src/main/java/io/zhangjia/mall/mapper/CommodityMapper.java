@@ -1,5 +1,7 @@
 package io.zhangjia.mall.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +9,7 @@ public interface CommodityMapper {
 
     List<Map<String, Object>> query(Map<String, Object> params);
 
-    List<Map<String, Object>> queryCommodityImgs(List<Map<String,Object>> commodities);
+//    List<Map<String, Object>> queryCommodityImgs(List<Map<String,Object>> commodities);
 
 
 
@@ -24,5 +26,8 @@ public interface CommodityMapper {
      * @param commoditySpecsId
      * @return
      */
-    int queryCommoditySpecsInventory(Integer commoditySpecsId);
+    Integer queryCommoditySpecsInventory(Integer commoditySpecsId);
+
+    Integer updateCommoditySpecs4InventoryAndSales(@Param("commoditySpecsId") Integer commoditySpecsId , @Param("commodityCount") Integer commodityCount);
+
 }

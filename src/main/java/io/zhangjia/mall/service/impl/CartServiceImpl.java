@@ -1,67 +1,71 @@
 package io.zhangjia.mall.service.impl;
 
 
+import io.zhangjia.mall.mapper.CartMapper;
+import io.zhangjia.mall.mapper.CommodityMapper;
 import io.zhangjia.mall.service.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Service("carService")
 public class CartServiceImpl implements CarService {
-  /*  private CartDao cartDao = new CartDaoImpl();
-    private SKUDao skuDao = new SKUDaoImpl();
-    private CommodityDao commodityDao = new CommodityDaoImpl();
+
+    @Autowired
+    private CartMapper cartMapper;
+
+    @Autowired
+    private CommodityMapper commodityMapper;
 
     @Override
-    public List<Map<String, Object>> getCarCommodities(String userId) {
-        Integer usersId = -1;
-        if (userId != null || "".equals(userId)) {
-            usersId = Integer.parseInt(userId);
-        }
-        return cartDao.queryByUserId(usersId);
-    }
+    public Map<String, Object> addCart(Integer userId, Integer commoditySpecsId, Integer commodityCount) {
 
-    @Override
-    public Map<String, Object> addCart(String userId, String SKUId, String commodityCount) {
-        Map<String, Object> param = new HashMap<>();
-        int uid = 0;
-        int sid = 0;
-        int count = 0;
+        Map<String, Object> params = new HashMap<>();
+
         Map<String, Object> map = new HashMap<>();
-        if (userId != null && !"".equals(userId) &&
-                SKUId != null && !"".equals(SKUId) &&
-                commodityCount != null && !"".equals(commodityCount)) {
-            uid = Integer.parseInt(userId);
-            sid = Integer.parseInt(SKUId);
-            count = Integer.parseInt(commodityCount);
-            param.put("userId", uid);
-            param.put("SKUId", sid);
-            param.put("commodityCount", count);
-        }
 
-        Map<String, Object> cart = cartDao.queryByUserIdAndSKUId(uid, sid);
+        params.put("userId", userId);
+        params.put("commoditySpecsId", commoditySpecsId);
+        params.put("commodityCount", commodityCount);
+
+
+        Map<String, Object> cart = cartMapper.queryByUserIdAndCommoditySpecsId(userId, commoditySpecsId);
         //仔细考虑一下，这里的判断为啥要加在Service里而不是DaoImpl里
-        int i = 0;
+        int i;
         if (cart == null) {
-            i = cartDao.doInsert(param);
+            i = cartMapper.doInsert(params);
         } else {
-            i = cartDao.doUpdateCommodityCount(param);
+            i = cartMapper.doUpdateCommodityCount(params);
         }
 
 
-
-            map.put("success",i == 1);
+        map.put("success", i == 1);
 
         return map;
+
     }
 
+
+
+      @Override
+      public List<Map<String, Object>> getCarCommodities(Integer userId) {
+          Map<String,Object> params = new HashMap<>();
+          System.out.println("userId = [" + userId + "]");
+          params.put("userId",userId);
+          return cartMapper.query(params);
+      }
+
+
+
     @Override
-    public boolean deleteCart(String userId, List<String> SKUId) {
+    public boolean deleteCart(Integer userId, Integer[] commoditySpecsId) {
         if (userId != null && !"".equals(userId)) {
-            System.out.println("SKUID" + SKUId);
-            boolean b = cartDao.doDelete(Integer.parseInt(userId), SKUId) == 1;
+            System.out.println("SKUID" + commoditySpecsId);
+            boolean b = cartMapper.doDelete(userId, commoditySpecsId) == 1;
             System.out.println("b = " + b);
             return b;
         }
@@ -69,73 +73,62 @@ public class CartServiceImpl implements CarService {
     }
 
     @Override
-    public Map<String, Object> updateCount(String action, String userId, String SKUId,String count) {
-        int uid = -1;
-        int sid = -1;
-        int ct = -1;
-        System.out.println("userId = " + userId);
-        System.out.println("SKUId = " + SKUId);
-        System.out.println("ct = " + count);
+    public Map<String, Object> updateCount(String action, Integer userId, Integer commoditySpecsId,Integer commodityCount) {
+
         Map<String, Object> map = new HashMap<>();
-        if (userId != null && !"".equals(userId) &&
-                SKUId != null && !"".equals(SKUId) && count != null && !"".equals(count)) {
-            uid = Integer.parseInt(userId);
-            sid = Integer.parseInt(SKUId);
-            ct = Integer.parseInt(count);
-            System.out.println("uid = " + uid);
-            System.out.println("sid = " + sid);
-            System.out.println("SKUIds = " + sid);
 
 
-思路整理：
-             * 先获取当前商品的库存
-             * 再获取当前商品在当前用户的购物车中数量
-             * 如果购物车中的数量+1 大于 库存，则失败
-             * 如果购物车中的数量-1 = 0 。则失败
-             *
+//思路整理：
+//             * 先获取当前商品的库存
+//             * 再获取当前商品在当前用户的购物车中数量
+//             * 如果购物车中的数量+1 大于 库存，则失败
+//             * 如果购物车中的数量-1 = 0 。则失败
+//             *
 
 
 //        获取当前商品的库存
-            int skuInventory = skuDao.querySKUInventory(sid);
+            Integer commoditySpecsInventory = commodityMapper.queryCommoditySpecsInventory(commoditySpecsId);
+
+        System.out.println("commoditySpecsInventory111 = " + commoditySpecsInventory);
 
 //        再获取当前商品在当前用户的购物车中数量
-
-            Map<String, Object> cartSKU = cartDao.queryByUserIdAndSKUId(uid, sid);
-            System.out.println("cartSKU = " + cartSKU);
-            System.out.println("cartSKU.get(\"COMMODITY_COUNT\")class = " + cartSKU.get("COMMODITY_COUNT").getClass());
-            int skuCount = ((BigDecimal) cartSKU.get("COMMODITY_COUNT")).intValue();
+        Map<String, Object> cartCommoditySpecs = cartMapper.queryByUserIdAndCommoditySpecsId(userId, commoditySpecsId);
+            System.out.println("cartCommoditySpecs = " + cartCommoditySpecs);
+//            System.out.println("cartCommoditySpecs.get(\"COMMODITY_COUNT\")class = " + cartCommoditySpecs.get("COMMODITY_COUNT").getClass());
+//            int commodityCountByCart = ((BigDecimal) cartCommoditySpecs.get("commodity_count")).intValue();
+        Integer commodityCountByCart = (Integer) cartCommoditySpecs.get("commodity_count");
 
             int i = 0;
             if (action.equals("add")) {
-                if (skuCount + 1 > skuInventory) {
+                if (commodityCountByCart + 1 > commoditySpecsInventory) {
                     map.put("error", "超出库存");
                 } else {
-                    i = cartDao.addCount(uid, sid);
+                    i = cartMapper.addCount(userId,commoditySpecsId);
                 }
 
             } else if (action.equals("input")) {
-                if (ct > skuInventory) {
+                if (commodityCount > commoditySpecsInventory) {
                     map.put("error", "超出库存");
                     Map<String,Object> m = new HashMap<>();
-                    m.put("commodityCount",skuInventory);
-                    m.put("userId",uid);
-                    m.put("SKUId",sid);
-                    cartDao.doUpdateCartCount(m);
-                    map.put("skuInventory",skuInventory);
-                    System.out.println(skuInventory);
+                    m.put("commodityCount",commoditySpecsInventory);
+                    m.put("userId",userId);
+                    m.put("commoditySpecsId",commoditySpecsId);
+                    cartMapper.doUpdateCartCount(m);
+                    map.put("commoditySpecsInventory",commoditySpecsInventory);
+                    System.out.println(commoditySpecsInventory);
                 } else {
                     Map<String,Object> m = new HashMap<>();
-                    m.put("commodityCount",ct);
-                    m.put("userId",uid);
-                    m.put("SKUId",sid);
-                    i = cartDao.doUpdateCartCount(m);
+                    m.put("commodityCount",commodityCount);
+                    m.put("userId",userId);
+                    m.put("commoditySpecsId",commoditySpecsId);
+                    i = cartMapper.doUpdateCartCount(m);
                     System.out.println("m" + m);
                 }
             } else {
-                if (skuCount - 1 == 0) {
+                if (commodityCountByCart - 1 == 0) {
                     map.put("error", "不能再少啦");
                 } else {
-                    i = cartDao.subCount(uid, sid);
+                    i = cartMapper.subCount(userId, commoditySpecsId);
                 }
 
             }
@@ -144,29 +137,23 @@ public class CartServiceImpl implements CarService {
             }
 
             return map;
-        } else {
-            return null;
-        }
+
 
     }
-
+/*
     @Override
-    public List<Map<String, Object>> getCarCommodities4Settlement(String userId,String[] commoditySKUIds) {
+    public List<Map<String, Object>> getCarCommodities4Settlement(String userId,String[] commoditycommoditySpecsId) {
         if(userId != null && !"".equals(userId)) {
-            int uid = Integer.parseInt(userId);
-            System.out.println("uid = " + uid);
-        return cartDao.queryCommodities4Settlement(uid,commoditySKUIds);
+            int userId = Integer.parseInt(userId);
+            System.out.println("userId = " + userId);
+        return cartMapper.queryCommodities4Settlement(userId,commoditycommoditySpecsId);
         } else {
             return null;
         }
     }
+*/
 
-    @Override
-    public Map<String, Object> getTotal(String userId, String[] commoditySKUIds) {
-        if(userId != null && !"".equals(userId)) {
-           return cartDao.queryTotal(Integer.parseInt(userId),commoditySKUIds);
-        } else {
-            return null;
-        }
-    }*/
+
+
+
 }

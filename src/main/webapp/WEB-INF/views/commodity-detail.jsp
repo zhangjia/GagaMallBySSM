@@ -96,7 +96,7 @@
             $(".add-cart").click(function () {
 
 
-                var sku = JSON.stringify(selectjson);
+                var commoditySpecsValue = JSON.stringify(selectjson);
                 var commodityCount = $(".jia-commodity-detail-num").val();
                 var length = $(".sku").length;
                 if ($(".sku dd.active").length != length) {
@@ -106,7 +106,7 @@
                         url: "${path}/addCart",
                         type: "get",
                         data: {
-                            SKU: sku,
+                            commoditySpecsValue: commoditySpecsValue,
                             commodityCount: commodityCount
                         },
                         success: function (res) {

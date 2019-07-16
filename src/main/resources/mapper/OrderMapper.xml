@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.zhangjia.mall.mapper.OrderMapper">
+
+    <select id="queryCommodities4Settlement" resultType="map" >
+        SELECT *
+        FROM cart,
+        commodity_specs,
+        commodity,
+        img
+        WHERE img.img_type = '商品图'
+        AND img_belong = commodity.commodity_id
+        AND img_order = 1
+        AND cart_status != 0
+        AND cart_status != 5
+        AND commodity_specs.commodity_id = commodity.commodity_id
+        AND cart.user_id = #{userId}
+        AND cart.commodity_specs_id = commodity_specs.commodity_specs_id
+        AND cart.commodity_specs_id IN (
+#  这里不能写collection=list
+        <foreach item="commoditySpecsId"  collection="commoditySpecsId"  separator=",">
+           #{commoditySpecsId}
+        </foreach>
+        )
+
+    </select>
+
+
+
+
+    <select id="queryByUserId" resultType="map">
+        SELECT * FROM orders WHERE user_id = #{userId} AND order_status != 0  ORDER BY order_create_time DESC;
+    </select>
+
+
+
+    <select id="queryCommodityByOrderId" resultType="map">
+        SELECT t2.* FROM ORDERS t1,order_detail t2
+    WHERE t1.ORDER_ID = t2.ORDER_ID AND t1.ORDER_ID = ?
+   AND t1.ORDER_STATUS != 0 AND t2.order_detail_status !=0;
+    </select>
+
+
+    <select id="queryOrderPrice" resultType="double">
+        SELECT t2.order_freight_price + t1.price sumprice
+        FROM (SELECT order_id,
+                     sum(order_detail_commodity_price * order_detail_commodity_count - order_detail_discounts_price) price
+              FROM order_detail
+              WHERE order_detail_status != 0
+              GROUP BY order_id
+              HAVING order_id = #{orderid}) t1,
+             orders t2
+        WHERE t1.order_id = t2.order_id
+          AND t2.order_status != 0
+    </select>
+
+
+    <select id="queryOrderOriginalPrice" resultType="double">
+        SELECT order_id, SUM(order_detail_commodity_price * order_detail_commodity_count) original_price
+        FROM order_detail
+        WHERE order_detail_status != 0
+        GROUP BY order_id
+        HAVING order_id = #{orderId}
+    </select>
+
+
+    <select id="queryOrderDiscountPrice" resultType="double">
+        SELECT order_id, SUM(order_detail_discounts_price) discount_price
+        FROM order_detail
+        WHERE order_detail_status != 0
+        GROUP BY order_id
+        HAVING order_id = #{orderId}
+    </select>
+
+
+
+
+
+    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="bookId">
+        INSERT INTO orders (user_id, address_id, order_logistics,
+                            order_freight_price, order_pay_type, order_note, order_status)
+        VALUES (#{userId},#{addressId},#{orderLogistics},#{orderFreightPrice},
+                #{orderPayType},#{orderNote},#{orderStatus});
+
+    </insert>
+
+
+    <insert id="doInsert4Detail">
+        INSERT INTO order_detail( order_id, commodity_specs_id, order_detail_commodity_name,
+                                  order_detail_commodity_specs_value,
+                                  order_detail_commodity_img,
+                                  order_detail_commodity_price,
+                                  order_detail_discounts_price,
+                                  order_detail_commodity_count)
+        VALUES ( #{order_id},#{commodity_specs_id},#{commodity_name},
+                 #{commodity_specs_value},
+                 #{img_url},
+                 #{commodity_specs_present_price}, #{order_detail_discount_price},
+                #{commodity_count})
+    </insert>
+
+    <update id="doUpdateByPay" >
+        UPDATE orders
+        SET order_pay_type = #{orderPayType},
+            order_status   = 1,
+            order_logistics='未发货'
+        WHERE user_id = #{userId}
+          AND order_id = #{orderId}
+
+    </update>
+
+
+    <update id="doUpdateByDeliverGoods" >
+        UPDATE orders
+        SET order_logistics = #{orderLogistics},
+            order_status    = 2
+        WHERE order_id = #{orderId}
+
+    </update>
+
+
+    <select id="queryTotal" resultType="map">
+        SELECT sum(cart.commodity_count) sum_commodity_count,
+        sum(cart.commodity_count * commodity_specs.commodity_specs_present_price) sum_commodity_present_price,
+        sum(cart.commodity_count * commodity_specs.commodity_specs_present_price) + #{orderFreightPrice} sum_commodity_pay_price
+        FROM commodity_specs,
+        cart
+        WHERE commodity_specs.commodity_specs_id = cart.commodity_specs_id
+        AND cart_status != 5
+        AND cart_status != 0
+        AND user_id = #{userId}
+        AND cart.commodity_specs_id IN(
+        <foreach item="commoditySpecsId" collection="commoditySpecsId" separator=",">
+            #{commoditySpecsId}
+        </foreach>
+        )
+
+    </select>
+
+</mapper>

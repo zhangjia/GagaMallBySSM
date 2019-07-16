@@ -126,16 +126,16 @@
                 var thiss = $(this);
                 layer.confirm('确定要删除吗?', {icon: 3, title: '嘎嘎警告'}, function (index) {
                     //获取要删除的商品ID
-                    var SKUIds = [];
+                    var commoditySpecsId = [];
                     var SKUId = thiss.parent().parent().children(":first").children(":first").children("input").val();
-                    SKUIds.push(SKUId);
+                    commoditySpecsId.push(SKUId);
                     //获取用于remove的元素
                     var remove = thiss.parent().parent();
                     $.ajax({
                         url: "${path}/cart/delete",
                         type: "get",
                         data: {
-                            SKUIds: SKUIds
+                            commoditySpecsId: commoditySpecsId
                         },
                         traditional: true,
                         success: function (res) {
@@ -173,10 +173,10 @@
                     layer.confirm('确定要删除吗?', {icon: 3, title: '嘎嘎警告'}, function (index) {
                         //获取要删除的商品ID
 
-                        var SKUIds = [];
+                        var commoditySpecsId = [];
                         // layer.alert( $(".th input[type='checkbox']:checked").length);
                         $(".th input[type='checkbox']:checked").each(function (j) {
-                            SKUIds.push($(this).val())
+                            commoditySpecsId.push($(this).val())
                             indexs = $(this).parents('.th').index() - 1;
                             $(".th").eq(indexs).remove();
                             if ($(".th").length == 0) {
@@ -184,7 +184,7 @@
                             }
                         })
 
-                        console.log(SKUIds)
+                        console.log(commoditySpecsId)
 
 
                         var SKUId = thiss.parent().parent().children(":first").children(":first").children("input").val();
@@ -194,7 +194,7 @@
                             url: "${path}/cart/delete",
                             type: "get",
                             data: {
-                                SKUIds: SKUIds
+                                commoditySpecsId: commoditySpecsId
                             },
                             traditional: true,
                             success: function (res) {
@@ -225,7 +225,7 @@
             /*-------------------------------------------------更改商品数量开始-------------------------------------------------*/
 
             $(".cart-add").click(function () {
-                var SKUId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
+                var commoditySpecsId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
                 var action = "add";
                 var thiss = $(this);
 
@@ -233,9 +233,9 @@
                     url: "${path}/updateCount",
                     type: "get",
                     data: {
-                        SKUId: SKUId,
+                        commoditySpecsId: commoditySpecsId,
                         action: action,
-                        count:1
+                        commodityCount:1
                     },
                     success: function (res) {
                         if (res.isLogin === false) {
@@ -266,16 +266,16 @@
 
 
            $(".cart-sub").click(function () {
-                var SKUId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
+                var commoditySpecsId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
                 var action = "sub";
                 var thiss = $(this);
                 $.ajax({
                     url: "${path}/updateCount",
                     type: "get",
                     data: {
-                        SKUId: SKUId,
+                        commoditySpecsId: commoditySpecsId,
                         action: action,
-                        count:1
+                        commodityCount:1
                     },
                     success: function (res) {
                         if (res.isLogin === false) {
@@ -306,20 +306,22 @@
 
 
             $(".cart-num").each(function () {
-               $(this).blur(function () {
-                   var count = $(this).val();
+               $(this).keyup(function () {
+                   var commodityCount = $(this).val();
                    var thiss = $(this);
                    var action = 'input';
-                   var SKUId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
+                   var commoditySpecsId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
+
                    $.ajax({
                        url: "${path}/updateCount",
                        type: "get",
                        data: {
-                           SKUId: SKUId,
+                           commoditySpecsId: commoditySpecsId,
                            action: action,
-                           count:count,
+                           commodityCount:commodityCount,
                        },
                        success: function (res) {
+                           console.log(res)
                            if (res.isLogin === false) {
 
                                location = "${path}/login?uri=${path}/cart";
@@ -336,8 +338,12 @@
                                    jisuan();
 
                                } else {
-                                   layer.msg(res.error)
-                                   $(thiss).val(res.skuInventory);
+
+                                   layer.tips('超出库存，已经为您更改为最大库存', thiss, {
+                                       tips: [1, '#3595CC'],
+                                       time: 1500
+                                   });
+                                   $(thiss).val(res.commoditySpecsInventory);
                                }
                            }
 
@@ -348,52 +354,52 @@
                });
             });
             //------------------------------------------------------------------------------------------------------------
-            $(".cart-num").each(function () {
+            <%--$(".cart-num").each(function () {--%>
 
-                    var count = $(this).val();
-                    var thiss = $(this);
-                    var action = 'input';
-                    var SKUId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
-                    $.ajax({
-                        url: "${path}/updateCount",
-                        type: "get",
-                        data: {
-                            SKUId: SKUId,
-                            action: action,
-                            count:count,
-                        },
-                        success: function (res) {
-                            if (res.isLogin === false) {
+            <%--        var commodityCount = $(this).val();--%>
+            <%--        var thiss = $(this);--%>
+            <%--        var action = 'input';--%>
+            <%--        var commoditySpecsId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();--%>
+            <%--        $.ajax({--%>
+            <%--            url: "${path}/updateCount",--%>
+            <%--            type: "get",--%>
+            <%--            data: {--%>
+            <%--                commoditySpecsId: commoditySpecsId,--%>
+            <%--                action: action,--%>
+            <%--                commodityCount:commodityCount,--%>
+            <%--            },--%>
+            <%--            success: function (res) {--%>
+            <%--                if (res.isLogin === false) {--%>
 
-                                location = "${path}/login?uri=${path}/cart";
-                            } else {
-                                if (res.success) {
-                                    var nowCartCount = $(thiss).val();
-                                    console.log(nowCartCount)
-                                    // $(thiss).siblings("input").val(++nowCartCount);
-                                    console.log()
-                                    var price = $(thiss).parent().parent().siblings(".cart-price").children("span").text();
+            <%--                    location = "${path}/login?uri=${path}/cart";--%>
+            <%--                } else {--%>
+            <%--                    if (res.success) {--%>
+            <%--                        var nowCartCount = $(thiss).val();--%>
+            <%--                        console.log(nowCartCount)--%>
+            <%--                        // $(thiss).siblings("input").val(++nowCartCount);--%>
+            <%--                        console.log()--%>
+            <%--                        var price = $(thiss).parent().parent().siblings(".cart-price").children("span").text();--%>
 
-                                    var allPrice = floatObj.multiply(parseFloat(price), nowCartCount);
-                                    $(thiss).parent().parent().siblings(".sAll").children("span").text(allPrice);
-                                    jisuan();
+            <%--                        var allPrice = floatObj.multiply(parseFloat(price), nowCartCount);--%>
+            <%--                        $(thiss).parent().parent().siblings(".sAll").children("span").text(allPrice);--%>
+            <%--                        jisuan();--%>
 
-                                } else {
+            <%--                    } else {--%>
 
-                                    layer.tips('超出库存，已经为您更改为最大库存', thiss, {
-                                        tips: [1, '#3595CC'],
-                                        time: 1500
-                                    });
-                                    $(thiss).val(res.skuInventory);
-                                }
-                            }
+            <%--                        layer.tips('超出库存，已经为您更改为最大库存', thiss, {--%>
+            <%--                            tips: [1, '#3595CC'],--%>
+            <%--                            time: 1500--%>
+            <%--                        });--%>
+            <%--                        $(thiss).val(res.commoditySpecsInventory);--%>
+            <%--                    }--%>
+            <%--                }--%>
 
 
 
-                        }
-                    });
+            <%--            }--%>
+            <%--        });--%>
 
-            });
+            <%--});--%>
 
             /*-------------------------------------------------更改商品数量结束-------------------------------------------------*/
             var floatObj = function () {
@@ -513,7 +519,7 @@
                    layer.msg("请选择商品")
                } else {
                    checkedCommoditySKU.each(function () {
-                       url+="SKUIds=" + this.value + "&";
+                       url+="commoditySpecsId=" + this.value + "&";
                    });
                    console.log(url);
                    location=url;
@@ -556,41 +562,41 @@
         </div>
         <c:forEach items="${requestScope.commodities}" var="commodity">
 
-            <c:if test="${commodity.SKU_INVENTORY > 0}">
+            <c:if test="${commodity.commodity_specs_inventor > 0}">
                 <div class="th">
                     <div class="pro clearfix">
                         <label class="fl">
-                            <input class="cart-sku-id" type="checkbox" value="${commodity.SKU_ID}"/>
+                            <input class="cart-sku-id" type="checkbox" value="${commodity.commodity_specs_id}"/>
                             <span></span>
                         </label>
                         <a class="fl" href="#">
                             <dl class="clearfix">
-                                <dt class="fl"><img src="${commodity.IMG_URL}" class="cart-commodity-img"></dt>
+                                <dt class="fl"><img src="${commodity.img_url}" class="cart-commodity-img"></dt>
                                 <dd class="fl">
-                                    <p class="cart-commodity-name">${commodity.COMMODITY_NAME}</p>
+                                    <p class="cart-commodity-name">${commodity.commodity_name}</p>
                                     <p>
-                                            ${fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(commodity.SKU_VALUE, '{', ''),'}' ,'' ),'"' , ''),',' ,'<br />' ),':' ,'：    ' )}
+                                            ${fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(commodity.commodity_specs_value, '{', ''),'}' ,'' ),'"' , ''),',' ,'<br />' ),':' ,'：    ' )}
                                                     </p>
                                             <%--										<p>白色瓷瓶+白色串枚</p>--%>
                                 </dd>
                             </dl>
                         </a>
                     </div>
-                    <div class="cart-price">￥<span>${commodity.SKU_PRESENT_PRICE}</span></div>
+                    <div class="cart-price">￥<span>${commodity.commodity_specs_present_price}</span></div>
                     <div class="number">
                         <p class="num clearfix">
                             <button type="button" class="layui-btn layui-btn-primary layui-btn layui-btn-xs cart-sub">
                                 <i class="layui-icon">&#xe603;</i>
                             </button>
 
-                            <input type="number" value="${commodity.COMMODITY_COUNT}" autocomplete="off"
+                            <input type="number" value="${commodity.commodity_count}" autocomplete="off"
                                    class="cart-num" style="text-align:center" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
                             <button type="button" class="layui-btn layui-btn-primary layui-btn layui-btn-xs cart-add">
                                 <i class="layui-icon">&#xe602;</i>
                             </button>
                         </p>
                     </div>
-                    <div class="price sAll">￥<span>${commodity.SKU_PRESENT_PRICE * commodity.COMMODITY_COUNT}</span>
+                    <div class="price sAll">￥<span>${commodity.commodity_specs_present_price * commodity.commodity_count}</span>
                     </div>
                         <%--                    正常商品删除--%>
                     <div class="price"><a class="cart-del" href="javascript:;">删除</a></div>
@@ -629,7 +635,7 @@
         <h4>失效商品</h4>
         <c:forEach items="${requestScope.commodities}" var="commodity">
 
-            <c:if test="${commodity.SKU_INVENTORY <= 0}">
+            <c:if test="${commodity.commodity_specs_inventor <= 0}">
 
                 <hr/>
                 <%--库存不足--%>
@@ -641,18 +647,18 @@
                         </label>
                         <a class="fl" href="#">
                             <dl class="clearfix">
-                                <dt class="fl"><img src="${commodity.IMG_URL}" class="cart-commodity-img"></dt>
+                                <dt class="fl"><img src="${commodity.img_url}" class="cart-commodity-img"></dt>
                                 <dd class="fl">
-                                    <p class="cart-commodity-name cart-understock">${commodity.COMMODITY_NAME}</p>
+                                    <p class="cart-commodity-name cart-understock">${commodity.commodity_name}</p>
                                     <p>
-                                            ${fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(commodity.SKU_VALUE, '{', ''),'}' ,'' ),'"' , ''),',' ,'<br />' ),':' ,'：    ' )}
+                                            ${fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(commodity.commodity_specs_value, '{', ''),'}' ,'' ),'"' , ''),',' ,'<br />' ),':' ,'：    ' )}
                                                     </p>
                                             <%--										<p>白色瓷瓶+白色串枚</p>--%>
                                 </dd>
                             </dl>
                         </a>
                     </div>
-                    <div class="sku-price">￥${commodity.SKU_PRESENT_PRICE}</div>
+                    <div class="sku-price">￥${commodity.commodity_specs_present_price}</div>
                     <div class="number">
                         <p class="num clearfix">
                             <img class="fl sub" src="${path}/static/img/temp/sub.jpg">
@@ -660,7 +666,7 @@
                             <img class="fl add" src="${path}/static/img/temp/add.jpg">
                         </p>
                     </div>
-                    <div class="price sAll">￥${commodity.SKU_PRESENT_PRICE * commodity.COMMODITY_COUNT} </div>
+                    <div class="price sAll">￥${commodity.commodity_specs_present_price * commodity.commodity_count} </div>
                         <%--							<div class="price"><a class="del cart-del" href="#2">删除</a></div>--%>
                         <%--                    失效删除--%>
                     <div class="price"><a class="cart-del" href="#2">删除</a></div>

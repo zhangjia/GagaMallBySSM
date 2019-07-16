@@ -53,8 +53,6 @@ public class CommodityController {
         List<Map<String,Object>> commodities = commodityService.query(commodityId,
                 commodityName, level1MenuId,level2MenuId,order,page);
         model.addAttribute("commodities",commodities);
-//        System.out.println("commodities = " + commodities);
-//        System.out.println("commoditiesClass = " + commodities.getClass());
         if(commodities instanceof Page){
             Page productPage = (Page) commodities;
             System.out.println("CommodityController.list" + JSON.toJSONString(productPage));
@@ -104,7 +102,7 @@ public class CommodityController {
         System.out.println("action = [" + action + "], commoditySpecsId = [" + commoditySpecsId + "], count = [" + count + "], val = [" + val + "], request = [" + request + "]");
         HttpSession session = request.getSession();
         Map<String,Object> user =   (Map<String,Object>)session.getAttribute("user");
-        Integer userId = (Integer)user.get("userId");
+        Integer userId = (Integer)user.get("user_id");
 
         Map<String, Object> stringObjectMap = commodityService.updateCount2CommodityDetail(action, userId, commoditySpecsId,count,val);
 

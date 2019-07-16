@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.zhangjia.mall.mapper.AddressMapper">
+
+    <select id="queryByUserId" parameterType="int" resultType="map">
+        SELECT *
+        FROM address
+        WHERE address_status != 0
+          AND user_id = #{userId}
+        ORDER BY address_status DESC;
+    </select>
+
+
+
+    <insert id="doInsert">
+        INSERT INTO address(user_id, address_name, province, city,
+                            district, county, address_detail, address_postcode, address_tel)
+        VALUES (#{usre_id}, #{usre_id}, #{usre_id}, #{usre_id}, #{usre_id}, #{usre_id},
+                #{usre_id}, #{usre_id}, #{usre_id});
+    </insert>
+
+
+
+    <select id="queryByAddressId" resultType="map">
+        SELECT * FROM address WHERE address_id = #{addressId} AND address_status != 0
+    </select>
+
+
+    <update id="updateAddressStatus">
+        UPDATE address SET address_status = #{addressStatus} WHERE address_id = #{addressId} AND USER_ID= #{userId}
+    </update>
+
+
+    <delete id="cancelDefaultAddress" >
+        UPDATE address SET address_status = 1 WHERE address_status = 2 AND user_id = #{userId}
+    </delete>
+
+</mapper>

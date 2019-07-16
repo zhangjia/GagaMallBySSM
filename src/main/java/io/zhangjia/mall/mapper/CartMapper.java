@@ -8,17 +8,18 @@ import java.util.Map;
 public interface CartMapper {
 //    List<Map<String,Object>> queryByUserId(Integer userId);
 //    int doInsert(Map<String, Object> param);
-//    Map<String,Object> queryByUserIdAndSKUId(Integer userId, Integer SKUId);
+//    Map<String,Object> queryByUserIdAndcommoditySpecsId(Integer userId, Integer commoditySpecsId);
     int doUpdateCommodityCount(Map<String, Object> param);
     int doUpdateCartCount(Map<String, Object> param);
-    int doDelete(Integer userId, List<String> SKUId);
+    int doDelete(@Param("userId") Integer userId, @Param("commoditySpecsId") Integer[] commoditySpecsId);
 //
-    int addCount(Integer userId, Integer SKUId);
-    int subCount(Integer userId, Integer SKUId);
-    List<Map<String,Object>> queryCommodities4Settlement(Integer userId, String[] CommoditySKUIds);
+    int addCount(@Param("userId") Integer userId, @Param("commoditySpecsId") Integer commoditySpecsId);
+    int subCount(@Param("userId") Integer userId,@Param("commoditySpecsId")  Integer commoditySpecsId);
+//    List<Map<String,Object>> queryCommodities4Settlement(Integer userId, Integer[] commoditySpecsId);
 //
-    Map<String,Object> queryTotal(Integer userId, String[] commoditySKUIds);
-    Map<String,Object> querylogistics(Integer userId, String[] commoditySKUIds);
+//    Map<String,Object> queryTotal(@Param("orderFreightPrice")Double orderFreightPrice ,@Param("userId") Integer userId, @Param("commoditySpecsId") Integer[] commoditySpecsId);
+//    Map<String,Object> queryOrderFreightPrice(Integer userId, Integer[] commoditySpecsId);
+    Double queryOrderFreightPrice(@Param("userId") Integer userId, @Param("commoditySpecsId") Integer[] commoditySpecsId);
 
 
     List<Map<String,Object>> query(Map<String,Object> params);

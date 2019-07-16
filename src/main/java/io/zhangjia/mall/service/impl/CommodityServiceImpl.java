@@ -80,19 +80,19 @@ public class CommodityServiceImpl implements CommodityService {
         Integer commoditySpecsInventory = commodityMapper.queryCommoditySpecsInventory(commoditySpecsId);
 
 //        再获取当前商品在当前用户的购物车中数量
-        int commoditySpecsCount;
+        int commodityCount;
         Map<String, Object> cartCommoditySpecs = cartMapper.queryByUserIdAndCommoditySpecsId(userId, commoditySpecsId);
         if (cartCommoditySpecs == null) {
             map.put("nowInventory", commoditySpecsInventory);
-            commoditySpecsCount = 0;
+            commodityCount = 0;
         } else {
             System.out.println(cartCommoditySpecs);
             map.put("nowInventory", commoditySpecsInventory);
-            commoditySpecsCount = ((BigDecimal) cartCommoditySpecs.get("COMMODITY_COUNT")).intValue();
+            commodityCount = ((BigDecimal) cartCommoditySpecs.get("COMMODITY_COUNT")).intValue();
 
         }
         if (action.equals("add") || action.equals("input")) {
-            System.out.println("Sku" + commoditySpecsCount + "val" + vals + "ct" + count + "commoditySpecsInventory" + commoditySpecsInventory);
+            System.out.println("Sku" + commodityCount + "val" + vals + "ct" + count + "commoditySpecsInventory" + commoditySpecsInventory);
             if ((vals + count) > commoditySpecsInventory) {
                 System.out.println("库存吵了");
                 map.put("error", "超出库存");
@@ -104,7 +104,7 @@ public class CommodityServiceImpl implements CommodityService {
 
         //如果是null，说明购物车里没有
 
-        System.out.println("action = " + action + "--" + "userId = " + userId + "--" + "count = " + count + "--" + commoditySpecsCount + "--" + commoditySpecsId);
+        System.out.println("action = " + action + "--" + "userId = " + userId + "--" + "count = " + count + "--" + commodityCount + "--" + commoditySpecsId);
         System.out.println();
 
 

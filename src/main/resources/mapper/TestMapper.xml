@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.zhangjia.mall.mapper.TestMapper">
+
+    <select id="queryUserId"  resultMap="userIdResultMap">
+        SELECT user_id FROM  users WHERE  user_id = 1;
+    </select>
+
+    <resultMap id="userIdResultMap" type="map">  <!--map就是每个属性的值-->
+
+        <id column="user_id" property="ids"/> <!--用于设置主键字段与领域模型属性的映射关系-->
+
+<!-- result元素 ，用于设置普通字段与领域模型属性的映射关系-->
+<!--        <collection property="ids" column="user_id" 和下面的结果不同-->
+        <collection property="id" column="user_id"
+                     ofType="map" select="queryById"/>
+    </resultMap>
+
+    <select id="queryById" resultType="map" >
+        SELECT * FROM  cart WHERE  cart.user_id = #{userId};
+    </select>
+
+</mapper>
