@@ -58,13 +58,13 @@ public class MoneyController {
             } else {
 
                 Double money = (Double)orderService.getOrder(userId, Integer.parseInt(session.getAttribute("order_id").toString())).get("order_price");
-                System.out.println("直接下单页的orderId是 = " + session.getAttribute("orderId"));
+                System.out.println("直接下单页的orderId是 = " + session.getAttribute("order_id"));
                 if(payType.equals("余额")){
                     result  = walletService.orderPayByBalance(userId, money, Integer.parseInt(session.getAttribute("order_id").toString()));
                 }
 
                 if(payType.equals("白条")){
-                    result  = iouService.orderPayByIou(userId, money,Integer.parseInt(session.getAttribute("orderId").toString()));
+                    result  = iouService.orderPayByIou(userId, money,Integer.parseInt(session.getAttribute("order_id").toString()));
                 }
 
             }

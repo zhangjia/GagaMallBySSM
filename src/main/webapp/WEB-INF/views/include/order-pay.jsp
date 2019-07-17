@@ -55,11 +55,11 @@
     <form class="layui-form" action="">
         <div class="layui-tab-item layui-show" >
             <span style="margin-left: 50px;">订单金额</span>
-            <c:if test="${requestScope.total.SUM_COMMODITY_PAY_PRICE == null}">
+            <c:if test="${requestScope.total.sum_commodity_pay_price == null}">
                 <input value="" readonly="readonly" style="width:200px; display: inline-block;margin-top: 20px;margin-left:20px" type="number"  name="payMoney" lay-verify="title" autocomplete="off" placeholder="" class="layui-input jia-order-pay-view-price ">
             </c:if>
-            <c:if test="${requestScope.total.SUM_COMMODITY_PAY_PRICE != null}">
-                <input value="${requestScope.total.SUM_COMMODITY_PAY_PRICE}" readonly="readonly" style="width:200px; display: inline-block;margin-top: 20px;margin-left:20px" type="number"  name="payMoney" lay-verify="title" autocomplete="off" placeholder="" class="layui-input ">
+            <c:if test="${requestScope.total.sum_commodity_pay_price != null}">
+                <input value="${requestScope.total.sum_commodity_pay_price}" readonly="readonly" style="width:200px; display: inline-block;margin-top: 20px;margin-left:20px" type="number"  name="payMoney" lay-verify="title" autocomplete="off" placeholder="" class="layui-input ">
             </c:if>
             <span style="font-size: 20px;margin-left: 10px;">元</span>
             <br/>
@@ -118,17 +118,17 @@
                 console.log(data.field)
 
 
-                console.log(${requestScope.orderId})
+                console.log(${requestScope.order_id})
                 var locations;
                 var orderId;
                 var payMoney;
-                if(${requestScope.total.SUM_COMMODITY_PAY_PRICE == null}) {
+                if(${requestScope.total.sum_commodity_pay_price == null}) {
                     locations ="订单页";
                     orderId = data.field.orderId;
 
                 } else {
-                    orderId = "${sessionScope.orderId}";
-                    payMoney:"${requestScope.total.SUM_COMMODITY_PAY_PRICE}";
+                    orderId = "${sessionScope.order_id}";
+                    payMoney:"${requestScope.total.sum_commodity_pay_price}";
                 }
 
                 console.log("aa")
