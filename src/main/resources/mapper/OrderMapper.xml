@@ -39,7 +39,7 @@
 
     <select id="queryCommodityByOrderId" resultType="map">
         SELECT t2.* FROM ORDERS t1,order_detail t2
-    WHERE t1.ORDER_ID = t2.ORDER_ID AND t1.ORDER_ID = ?
+    WHERE t1.ORDER_ID = t2.ORDER_ID AND t1.ORDER_ID = #{orderId}
    AND t1.ORDER_STATUS != 0 AND t2.order_detail_status !=0;
     </select>
 
@@ -104,7 +104,7 @@
 
     <update id="doUpdateByPay" >
         UPDATE orders
-        SET order_pay_type = #{orderPayType},
+        SET order_pay_type = #{payType},
             order_status   = 1,
             order_logistics='未发货'
         WHERE user_id = #{userId}

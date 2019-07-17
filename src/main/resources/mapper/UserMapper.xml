@@ -45,4 +45,7 @@
         #{userName})
     </insert>
 
+    <select id="isPayPasswordEmpty" resultType="map" >
+        SELECT * FROM  users WHERE user_id = #{userId} AND user_pay_password IS NOT NULL
+    </select>
 </mapper>

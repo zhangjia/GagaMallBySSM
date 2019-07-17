@@ -43,23 +43,13 @@ public class PersonalController {
         return "personal-wallet";
     }
 
-    @GetMapping("/orders")
-
-    public String orders() {
-        return "personal-orders";
-    }
-
-    @GetMapping("/order-detail")
-    public String orderDetail() {
-        return "personal-order-detail";
-    }
 
 
     @PostMapping(value = "/wallet",produces = "application/json;charset=utf-8")
     @ResponseBody
     public String doWallet(HttpSession session) {
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
-        Integer userId = (Integer) user.get("user_id");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
         Map<String, Object> userWallet = walletService.getUserWallet(userId);
         System.out.println("PersonalController.doWallet" + JSON.toJSONString(userWallet));
         return JSON.toJSONString(userWallet);
@@ -70,7 +60,7 @@ public class PersonalController {
     @ResponseBody
     public String doIou(HttpSession session) {
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
-        Integer userId = (Integer) user.get("user_id");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
         Map<String, Object> stringObjectMap = iouService.queryUserIou(userId);
         if(stringObjectMap != null){
             stringObjectMap.put("success",true);
@@ -84,7 +74,7 @@ public class PersonalController {
     @ResponseBody
     public String doIou(Double money, HttpSession session) {
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
-        Integer userId = (Integer) user.get("user_id");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
 
 
         int recharge = walletService.recharge(userId, money);

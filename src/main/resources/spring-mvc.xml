@@ -36,16 +36,29 @@
         </mvc:interceptor>
 
         <mvc:interceptor>
+            <mvc:mapping path="/personal"/>
+            <mvc:mapping path="/cart"/>
+            <mvc:mapping path="/updateCount2CommodityDetail"/>
+            <mvc:mapping path="/addCart"/>
+            <mvc:mapping path="/settlement"/>
+            <mvc:mapping path="/addressManage"/>
+            <mvc:mapping path="/userInfo"/>
+            <mvc:mapping path="/wallet"/>
+            <mvc:mapping path="/orders"/>
+            <mvc:mapping path="/order-detail"/>
+            <mvc:mapping path="/recharge"/>
 
+<!--            <mvc:mapping path="/**"/>-->
 
-            <mvc:mapping path="/**"/>
+<!--            <mvc:exclude-mapping path="/index"/>-->
 
-            <mvc:exclude-mapping path="/index"/>
-            <mvc:exclude-mapping path="/static/**"/>
-            <mvc:exclude-mapping path="/login"/>
-            <mvc:exclude-mapping path="/commodities"/>
-            <mvc:exclude-mapping path="/commodityDetail"/>
             <ref bean="loginInterceptor" />
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/settlement"/>
+            <mvc:mapping path="/addressManage"/>
+            <ref bean="addressInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>

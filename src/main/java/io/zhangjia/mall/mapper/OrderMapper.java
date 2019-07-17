@@ -19,7 +19,7 @@ public interface OrderMapper {
 
     int doInsert4Detail(Map<String, Object> param);
 
-    int doUpdateByPay(String payType ,Integer userId, Integer orderId);
+    int doUpdateByPay(@Param("payType") String payType ,@Param("userId")Integer userId, @Param("orderId")Integer orderId);
     int doUpdateByDeliverGoods( Integer orderId,String logistics);
 
     Map<String,Object> queryTotal(@Param("orderFreightPrice")Double orderFreightPrice ,@Param("userId") Integer userId, @Param("commoditySpecsId") Integer[] commoditySpecsId);

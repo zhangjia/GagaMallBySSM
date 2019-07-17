@@ -35,7 +35,7 @@
 					$(".chak").hide();
 					$(".xg-pay").hide();
 				});
-				$(".jia-user-paypassword-save").click(function(){
+				$(".jia-user-pay-password-save").click(function(){
 					$(".mask").hide();
 					$(".bj").hide();
 					$(".xg").hide();
@@ -283,7 +283,7 @@ placeholder="<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DAT
 			<div class="layui-form-item">
 				<label class="layui-form-label">支付密码</label>
 				<div class="layui-input-block">
-					<input type="text" name="paypassword" required  lay-verify="required" placeholder="请输入支付密码" autocomplete="off" class="layui-input">
+					<input type="text" name="pay-password" required  lay-verify="required" placeholder="请输入支付密码" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
@@ -292,7 +292,7 @@ placeholder="<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DAT
 
 			<div class="layui-form-item">
 				<div class="layui-input-block">
-					<button class="layui-btn jia-user-paypassword-save" lay-submit  lay-filter="jia-edit-user-paypassword">保存</button>
+					<button class="layui-btn jia-user-pay-password-save" lay-submit  lay-filter="jia-edit-user-pay-password">保存</button>
 					<button type="button" class="layui-btn layui-btn-primary jia-btn-cancle">取消</button>
 				</div>
 			</div>
@@ -304,14 +304,14 @@ placeholder="<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DAT
 				var form = layui.form;
 
 				//监听提交
-				form.on('submit(jia-edit-user-paypassword)', function(data){
+				form.on('submit(jia-edit-user-pay-password)', function(data){
 
 					console.log(data.field)
 					$.ajax({
 						url:"${path}/editUserPayPassword",
 						type:"get",
 						data:{
-							paypassword:data.field.paypassword
+							pay-password:data.field.pay-password
 						},
 						success:function (res) {
 							if(res.success === true){

@@ -58,7 +58,8 @@
     <div class="wrapper clearfix">
         <div class="zuo fl">
 
-            <jsp:include page="include/personal-left.jsp" />
+<%--            <jsp:include page="include/personal-left.jsp" />--%>
+            <%@include file="include/personal-left.jsp"%>
         </div>
         <div class="you fl">
             <div class="my clearfix">
@@ -82,46 +83,49 @@
                   <p class="one"></p>
                   <div class="word clearfix">
                       <ul class="fl clearfix">
-                          <li><fmt:formatDate value="${order.ORDER_TIME}" type="both" /></li>
-                          <li>${order.ADDRESS.ADDRESS_NAME}</li>
-                          <li class="order-num">订单号:<span>${order.ORDER_ID}</span></li>
+                          <li><fmt:formatDate value="${order.order_create_time}" type="both" /></li>
+                          <li>${order.address.address_name}</li>
+                          <li class="order-num">订单号:<span>${order.order_id}</span></li>
 
-                          <li>${order.ORDER_PAY_TYPE}</li>
+                          <li>${order.order_pay_type}</li>
                       </ul>
-                      <p class="fr">订单金额：<span>${order.ORDERPRICE}</span>元</p>
+                      <p class="fr">订单金额：<span>${order.order_price}</span>元</p>
 
                   </div>
-                  <c:forEach items="${order.COMMODITIES}" var="commodity" >
+                  <c:forEach items="${order.commodities}" var="commodity" >
                       <div class="shohou clearfix">
-                          <a href="#" class="fl"><img src="${commodity.ORDER_DETAILS_COMMODITY_IMG}"/></a>
+                          <a href="#" class="fl"><img src="${commodity.order_detail_commodity_img}"/></a>
 
                           <p class="fl">
-                      <span hidden>${commodity.ORDER_DETAILS_COMMODITY_NAME}</span>
-                      <a href="#">${commodity.ORDER_DETAILS_COMMODITY_NAME}
+                      <span hidden>${commodity.order_detail_commodity_name}</span>
+                      <a href="#">${commodity.order_detail_commodity_name}
                       </a>
                               <a href="#">
-                      ${fn:replace(fn:replace(fn:replace(fn:replace(commodity.ORDER_DETAILS_SKU_VALUE, '"', ''), '{', ''), '}', ''), ',', '    ')}
+                                  <c:set var="string"
+                                      value="${fn:replace(fn:replace(fn:replace(fn:replace(commodity.order_detail_commodity_specs_value, '\"', ''), '{', ''), '}', ''), ',', '')}">
+                                  </c:set>
+                                      ${string}
                               </a>
 
-                              <a href="#">¥${commodity.ORDER_DETAILS_COMMODITY_PRICE}×${commodity.ORDER_DETAILS_COMMODITY_COUNT}</a></p>
+                              <a href="#">¥${commodity.order_detail_commodity_price}×${commodity.order_detail_commodity_count}</a></p>
 
                           <p class="fr">
-                              <c:if test="${order.ORDER_STATUS == 1}">
+                              <c:if test="${order.order_status == 1}">
                                   <a href="myprod.html1">待发货</a>
                               </c:if>
-                              <c:if test="${order.ORDER_STATUS == 2}">
+                              <c:if test="${order.order_status == 2}">
                                   <a href="myprod.html2">已发货</a>
                               </c:if>
-                              <c:if test="${order.ORDER_STATUS == 3}">
+                              <c:if test="${order.order_status == 3}">
                                   <a href="myprod.html3">待评价</a>
                               </c:if>
-                              <c:if test="${order.ORDER_STATUS == 4}">
+                              <c:if test="${order.order_status == 4}">
                                       <a class ="jia-id-myorder-pay" href="javascript:;">待支付</a>
                               </c:if>
-                              <c:if test="${order.ORDER_STATUS == 5}">
+                              <c:if test="${order.order_status == 5}">
                                   <a href="myprod.html">已关闭</a>
                               </c:if>
-                              <a href="${path}/orderDetails?orderId=${order.ORDER_ID}">订单详情</a>
+                              <a href="${path}/orderDetail?orderId=${order.order_id}">订单详情</a>
                           </p>
                       </div>
                   </c:forEach>
@@ -138,7 +142,7 @@
     </div>
 </div>
 <!--返回顶部-->
-                              <jsp:include page="right-sidebar.jsp"></jsp:include>
+                              <jsp:include page="include/right-sidebar.jsp"></jsp:include>
 <!--footer-->
 <div class="footer">
     <div class="top">
@@ -164,7 +168,6 @@
     <p class="dibu">最家家居&copy;2013-2017公司版权所有 京ICP备080100-44备0000111000号<br/>
         违法和不良信息举报电话：188-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
 </div>
-<script src="${path}/static/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="${path}/static/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script src="${path}/static/js/user.js" type="text/javascript" charset="utf-8"></script>
 </body>

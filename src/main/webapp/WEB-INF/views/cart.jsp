@@ -29,7 +29,8 @@
                 } else {
                     $(".th input[type='checkbox']:checked").each(function () {
                         //获取小计里的数值
-                        var sAll = $(this).parents(".pro").siblings('.sAll').text().substring(1);
+                        var sAll = $(this).parents(".pro").siblings('.sAll').children('span').text();
+                        console.log(sAll)
                         //累加
                         all += parseFloat(sAll);
                         //赋值
@@ -94,7 +95,7 @@
                         zg();
                         jisuan();
                     }
-                //    如果是取消勾选
+                    //    如果是取消勾选
                 } else {
                     //如果取消勾选的是全选按钮
                     if (sc) {
@@ -144,8 +145,12 @@
                                 location = "${path}/login?uri=${path}/cart";
                             } else {
                                 if (res.success) {
+
                                     layer.msg('删除成功', {time: 300, anim: 1});
                                     remove.remove();
+                                    jisuan();
+                                    zg();
+
                                 } else {
                                     layer.msg('删除失败');
                                 }
@@ -205,6 +210,7 @@
                                     if (res.success) {
                                         layer.msg('删除成功', {time: 300, anim: 1});
                                         remove.remove();
+                                        zg();
                                     } else {
                                         layer.msg('删除失败');
                                     }
@@ -235,7 +241,7 @@
                     data: {
                         commoditySpecsId: commoditySpecsId,
                         action: action,
-                        commodityCount:1
+                        commodityCount: 1
                     },
                     success: function (res) {
                         if (res.isLogin === false) {
@@ -243,6 +249,7 @@
                             location = "${path}/login?uri=${path}/cart";
                         } else {
                             if (res.success) {
+
                                 var nowCartCount = $(thiss).siblings("input").val();
                                 console.log(nowCartCount)
                                 $(thiss).siblings("input").val(++nowCartCount);
@@ -252,12 +259,11 @@
                                 var allPrice = floatObj.multiply(parseFloat(price), nowCartCount);
                                 $(thiss).parent().parent().siblings(".sAll").children("span").text(allPrice);
                                 jisuan();
-
+                                zg();
                             } else {
                                 layer.msg(res.error)
                             }
                         }
-
 
 
                     }
@@ -265,7 +271,7 @@
             });
 
 
-           $(".cart-sub").click(function () {
+            $(".cart-sub").click(function () {
                 var commoditySpecsId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
                 var action = "sub";
                 var thiss = $(this);
@@ -275,7 +281,7 @@
                     data: {
                         commoditySpecsId: commoditySpecsId,
                         action: action,
-                        commodityCount:1
+                        commodityCount: 1
                     },
                     success: function (res) {
                         if (res.isLogin === false) {
@@ -293,7 +299,7 @@
                                 var allPrice = floatObj.multiply(parseFloat(price), nowCartCount);
                                 $(thiss).parent().parent().siblings(".sAll").children("span").text(allPrice);
                                 jisuan()
-
+                                zg();
                             } else {
                                 layer.msg(res.error)
                             }
@@ -306,52 +312,51 @@
 
 
             $(".cart-num").each(function () {
-               $(this).keyup(function () {
-                   var commodityCount = $(this).val();
-                   var thiss = $(this);
-                   var action = 'input';
-                   var commoditySpecsId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
+                $(this).keyup(function () {
+                    var commodityCount = $(this).val();
+                    var thiss = $(this);
+                    var action = 'input';
+                    var commoditySpecsId = $(this).parent().parent().parent().children(":first").children(".fl").children("input").val();
 
-                   $.ajax({
-                       url: "${path}/updateCount",
-                       type: "get",
-                       data: {
-                           commoditySpecsId: commoditySpecsId,
-                           action: action,
-                           commodityCount:commodityCount,
-                       },
-                       success: function (res) {
-                           console.log(res)
-                           if (res.isLogin === false) {
+                    $.ajax({
+                        url: "${path}/updateCount",
+                        type: "get",
+                        data: {
+                            commoditySpecsId: commoditySpecsId,
+                            action: action,
+                            commodityCount: commodityCount,
+                        },
+                        success: function (res) {
+                            console.log(res)
+                            if (res.isLogin === false) {
 
-                               location = "${path}/login?uri=${path}/cart";
-                           } else {
-                               if (res.success) {
-                                   var nowCartCount = $(thiss).val();
-                                   console.log(nowCartCount)
-                                   // $(thiss).siblings("input").val(++nowCartCount);
-                                   console.log()
-                                   var price = $(thiss).parent().parent().siblings(".cart-price").children("span").text();
+                                location = "${path}/login?uri=${path}/cart";
+                            } else {
+                                if (res.success) {
+                                    var nowCartCount = $(thiss).val();
+                                    console.log(nowCartCount)
+                                    // $(thiss).siblings("input").val(++nowCartCount);
+                                    console.log()
+                                    var price = $(thiss).parent().parent().siblings(".cart-price").children("span").text();
 
-                                   var allPrice = floatObj.multiply(parseFloat(price), nowCartCount);
-                                   $(thiss).parent().parent().siblings(".sAll").children("span").text(allPrice);
-                                   jisuan();
+                                    var allPrice = floatObj.multiply(parseFloat(price), nowCartCount);
+                                    $(thiss).parent().parent().siblings(".sAll").children("span").text(allPrice);
+                                    jisuan();
+                                    zg();
+                                } else {
 
-                               } else {
-
-                                   layer.tips('超出库存，已经为您更改为最大库存', thiss, {
-                                       tips: [1, '#3595CC'],
-                                       time: 1500
-                                   });
-                                   $(thiss).val(res.commoditySpecsInventory);
-                               }
-                           }
+                                    layer.tips('超出库存，已经为您更改为最大库存', thiss, {
+                                        tips: [1, '#3595CC'],
+                                        time: 1500
+                                    });
+                                    $(thiss).val(res.commoditySpecsInventory);
+                                }
+                            }
 
 
-
-                       }
-                   });
-               });
+                        }
+                    });
+                });
             });
             //------------------------------------------------------------------------------------------------------------
             <%--$(".cart-num").each(function () {--%>
@@ -512,18 +517,18 @@
             /*-------------------------------------------------结束-------------------------------------------------*/
             /*-------------------------------------------------结算开始-------------------------------------------------*/
             $(".count").click(function () {
-               var checkedCount =  $(":checkbox[class='cart-sku-id']:checked").length;
-               var checkedCommoditySKU = $(":checkbox[class='cart-sku-id']:checked");
-               var url= "${path}/settlement?"
-               if(checkedCount === 0){
-                   layer.msg("请选择商品")
-               } else {
-                   checkedCommoditySKU.each(function () {
-                       url+="commoditySpecsId=" + this.value + "&";
-                   });
-                   console.log(url);
-                   location=url;
-               }
+                var checkedCount = $(":checkbox[class='cart-sku-id']:checked").length;
+                var checkedCommoditySKU = $(":checkbox[class='cart-sku-id']:checked");
+                var url = "${path}/settlement?"
+                if (checkedCount === 0) {
+                    layer.msg("请选择商品")
+                } else {
+                    checkedCommoditySKU.each(function () {
+                        url += "commoditySpecsId=" + this.value + "&";
+                    });
+                    console.log(url);
+                    location = url;
+                }
 
             });
             /*-------------------------------------------------结算结束-------------------------------------------------*/
@@ -575,9 +580,12 @@
                                 <dd class="fl">
                                     <p class="cart-commodity-name">${commodity.commodity_name}</p>
                                     <p>
-                                            ${fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(commodity.commodity_specs_value, '{', ''),'}' ,'' ),'"' , ''),',' ,'<br />' ),':' ,'：    ' )}
-                                                    </p>
-                                            <%--										<p>白色瓷瓶+白色串枚</p>--%>
+                                        <c:set var="string"
+                                               value=" ${fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(commodity.commodity_specs_value, '{', ''),'}' ,'' ),'\"' , ''),',' ,'<br />' ),':' ,'：    ' )}">
+                                        </c:set>
+                                            ${string}
+                                    </p>
+                                        <%--										<p>白色瓷瓶+白色串枚</p>--%>
                                 </dd>
                             </dl>
                         </a>
@@ -590,13 +598,16 @@
                             </button>
 
                             <input type="number" value="${commodity.commodity_count}" autocomplete="off"
-                                   class="cart-num" style="text-align:center" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+                                   class="cart-num" style="text-align:center"
+                                   onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
                             <button type="button" class="layui-btn layui-btn-primary layui-btn layui-btn-xs cart-add">
                                 <i class="layui-icon">&#xe602;</i>
                             </button>
                         </p>
                     </div>
-                    <div class="price sAll">￥<span>${commodity.commodity_specs_present_price * commodity.commodity_count}</span>
+                    <div class="price sAll">
+                        ￥<span>${commodity.commodity_specs_present_price * commodity.commodity_count}</span>
                     </div>
                         <%--                    正常商品删除--%>
                     <div class="price"><a class="cart-del" href="javascript:;">删除</a></div>
@@ -666,7 +677,8 @@
                             <img class="fl add" src="${path}/static/img/temp/add.jpg">
                         </p>
                     </div>
-                    <div class="price sAll">￥${commodity.commodity_specs_present_price * commodity.commodity_count} </div>
+                    <div class="price sAll">
+                        ￥${commodity.commodity_specs_present_price * commodity.commodity_count} </div>
                         <%--							<div class="price"><a class="del cart-del" href="#2">删除</a></div>--%>
                         <%--                    失效删除--%>
                     <div class="price"><a class="cart-del" href="#2">删除</a></div>

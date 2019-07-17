@@ -51,18 +51,18 @@
                 },
                 success: function (res) {
                    console.log(res);
-                    $("input[placeholder='姓名']").val(res.ADDRESS_NAME);
-                    $("input[placeholder='手机号']").val(res.ADDRESS_TEL);
-                    $(".address-details").val(res.ADDRESS_DETAIL);
-                    $(".postcode").val(res.ADDRESS_POSTCODE);
-                    $(".o-p-hide").text(res.PROVINCE);
-                    $(".o-p-hide").val(res.PROVINCE);
-                    $(".o-c-hide").text(res.CITY);
-                    $(".o-c-hide").val(res.CITY);
-                    $(".o-q-hide").text(res.DISTRICT);
-                    $(".o-q-hide").val(res.DISTRICT);
-                    $(".o-x-hide").text(res.COUNTY);
-                    $(".o-x-hide").val(res.COUNTY);
+                    $("input[placeholder='姓名']").val(res.address_name);
+                    $("input[placeholder='手机号']").val(res.address_tel);
+                    $(".address-details").val(res.address_detail);
+                    $(".postcode").val(res.address_postcode);
+                    $(".o-p-hide").text(res.province);
+                    $(".o-p-hide").val(res.province);
+                    $(".o-c-hide").text(res.city);
+                    $(".o-c-hide").val(res.city);
+                    $(".o-q-hide").text(res.district);
+                    $(".o-q-hide").val(res.district);
+                    $(".o-x-hide").text(res.county);
+                    $(".o-x-hide").val(res.county);
 
                 }
         });

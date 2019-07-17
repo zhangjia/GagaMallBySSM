@@ -69,8 +69,8 @@
             <label class="layui-form-label">支付方式</label>
             <div class="layui-input-block">
                 <input type="hidden" name="orderId" value="">
-                <input  type="radio" name="payStyle" value="余额" title="余额">
-                <input type="radio" name="payStyle" value="白条" title="白条" checked>
+                <input  type="radio" name="payType" value="余额" title="余额">
+                <input type="radio" name="payType" value="白条" title="白条" checked>
             </div>
         </div>
 <%--        <div class="layui-form-item layui-form-text">--%>
@@ -82,7 +82,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">支付密码</label>
             <div class="layui-input-inline">
-                <input style="margin-left: 10px;    width: 200px;" type="password" name="paypassword" required lay-verify="required" placeholder="请输入支付密码" autocomplete="off" class="layui-input">
+                <input style="margin-left: 10px;    width: 200px;" type="password" name="payPassword" required lay-verify="required" placeholder="请输入支付密码" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -139,24 +139,24 @@
                     url: "${path}/pay",
                     type: "get",
                     data: {
-                        payStyle:data.field.payStyle,
+                        payType:data.field.payType,
                         payMoney:payMoney,
                         // note:data.field.note,
                         orderId:orderId,
                         location:locations,
-                        paypassword:data.field.paypassword,
+                        payPassword:data.field.payPassword,
 
 
                     },
                     success: function (res) {
                         console.log(res)
-                        if (res.error ==='未设置密码') {
+                        if (res.error ==='未设置支付密码') {
 
                             layer.msg('未设置支付密码', {
 
                                 time: 2000 //2秒关闭（如果不配置，默认是3秒）
                             }, function(){
-                               location = "${path}/personalInformation";
+                               location = "${path}/personalInfo";
                             });
                             return;
                         }
@@ -176,7 +176,7 @@
                             layer.msg("支付成功",{
                                 time:1000
                             },function () {
-                                location = "${path}/myorder";
+                                location = "${path}/orders";
                             });
 
 

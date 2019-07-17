@@ -2,6 +2,7 @@ import com.alibaba.fastjson.JSON;
 import io.zhangjia.mall.mapper.*;
 import io.zhangjia.mall.service.MenuService;
 import io.zhangjia.mall.service.impl.MenuServiceImpl;
+import org.springframework.context.MessageSource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.HashMap;
@@ -27,12 +28,17 @@ public class Test {
 //        map.put("userTel","15628791990");
 //        bean.doInsert(map);
 
-        AddressMapper bean = context.getBean(AddressMapper.class);
-//        Integer a[] = {2,3,4};
-//        List<Map<String, Object>> maps = bean.queryCommodities4Settlement(1, a);
-//        System.out.println("JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
-//        List<Map<String, Object>> map = bean.queryById(1);
-//        List<Map<String,Object>> map = bean.queryUserId();
-        System.out.println(JSON.toJSONString(bean.queryByUserId(1)));
+//        AddressMapper bean = context.getBean(AddressMapper.class);
+////        Integer a[] = {2,3,4};
+////        List<Map<String, Object>> maps = bean.queryCommodities4Settlement(1, a);
+////        System.out.println("JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
+////        List<Map<String, Object>> map = bean.queryById(1);
+////        List<Map<String,Object>> map = bean.queryUserId();
+//        System.out.println(JSON.toJSONString(bean.queryByUserId(1)));
+
+        Map<String,Object> map = new HashMap<>();
+
+        System.out.println(map == null );
+        System.out.println(map.isEmpty() );
     }
 }

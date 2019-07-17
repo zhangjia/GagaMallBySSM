@@ -994,7 +994,8 @@ dl, ol, ul {
 }
 .cart-commodity-img{
 	width: 120px;
-	height: auto;
+	height: 120px;
+	object-fit: cover;
 }
 .grayness {
 

@@ -1,5 +1,6 @@
 package io.zhangjia.mall.service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,11 +22,11 @@ public interface UserService {
 	 */
 	Map<String, Object> register(Map<String,Object> user);
 
-//	User getUserInformation(String userName);
+	Map<String,Object> getUserInformation(String userName);
 //
-//	int editUserInformation(User user);
+	int editUserInformation(Map<String,Object> user);
 //
-//	Map<String,Object> judgePayPassword(String userId, String payPassword);
+	Map<String,Object> judgePayPassword(Integer userId, String RpayPassword);
 //
-//	List<User> queryUserAll();
+	List<Map<String,Object>> queryUserAll();
 }

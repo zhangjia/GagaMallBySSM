@@ -67,7 +67,8 @@ public class WalletServiceImpl implements WalletService {
         if (userId != null && !"".equals(userId) && money != null && !"".equals(money) && orderId != null && !"".equals(orderId)) {
             Map<String, Object> stringObjectMap = walletMapper.queryByUserId(userId);
             System.out.println("gaggagastringObjectMap = " + stringObjectMap);
-            Double walletBalance = ((BigDecimal) stringObjectMap.get("WALLET_BALANCE")).doubleValue();
+//            Double walletBalance = ((BigDecimal) stringObjectMap.get("wallet_balance")).doubleValue();
+            Double walletBalance = Double.parseDouble(stringObjectMap.get("wallet_balance").toString());
             System.out.println("walletBalance = " + walletBalance);
             System.out.println("wallet_balance = " + walletBalance);
             if (walletBalance < money) {

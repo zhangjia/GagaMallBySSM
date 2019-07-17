@@ -40,19 +40,19 @@ public class OrderServiceImpl implements OrderService {
 
             for (Map<String, Object> map : maps) {
 //               获取地址编号
-                int addressId = Integer.parseInt(map.get("ADDRESS_ID") + "");
+                Integer addressId = Integer.parseInt(map.get("address_id").toString());
                 Map<String, Object> stringObjectMap = addressMapper.queryByAddressId(addressId);
-                map.put("ADDRESS", stringObjectMap);
-                int orderId = Integer.parseInt(map.get("ORDER_ID") + "");
+                map.put("address", stringObjectMap);
+                Integer orderId = Integer.parseInt(map.get("order_id").toString());
                 System.out.println("orderIdzz = " + orderId);
                 Double aDouble = orderMapper.queryOrderPrice(orderId);
-                map.put("ORDERPRICE", aDouble);
+                map.put("order_price", aDouble);
                 List<Map<String, Object>> maps1 = orderMapper.queryCommodityByOrderId(orderId);
-                map.put("COMMODITIES", maps1);
+                map.put("commodities", maps1);
                 Double aDouble1 = orderMapper.queryOrderDiscountPrice(orderId);
-                map.put("DISCOUNTPRICE", aDouble1);
+                map.put("discount_price", aDouble1);
                 Double aDouble2 = orderMapper.queryOrderOriginalPrice(orderId);
-                map.put("ORIGINALPRICE", aDouble2);
+                map.put("original_price", aDouble2);
             }
             System.out.println("jsonmaps" + JSON.toJSONString(maps));
             return maps;
@@ -63,12 +63,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Map<String, Object> getOrder(Integer userId, Integer orderId) {
+        System.out.println("1userId = [" + userId + "], orderId = [" + orderId + "]");
         List<Map<String, Object>> orders = getOrders(userId);
         for (Map<String, Object> m : orders) {
             System.out.println(("m" + JSON.toJSONString(m)));
-            System.out.println((m.get("ORDER_ID") + "").equals(orderId));
+            System.out.println(Integer.parseInt(m.get("order_id").toString()) == (orderId));
             //必须加""，否则是false
-            if ((m.get("ORDER_ID") + "").equals(orderId)) {
+            if (Integer.parseInt(m.get("order_id").toString()) == (orderId)) {
                 System.out.println("进入orderId");
                 return m;
             }
@@ -141,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
             result *= cartMapper.doDelete(userId, commoditySpecsId);
 //       如果插入成功，将id返回
            if(result  != 0){
-               return orderId;
+               return Integer.parseInt(params.get("orderId").toString());
            } else {
                return  0;
            }

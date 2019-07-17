@@ -46,33 +46,33 @@
 					<div class="orderList">
 						<div class="orderList1">
 							<div class="jia-h3">
-							<h3 style="margin-top: 20px ">订单号：<span>${order.ORDER_ID}</span></h3>
-							<c:if test="${order.ORDER_STATUS == 1}">
+							<h3 style="margin-top: 20px ">订单号：<span>${order.order_id}</span></h3>
+							<c:if test="${order.order_status == 1}">
 								<h3>待发货</h3>
 							</c:if>
-							<c:if test="${order.ORDER_STATUS == 2}">
+							<c:if test="${order.order_status == 2}">
 								<h3>已发货</h3>
 							</c:if>
-							<c:if test="${order.ORDER_STATUS == 3}">
+							<c:if test="${order.order_status == 3}">
 								<h3>待评价</h3>
 							</c:if>
-							<c:if test="${order.ORDER_STATUS == 4}">
+							<c:if test="${order.order_status == 4}">
 								<h3>待支付</h3>
 							</c:if>
-							<c:if test="${order.ORDER_STATUS == 5}">
+							<c:if test="${order.order_status == 5}">
 								<h3>已关闭</h3>
 							</c:if>
-								<h3>物流：${order.ORDER_LOGISTICS}</h3>
+								<h3>物流：${order.order_logistics}</h3>
 							</div>
-							<c:forEach items="${order.COMMODITIES}" var="commodity" >
+							<c:forEach items="${order.commodities}" var="commodity" >
 							<div class="clearfix">
-								<a href="#" class="fl"><img class="spxqtsmall" src="${commodity.ORDER_DETAILS_COMMODITY_IMG}"/></a>
+								<a href="#" class="fl"><img class="spxqtsmall" src="${commodity.order_detail_commodity_img}"/></a>
 								<p class="settlement-ellipsis-order-detail">
-                                    <a href="#">${commodity.ORDER_DETAILS_COMMODITY_NAME}</a>
-                                    <a href="#">¥${commodity.ORDER_DETAILS_COMMODITY_PRICE}×${commodity.ORDER_DETAILS_COMMODITY_COUNT} </a>
+                                    <a href="#">${commodity.order_detail_commodity_name}</a>
+                                    <a href="#">¥${commodity.order_detail_commodity_price}×${commodity.order_detail_commodity_count} </a>
 
                                  </p>
-                                <span class="sku-value">${commodity.ORDER_DETAILS_SKU_VALUE}</span>
+                                <span class="sku-value">${commodity.order_detail_sku_value}</span>
 
 							</div>
 							</c:forEach>
@@ -80,21 +80,21 @@
 						</div>
 						<div class="orderList1">
 							<h3>收货信息</h3>
-							<p>姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span>${order.ADDRESS.ADDRESS_NAME}</span></p>
-							<p>联系电话：<span>${order.ADDRESS.ADDRESS_TEL}</span></p>
-							<p>收货地址：<span>${order.ADDRESS.ADDRESS_DETAIL}</span></p>
+							<p>姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span>${order.address.address_name}</span></p>
+							<p>联系电话：<span>${order.address.address_tel}</span></p>
+							<p>收货地址：<span>${order.address.address_detail}</span></p>
 						</div>
 						<div class="orderList1">
 							<h3>支付方式/备注</h3>
-							<p>支付方式：<span>${order.ORDER_PAY_TYPE}</span></p>
-							<p>备注：<span>${order.ORDER_NOTE}</span></p>
+							<p>支付方式：<span>${order.order_pay_type}</span></p>
+							<p>备注：<span>${order.order_note}</span></p>
 						</div>
 						<div class="orderList1 hei">
-							<h3><strong>商品原价：</strong><span>${order.ORIGINALPRICE}</span></h3>
-							<p>运费：<span>¥${order.ORDER_FREIGHT_PRICE}</span></p>
-							<p>优惠：<span>¥${order.DISCOUNTPRICE}</span></p>
+							<h3><strong>商品原价：</strong><span>${order.originalprice}</span></h3>
+							<p>运费：<span>¥${order.order_freight_price}</span></p>
+							<p>优惠：<span>¥${order.order_detail_discounts_price}</span></p>
 
-							<p>实付金额：<span>¥${order.ORDERPRICE}</span></p>
+							<p>实付金额：<span>¥${order.order_price}</span></p>
 						</div>
 
 					</div>

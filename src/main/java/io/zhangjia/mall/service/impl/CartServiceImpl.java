@@ -65,7 +65,7 @@ public class CartServiceImpl implements CarService {
     public boolean deleteCart(Integer userId, Integer[] commoditySpecsId) {
         if (userId != null && !"".equals(userId)) {
             System.out.println("SKUID" + commoditySpecsId);
-            boolean b = cartMapper.doDelete(userId, commoditySpecsId) == 1;
+            boolean b = cartMapper.doDelete(userId, commoditySpecsId) != 0;
             System.out.println("b = " + b);
             return b;
         }

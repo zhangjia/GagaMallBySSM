@@ -82,13 +82,13 @@
                     });
                 } else {
 
-                    if (${requestScope.commodityDetail.commodityMaxPresentPrice != requestScope.commodityDetail.commodityMinPresentPrice}) {
-                        $(".commodity-price").text('￥' + '${requestScope.commodityDetail.commodityMinPresentPrice}' + "~￥" + '${requestScope.commodityDetail.commodityMaxPresentPrice}');
+                    if (${requestScope.commodityDetail.commodity_max_present_price != requestScope.commodityDetail.commodity_min_present_price}) {
+                        $(".commodity-price").text('￥' + '${requestScope.commodityDetail.commodity_min_present_price}' + "~￥" + '${requestScope.commodityDetail.commodity_max_present_price}');
                     } else {
-                        $(".commodity-price").text('￥' + '${requestScope.commodityDetail.commodityMinPresentPrice}');
+                        $(".commodity-price").text('￥' + '${requestScope.commodityDetail.commodity_min_present_price}');
                     }
-                    $(".inventory").text(${requestScope.commodityDetail.commodityInventory});
-                    $(".sale").text(${requestScope.commodityDetail.commoditySales});
+                    $(".inventory").text(${requestScope.commodityDetail.commodity_inventory});
+                    $(".sale").text(${requestScope.commodityDetail.commodity_sales});
                 }
             });
 

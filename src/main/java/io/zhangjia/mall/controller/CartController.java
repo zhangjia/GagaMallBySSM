@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +28,7 @@ public class CartController {
     public String cart(Model model, HttpSession session) {
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
         System.out.println("user = " + user);
-        Integer userId = (Integer) user.get("user_id");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
         System.out.println("userId22 = " + userId);
         List<Map<String, Object>> commodities = carService.getCarCommodities(userId);
         System.out.println("commodities" + JSON.toJSONString(commodities));
@@ -42,7 +44,7 @@ public class CartController {
                           Integer commodityCount, HttpSession session) {
 //        HttpSession session = request.getSession();
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
-        Integer userId = (Integer) user.get("user_id");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
 
         //先根据json字符串判断是哪个sku表中的商品，并获取该商品的ID
         Map<String, Object> commoditySpecs = commodityService.getCommoditySpecs(commoditySpecsValue);
@@ -61,7 +63,7 @@ public class CartController {
     @ResponseBody
     public String updateCount(String action, Integer commoditySpecsId, Integer commodityCount, HttpSession session) {
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
-        Integer userId = (Integer) user.get("user_id");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
 
         System.out.println("action = [" + action + "], commoditySpecsId = [" + commoditySpecsId + "], commodityCount = [" + commodityCount + "], userId = [" + userId + "]");
 
@@ -71,4 +73,16 @@ public class CartController {
         return s;
 
     }
+
+    @GetMapping(value = "/cart/delete", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String updateCount(Integer[] commoditySpecsId, HttpSession session) {
+        Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
+        boolean b = carService.deleteCart(userId, commoditySpecsId);
+        return ("{\"success\":" + b + "}");
+
+    }
+
+
 }

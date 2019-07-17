@@ -102,7 +102,7 @@ public class CommodityController {
         System.out.println("action = [" + action + "], commoditySpecsId = [" + commoditySpecsId + "], count = [" + count + "], val = [" + val + "], request = [" + request + "]");
         HttpSession session = request.getSession();
         Map<String,Object> user =   (Map<String,Object>)session.getAttribute("user");
-        Integer userId = (Integer)user.get("user_id");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
 
         Map<String, Object> stringObjectMap = commodityService.updateCount2CommodityDetail(action, userId, commoditySpecsId,count,val);
 
