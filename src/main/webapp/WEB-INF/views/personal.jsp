@@ -42,13 +42,13 @@
 
                         </c:if>
                     </a>
-                    <p class="fl"><span>${sessionScope.user.userName}</span><a href="${path}/personalInformation?userId=${sessionScope.user.userId}">修改个人信息></a></p>
+                    <p class="fl"><span>${sessionScope.user.user_name}</span><a href="${path}/personalInformation?userId=${sessionScope.user.userId}">修改个人信息></a></p>
                 </div>
-                <c:if test="${sessionScope.user.userMail == null}">
+                <c:if test="${sessionScope.user.user_mail == null}">
                     <div class="fr">绑定邮箱：未绑定</div>
                 </c:if>
-                <c:if test="${sessionScope.user.userMail != null}">
-                    <div class="fr">绑定邮箱：${sessionScope.user.userMail}</div>
+                <c:if test="${sessionScope.user.user_mail != null}">
+                    <div class="fr">绑定邮箱：${sessionScope.user.user_mail}</div>
 
                 </c:if>
 
@@ -57,13 +57,13 @@
                 <div class="clearfix">
                     <a href="#" class="fl"><img src="${path}/static/img/gxin1.jpg"/></a>
                     <p class="fl"><span>待支付的订单：<strong>0</strong></span>
-                        <a href="myorderq.jsp">查看待支付订单></a>
+                        <a href="personal-orders.jsp">查看待支付订单></a>
                     </p>
                 </div>
                 <div class="clearfix">
                     <a href="#" class="fl"><img src="${path}/static/img/gxin2.jpg"/></a>
                     <p class="fl"><span>待收货的订单：<strong>0</strong></span>
-                        <a href="myorderq.jsp">查看待收货订单></a>
+                        <a href="personal-orders.jsp">查看待收货订单></a>
                     </p>
                 </div>
                 <div class="clearfix">

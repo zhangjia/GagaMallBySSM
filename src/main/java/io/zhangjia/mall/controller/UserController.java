@@ -62,11 +62,6 @@ public class UserController {
     }
 
 
-    @GetMapping("/personal")
-
-    public String personal() {
-        return "personal";
-    }
 
 
     @GetMapping("/logout")
