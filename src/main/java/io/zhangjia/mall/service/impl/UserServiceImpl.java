@@ -2,7 +2,9 @@ package io.zhangjia.mall.service.impl;
 
 
 
+import io.zhangjia.mall.mapper.IouMapper;
 import io.zhangjia.mall.mapper.UserMapper;
+import io.zhangjia.mall.mapper.WalletMapper;
 import io.zhangjia.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,11 @@ public class UserServiceImpl implements UserService {
 	
 //	private UserDao userDao = new UserDaoImpl();
 //	private WalletDao walletDao = new WalletDaoImpl();
-//	private IOUDao iouDao = new IOUDaoImpl();
+//	private IouDao iouDao = new IouDaoImpl();
+	@Autowired
+	private WalletMapper walletMapper;
+	@Autowired
+	private IouMapper iouMapper;
 	@Autowired
 	private UserMapper userMapper;
 
@@ -53,11 +59,13 @@ public class UserServiceImpl implements UserService {
 
 		if(users.isEmpty()) {
 			System.out.println("用户名不存在");
+			user.put("userId",null);
 			int i = userMapper.doInsert(user);
 			if(i != 0) {
 				map.put("user",user);
-//				walletDao.doInsert(i);
-//				iouDao.doInsert(i);
+				String stringUserId = user.get("userId").toString(); //直接强转String不可以
+				walletMapper.doInsert(Integer.parseInt(stringUserId));
+				iouMapper.doInsert(Integer.parseInt(stringUserId));
 
 			} else {
 				map.put("error","注册失败");

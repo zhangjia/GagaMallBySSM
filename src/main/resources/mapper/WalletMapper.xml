@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.zhangjia.mall.mapper.WalletMapper">
+
+
+    <select id="queryByUserId" resultType="map">
+        SELECT *
+        FROM wallet
+        WHERE user_id = #{userId}
+    </select>
+
+
+    <update id="doUpdate">
+        UPDATE wallet
+        SET wallet_balance = wallet_balance + #{money}
+        WHERE user_id = #{userId}
+    </update>
+
+
+    <insert id="doInsert">
+        INSERT INTO wallet (user_id)
+        VALUES (#{userId})
+    </insert>
+
+
+</mapper>

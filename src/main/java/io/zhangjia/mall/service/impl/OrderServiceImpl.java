@@ -121,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
 //            List<Integer> commoditySpecsIds = new ArrayList<>();
             System.out.println("JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
             for (Map<String, Object> map : maps) {
-                map.put("order_id", orderId);
+                map.put("order_id", params.get("orderId"));
 //            TODO：订单优惠金额，留着做优惠券和京豆使用
                 map.put("order_detail_discount_price", 10);
                 System.out.println("JSON.mapmapmapmap= " + JSON.toJSONString(map));

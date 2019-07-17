@@ -28,7 +28,7 @@
 
     </select>
 
-    <insert id="doInsert" parameterType="map">
+    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO users ( user_name, user_password, user_tel, user_mail, user_nick)
 
          VALUES(#{userName},#{userPassword},

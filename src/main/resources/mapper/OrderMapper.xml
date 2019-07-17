@@ -79,7 +79,7 @@
 
 
 
-    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="bookId">
+    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="orderId">
         INSERT INTO orders (user_id, address_id, order_logistics,
                             order_freight_price, order_pay_type, order_note, order_status)
         VALUES (#{userId},#{addressId},#{orderLogistics},#{orderFreightPrice},
