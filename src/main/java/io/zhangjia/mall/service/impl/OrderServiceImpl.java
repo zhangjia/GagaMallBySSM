@@ -101,16 +101,16 @@ public class OrderServiceImpl implements OrderService {
             //        1.向订单表插入数据
 
             Map<String, Object> params = new HashMap<>();
-            params.put("userId", userId);
-            params.put("addressId", addressId);
+            params.put("user_id", userId);
+            params.put("address_id", addressId);
 //            params.put("orderLogistics", 10);
 //            TODO：订单物流
-            params.put("orderLogistics", "未支付");
-            params.put("orderFreightPrice", orderFreightPrice);
-            params.put("orderPayType", "未支付");
-            params.put("orderNote", orderNote);
-            params.put("orderStatus", 4); //默认是待支付
-            params.put("orderId",null);
+            params.put("order_logistics", "未支付");
+            params.put("order_freight_price", orderFreightPrice);
+            params.put("order_pay_type", "未支付");
+            params.put("order_note", orderNote);
+            params.put("order_status", 4); //默认是待支付
+            params.put("order_id",null);
             int orderId = orderMapper.doInsert(params);
             System.out.println("paramsJSON = " + JSON.toJSONString(params));
             result *= orderId;
@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
 //            List<Integer> commoditySpecsIds = new ArrayList<>();
             System.out.println("JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
             for (Map<String, Object> map : maps) {
-                map.put("order_id", params.get("orderId"));
+                map.put("order_id", params.get("order_id"));
 //            TODO：订单优惠金额，留着做优惠券和京豆使用
                 map.put("order_detail_discount_price", 10);
                 System.out.println("JSON.mapmapmapmap= " + JSON.toJSONString(map));
@@ -140,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
             result *= cartMapper.doDelete(userId, commoditySpecsId);
 //       如果插入成功，将id返回
            if(result  != 0){
-               return Integer.parseInt(params.get("orderId").toString());
+               return Integer.parseInt(params.get("order_id").toString());
            } else {
                return  0;
            }

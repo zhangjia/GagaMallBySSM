@@ -17,11 +17,11 @@
         AND cart_status != 0
         AND cart_status != 5
         AND commodity_specs.commodity_id = commodity.commodity_id
-        AND cart.user_id = #{userId}
+        AND cart.user_id = #{user_id}
         AND cart.commodity_specs_id = commodity_specs.commodity_specs_id
         AND cart.commodity_specs_id IN (
 #  这里不能写collection=list
-        <foreach item="commoditySpecsId"  collection="commoditySpecsId"  separator=",">
+        <foreach item="commodity_specs_id"  collection="commodity_specs_id"  separator=",">
            #{commoditySpecsId}
         </foreach>
         )
@@ -32,14 +32,14 @@
 
 
     <select id="queryByUserId" resultType="map">
-        SELECT * FROM orders WHERE user_id = #{userId} AND order_status != 0  ORDER BY order_create_time DESC;
+        SELECT * FROM orders WHERE user_id = #{user_id} AND order_status != 0  ORDER BY order_create_time DESC;
     </select>
 
 
 
     <select id="queryCommodityByOrderId" resultType="map">
         SELECT t2.* FROM ORDERS t1,order_detail t2
-    WHERE t1.ORDER_ID = t2.ORDER_ID AND t1.ORDER_ID = #{orderId}
+    WHERE t1.ORDER_ID = t2.ORDER_ID AND t1.ORDER_ID = #{order_id}
    AND t1.ORDER_STATUS != 0 AND t2.order_detail_status !=0;
     </select>
 
@@ -51,7 +51,7 @@
               FROM order_detail
               WHERE order_detail_status != 0
               GROUP BY order_id
-              HAVING order_id = #{orderid}) t1,
+              HAVING order_id = #{order_id}) t1,
              orders t2
         WHERE t1.order_id = t2.order_id
           AND t2.order_status != 0
@@ -63,7 +63,7 @@
         FROM order_detail
         WHERE order_detail_status != 0
         GROUP BY order_id
-        HAVING order_id = #{orderId}
+        HAVING order_id = #{order_id}
     </select>
 
 
@@ -72,18 +72,18 @@
         FROM order_detail
         WHERE order_detail_status != 0
         GROUP BY order_id
-        HAVING order_id = #{orderId}
+        HAVING order_id = #{order_id}
     </select>
 
 
 
 
 
-    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="orderId">
+    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="order_id">
         INSERT INTO orders (user_id, address_id, order_logistics,
                             order_freight_price, order_pay_type, order_note, order_status)
-        VALUES (#{userId},#{addressId},#{orderLogistics},#{orderFreightPrice},
-                #{orderPayType},#{orderNote},#{orderStatus});
+        VALUES (#{user_id},#{address_id},#{order_logistics},#{order_freight_price},
+                #{order_pay_type},#{order_note},#{order_status});
 
     </insert>
 
@@ -104,20 +104,20 @@
 
     <update id="doUpdateByPay" >
         UPDATE orders
-        SET order_pay_type = #{payType},
+        SET order_pay_type = #{pay_type},
             order_status   = 1,
             order_logistics='未发货'
-        WHERE user_id = #{userId}
-          AND order_id = #{orderId}
+        WHERE user_id = #{user_id}
+          AND order_id = #{order_id}
 
     </update>
 
 
     <update id="doUpdateByDeliverGoods" >
         UPDATE orders
-        SET order_logistics = #{logistics},
+        SET order_logistics = #{order_logistics},
             order_status    = 2
-        WHERE order_id = #{orderId}
+        WHERE order_id = #{order_id}
 
     </update>
 
@@ -125,16 +125,16 @@
     <select id="queryTotal" resultType="map">
         SELECT sum(cart.commodity_count) sum_commodity_count,
         sum(cart.commodity_count * commodity_specs.commodity_specs_present_price) sum_commodity_present_price,
-        sum(cart.commodity_count * commodity_specs.commodity_specs_present_price) + #{orderFreightPrice} sum_commodity_pay_price
+        sum(cart.commodity_count * commodity_specs.commodity_specs_present_price) + #{order_freight_price} sum_commodity_pay_price
         FROM commodity_specs,
         cart
         WHERE commodity_specs.commodity_specs_id = cart.commodity_specs_id
         AND cart_status != 5
         AND cart_status != 0
-        AND user_id = #{userId}
+        AND user_id = #{user_id}
         AND cart.commodity_specs_id IN(
-        <foreach item="commoditySpecsId" collection="commoditySpecsId" separator=",">
-            #{commoditySpecsId}
+        <foreach item="commodity_specs_id" collection="commodity_specs_id" separator=",">
+            #{commodity_specs_id}
         </foreach>
         )
 
