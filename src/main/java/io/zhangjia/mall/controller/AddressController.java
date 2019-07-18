@@ -42,16 +42,16 @@ public class AddressController {
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
         Integer userId = Integer.parseInt(user.get("user_id").toString());
         Map<String, Object> params = new HashMap<>();
-        params.put("userId", userId);
-        params.put("name", name);
-        params.put("postCode", postcode);
-        params.put("tel", tel);
+        params.put("user_id", userId);
+        params.put("address_name", name);
+        params.put("address_postcode", postcode);
+        params.put("address_tel", tel);
         params.put("province", province);
         params.put("city", city);
         params.put("district", district);
         params.put("country", country);
-        params.put("addressDetail", detailedAddress);
-        params.put("addressId", addressId);
+        params.put("address_detail", detailedAddress);
+        params.put("address_id", addressId);
         boolean result = addressService.addUserAddress(params);
         return "{\"success\":" + result + "}";
     }

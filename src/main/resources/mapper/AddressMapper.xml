@@ -4,38 +4,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.zhangjia.mall.mapper.AddressMapper">
-
+    <!--********************************************根据用户ID查询该用户的所有收货地址*******************************************-->
     <select id="queryByUserId" parameterType="int" resultType="map">
         SELECT *
         FROM address
         WHERE address_status != 0
-          AND user_id = #{userId}
+          AND user_id = #{user_id}
         ORDER BY address_status DESC;
     </select>
 
-
+    <!--********************************************添加新的收货地址*******************************************-->
 
     <insert id="doInsert">
         INSERT INTO address(user_id, address_name, province, city,
                             district, county, address_detail, address_postcode, address_tel)
-        VALUES (#{userId}, #{name}, #{province}, #{city}, #{district}, #{county},
-                #{addressDetail}, #{postCode}, #{tel});
+        VALUES (#{user_id}, #{address_name}, #{province}, #{city}, #{district}, #{county},
+                #{address_detail}, #{address_postcode}, #{address_tel});
     </insert>
 
-
+    <!--********************************************根据收货地址ID查询该收货地址相关信息*******************************************-->
 
     <select id="queryByAddressId" resultType="map">
-        SELECT * FROM address WHERE address_id = #{addressId} AND address_status != 0
+        SELECT * FROM address WHERE address_id = #{address_id} AND address_status != 0
     </select>
-
+    <!--********************************************更新收货地址信息状态*******************************************-->
 
     <update id="updateAddressStatus">
-        UPDATE address SET address_status = #{addressStatus} WHERE address_id = #{addressId} AND USER_ID= #{userId}
+        UPDATE address SET address_status = #{address_status} WHERE address_id = #{address_id} AND user_id= #{user_id}
     </update>
-
+    <!--********************************************取消默认地址*******************************************-->
 
     <delete id="cancelDefaultAddress" >
-        UPDATE address SET address_status = 1 WHERE address_status = 2 AND user_id = #{userId}
+        UPDATE address SET address_status = 1 WHERE address_status = 2 AND user_id = #{user_id}
     </delete>
 
 

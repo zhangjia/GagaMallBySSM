@@ -24,11 +24,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public boolean addUserAddress(Map<String, Object> maps) {
-        System.out.println("\"\".equals((maps.get(\"addressId\")+\"\")) = " + "".equals((maps.get("addressId") + "")));
-        System.out.println("\"\".equals((maps.get(\"null\")+\"\")) = " + (maps.get("addressId") + "") == null);
-        if ((maps.get("addressId") + "") != null || !"".equals((maps.get("addressId") + "")) || !"".equals((maps.get("userId") + ""))) {
-            String addressId = maps.get("addressId") + "";
-            String userId = (maps.get("userId") + "");
+
+        if ((maps.get("address_id") + "") != null || !"".equals((maps.get("address_id") + "")) || !"".equals((maps.get("user_id") + ""))) {
+            String addressId = maps.get("address_id") + "";
+            String userId = (maps.get("user_id") + "");
             addressMapper.updateAddressStatus(0, Integer.parseInt(addressId), Integer.parseInt(userId));
         }
         return addressMapper.doInsert(maps) == 1;
