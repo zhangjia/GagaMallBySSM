@@ -18,6 +18,8 @@
                      column="level1_menu_id"/>-->
     </resultMap>
 
+    <!--********************************************查询一级菜单*******************************************-->
+
     <select id="queryLevel1Menu" resultMap="level2MenuResultMap">
         SELECT DISTINCT f.*
         FROM commodity c,
@@ -25,7 +27,7 @@
         WHERE c.level1_menu_id = f.level1_menu_id
         ORDER BY level1_menu_id
     </select>
-
+    <!--********************************************查询二级菜单*******************************************-->
     <select id="queryLevel2Menu" parameterType="int" resultType="map">
         SELECT *
         FROM level2_menu s,

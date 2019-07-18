@@ -5,18 +5,18 @@
 
 <mapper namespace="io.zhangjia.mall.mapper.IouMapper">
 
-
+    <!--********************************************查询用户白条信息*******************************************-->
     <select id="queryByUserId" resultType="map" >
         SELECT  * FROM iou WHERE user_id = #{user_id}
     </select>
 
-
+    <!--********************************************更新用户白条额度*******************************************-->
     <update id="doUpdate">
         UPDATE iou SET iou_usable_limit = iou_usable_limit +  #{money} WHERE user_id = #{user_id}
     </update>
 
 
-
+    <!--********************************************插入白条记录*******************************************-->
     <insert id="doInsert" >
         INSERT INTO iou (user_id)VALUES(#{user_id})
     </insert>
