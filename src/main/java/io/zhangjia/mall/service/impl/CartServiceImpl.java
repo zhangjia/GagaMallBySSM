@@ -28,9 +28,9 @@ public class CartServiceImpl implements CarService {
 
         Map<String, Object> map = new HashMap<>();
 
-        params.put("userId", userId);
-        params.put("commoditySpecsId", commoditySpecsId);
-        params.put("commodityCount", commodityCount);
+        params.put("user_id", userId);
+        params.put("commodity_specs_id", commoditySpecsId);
+        params.put("commodity_count", commodityCount);
 
 
         Map<String, Object> cart = cartMapper.queryByUserIdAndCommoditySpecsId(userId, commoditySpecsId);
@@ -55,7 +55,7 @@ public class CartServiceImpl implements CarService {
       public List<Map<String, Object>> getCarCommodities(Integer userId) {
           Map<String,Object> params = new HashMap<>();
           System.out.println("userId = [" + userId + "]");
-          params.put("userId",userId);
+          params.put("user_id",userId);
           return cartMapper.query(params);
       }
 
@@ -110,17 +110,17 @@ public class CartServiceImpl implements CarService {
                 if (commodityCount > commoditySpecsInventory) {
                     map.put("error", "超出库存");
                     Map<String,Object> m = new HashMap<>();
-                    m.put("commodityCount",commoditySpecsInventory);
-                    m.put("userId",userId);
-                    m.put("commoditySpecsId",commoditySpecsId);
+                    m.put("commodity_count",commoditySpecsInventory);
+                    m.put("user_id",userId);
+                    m.put("commodity_specs_id",commoditySpecsId);
                     cartMapper.doUpdateCartCount(m);
-                    map.put("commoditySpecsInventory",commoditySpecsInventory);
+                    map.put("commodity_specs_inventory",commoditySpecsInventory);
                     System.out.println(commoditySpecsInventory);
                 } else {
                     Map<String,Object> m = new HashMap<>();
-                    m.put("commodityCount",commodityCount);
-                    m.put("userId",userId);
-                    m.put("commoditySpecsId",commoditySpecsId);
+                    m.put("commodity_count",commodityCount);
+                    m.put("user_id",userId);
+                    m.put("commodity_specs_id",commoditySpecsId);
                     i = cartMapper.doUpdateCartCount(m);
                     System.out.println("m" + m);
                 }

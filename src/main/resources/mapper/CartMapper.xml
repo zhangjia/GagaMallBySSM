@@ -4,68 +4,66 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.zhangjia.mall.mapper.CartMapper">
-
+    <!--********************************************查询购物车中商品信息*******************************************-->
     <select id="query" resultType="map">
         SELECT *
         FROM commodity_specs t1,
-             COMMODITY t2,
+             commodity t2,
              cart t3,
              img t4
         WHERE t1.commodity_id = t2.commodity_id
           AND t3.commodity_specs_id = t1.commodity_specs_id
-          AND t3.user_id = #{userId}
+          AND t3.user_id = #{user_id}
           AND t4.img_belong = t1.commodity_id
           AND t4.img_order = 1
           AND t4.img_type = '商品图'
     </select>
 
-
+    <!--********************************************查询购物车中商品规格信息*******************************************-->
     <select id="queryByUserIdAndCommoditySpecsId" resultType="map">
         SELECT *
-        FROM CART
-        WHERE USER_ID = #{userId}
-          AND commodity_specs_id = #{commoditySpecsId}
+        FROM cart
+        WHERE user_id = #{user_id}
+          AND commodity_specs_id = #{commodity_specs_id}
     </select>
 
-
+    <!--********************************************向购物车中添加商品*******************************************-->
     <insert id="doInsert">
         INSERT INTO cart(user_id, commodity_specs_id, commodity_count)
-        VALUES (#{userId}, #{commoditySpecsId}, #{commodityCount});
+            VALUES (#{user_id}, #{commodity_specs_id}, #{commodity_count});
     </insert>
-
+    <!--********************************************更新购物车中的商品数量*******************************************-->
     <update id="doUpdateCommodityCount">
         UPDATE cart
-        SET commodity_count = commodity_count + #{commodityCount}
-        WHERE user_id = #{userId}
-          AND commodity_specs_id = #{commoditySpecsId}
+        SET commodity_count = commodity_count + #{commodity_count}
+        WHERE user_id = #{user_id}
+          AND commodity_specs_id = #{commodity_specs_id}
     </update>
-
+    <!--********************************************更新购物车中的商品数量*******************************************-->
     <update id="doUpdateCartCount">
         UPDATE cart
-        SET commodity_count = #{commodityCount}
-        WHERE user_id = #{userId}
-          AND commodity_specs_id = #{commoditySpecsId}
+        SET commodity_count = #{commodity_count}
+        WHERE user_id = #{user_id}
+          AND commodity_specs_id = #{commodity_specs_id}
     </update>
-
+    <!--********************************************购物车中点击 < 号按钮,商品数量-1*******************************************-->
     <update id="subCount">
         UPDATE cart
         SET commodity_count = commodity_count - 1
-        where user_id = #{userId}
-          AND commodity_specs_id = #{commoditySpecsId}
+        where user_id = #{user_id}
+          AND commodity_specs_id = #{commodity_specs_id}
     </update>
-
+    <!--********************************************购物车中点击 > 号按钮,商品数量+1*******************************************-->
     <update id="addCount">
         UPDATE cart
         SET commodity_count = commodity_count + 1
-        where user_id = #{userId}
-          AND commodity_specs_id = #{commoditySpecsId}
+        where user_id = #{user_id}
+          AND commodity_specs_id = #{commodity_specs_id}
     </update>
 
 
-
-
-
-    <select id="queryOrderFreightPrice" resultType="double" >
+    <!--********************************************根据商品的金额判断运费是多少*******************************************-->
+    <select id="queryOrderFreightPrice" resultType="double">
         select IF( (sum(cart.commodity_count * commodity_specs_present_price) &lt; 1000), 10,0)
         order_freight_price
 
@@ -74,22 +72,22 @@
         where commodity_specs.commodity_specs_id = cart.commodity_specs_id
         and cart_status != 5
         and cart_status != 0
-        and user_id = #{userId}
+        and user_id = #{user_id}
         and cart.commodity_specs_id in(
-        <foreach item="commoditySpecsId" collection="commoditySpecsId" separator=",">
-            #{commoditySpecsId}
+        <foreach item="commodity_specs_id" collection="commodity_specs_id" separator=",">
+            #{commodity_specs_id}
         </foreach>
         )
     </select>
 
 
-
+    <!--*******************************************购物车中删除商品******************************************-->
     <delete id="doDelete" parameterType="int">
-        DELETE FROM cart WHERE user_id = #{userId} AND commodity_specs_id IN
-            <foreach item="commoditySpecsId" collection="commoditySpecsId"
-                     open="(" separator="," close=")">
-                #{commoditySpecsId}
-            </foreach>
+        DELETE FROM cart WHERE user_id = #{user_id} AND commodity_specs_id IN
+        <foreach item="commodity_specs_id" collection="commodity_specs_id"
+                 open="(" separator="," close=")">
+            #{commodity_specs_id}
+        </foreach>
 
     </delete>
 
