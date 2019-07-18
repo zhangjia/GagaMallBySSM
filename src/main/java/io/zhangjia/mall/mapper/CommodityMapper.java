@@ -7,21 +7,19 @@ import java.util.Map;
 
 public interface CommodityMapper {
 
-    /*
 
-
-    int doCommodityInsert(Commodity commodity);
-    int doSKUInsert(List<Map<String,Object>> lists) ;
-
-    List<Commodity> queryCommodity4Index();
-    *
-    * */
-
+    /**
+     * 使用动态sql查询商品信息
+     * @param params
+     * @return
+     */
     List<Map<String, Object>> query(Map<String, Object> params);
 
-//    List<Map<String, Object>> queryCommodityImgs(List<Map<String,Object>> commodities);
-
-
+    /**
+     * 添加商品信息
+     * @param commodity
+     * @return
+     */
     Integer doCommodityInsert(Map<String,Object> commodity);
     Integer doCommoditySpecsInsert(Map<String,Object> commoditySpecs);
 
