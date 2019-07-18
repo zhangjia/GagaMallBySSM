@@ -98,8 +98,7 @@ public class UserController {
         Map<String, Object> json = new HashMap<>();
         Map<String, Object> user = new HashMap<>();
 
-//        判断是不是手机注册
-
+//        判断是不是手机号注册
         if (action.equals("userTel")) {
             System.out.println("\"是手机号登录\" = " + "是手机号登录");
 //            判断输入的验证码是否正确
@@ -110,7 +109,7 @@ public class UserController {
                 json.put("error", "验证码不正确");
                 return JSON.toJSONString(json);
             } else {
-                user.put("userTel", request.getParameter(action));
+                user.put("user_tel", request.getParameter(action));
             }
         }
 
@@ -125,7 +124,7 @@ public class UserController {
                 json.put("error", "验证码不正确");
                 return JSON.toJSONString(json);
             } else {
-                user.put("userMail", request.getParameter(action));
+                user.put("user_mail", request.getParameter(action));
             }
         }
 
@@ -133,8 +132,8 @@ public class UserController {
 //        User user = new User(username,password,null,null,null,null,null,null,null,null,null,null);
 
 
-        user.put("userName", request.getParameter(action));
-        user.put("userPassword", userPassword);
+        user.put("user_name", request.getParameter(action));
+        user.put("user_password", userPassword);
 
         Map<String, Object> map = userService.register(user);
 
@@ -215,7 +214,7 @@ public class UserController {
 //        更新session信息
         if (i == 1) {
             Map<String, Object> uid = new HashMap<>();
-            uid.put("userId", userAfter.get("user_id"));
+            uid.put("user_id", userAfter.get("user_id"));
             session.setAttribute("user", userService.getUser(uid));
         }
         return "{\"success\":" + (i == 1) + "}";

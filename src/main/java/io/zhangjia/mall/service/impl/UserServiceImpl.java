@@ -28,11 +28,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> login(String userName, String userPassword) {
         Map<String, Object> params = new HashMap<>();
-        params.put("userName", userName);
+        params.put("user_name", userName);
         List<Map<String, Object>> users = userMapper.query(params);
 
 
         Map<String, Object> map = new HashMap<>();
+//        判断用户名是否存在
         if (!users.isEmpty()) { //注意这里不能用user != null
             Map<String, Object> user = users.get(0);
             if (user.get("user_name").equals(userName) && user.get("user_password").equals(userPassword)) {
@@ -51,18 +52,18 @@ public class UserServiceImpl implements UserService {
         System.out.println("user123 = [" + user + "]");
         Map<String, Object> userName = new HashMap<>();
 //		保证只根据用户名查
-        userName.put("userName", user.get("userName"));
+        userName.put("user_name", user.get("user_name"));
         List<Map<String, Object>> users = userMapper.query(userName);
 
         Map<String, Object> map = new HashMap<>();
 
         if (users.isEmpty()) {
             System.out.println("用户名不存在");
-            user.put("userId", null);
+            user.put("user_id", null);
             int i = userMapper.doInsert(user);
             if (i != 0) {
                 map.put("user", user);
-                String stringUserId = user.get("userId").toString(); //直接强转String不可以
+                String stringUserId = user.get("user_id").toString(); //直接强转String不可以
                 walletMapper.doInsert(Integer.parseInt(stringUserId));
                 iouMapper.doInsert(Integer.parseInt(stringUserId));
 
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> getUserInformation(String userName) {
         Map<String, Object> queryUserInfoByUserName = new HashMap<>();
-        queryUserInfoByUserName.put("userName", userName);
+        queryUserInfoByUserName.put("user_name", userName);
         return userMapper.query(queryUserInfoByUserName).get(0);
     }
 
@@ -104,8 +105,8 @@ public class UserServiceImpl implements UserService {
             } else {
 
                 Map<String, Object> queryByPayPassword = new HashMap<>();
-                queryByPayPassword.put("userId", userId);
-                queryByPayPassword.put("userPayPassword", payPassword);
+                queryByPayPassword.put("user_id", userId);
+                queryByPayPassword.put("user_pay_password", payPassword);
 
                 List<Map<String, Object>> isTruePayPassword = userMapper.query(queryByPayPassword);
                 if (isTruePayPassword.isEmpty()) {

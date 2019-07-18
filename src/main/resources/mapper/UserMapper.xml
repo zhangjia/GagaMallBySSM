@@ -5,52 +5,57 @@
 
 <mapper namespace="io.zhangjia.mall.mapper.UserMapper">
 
+<!--********************************************使用动态sql进行多个条件查询*******************************************-->
+
     <select id="query" resultType="map">
 
         SELECT * FROM users
         <where>
             users.user_status !=0
-            <if test="userId != null">
-                AND user_id = #{userId}
+            <if test="user_id != null">
+                AND user_id = #{user_id}
             </if>
-            <if test="userName != null">
-                AND user_name = #{userName}
+            <if test="user_name != null">
+                AND user_name = #{user_name}
             </if>
-            <if test="userPassword != null">
-                AND user_password = #{userPassword}
+            <if test="user_password != null">
+                AND user_password = #{user_password}
             </if>
 
-            <if test="userPayPassword != null">
-                AND user_pay_password = #{userPayPassword}
+            <if test="user_pay_password != null">
+                AND user_pay_password = #{user_pay_password}
             </if>
 
         </where>
 
     </select>
 
-    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="userId">
+<!--********************************************添加用户*******************************************-->
+    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="user_id">
         INSERT INTO users ( user_name, user_password, user_tel, user_mail, user_nick)
 
-         VALUES(#{userName},#{userPassword},
-        <if test="userTel != null">
-            #{userTel},null,
+         VALUES(#{user_name},#{user_password},
+        <if test="user_tel != null">
+            #{user_tel},null,
         </if>
-        <if test="userMail != null">
-           null,#{userMail},
+        <if test="user_mail != null">
+           null,#{user_mail},
         </if>
 
-        <if test="userMail == null and userTel == null">
+        <if test="user_mail == null and user_tel == null">
             null,null,
         </if>
-        #{userName})
+        #{user_name})
     </insert>
 
+<!--********************************************判断支付密码是否设置支付密码*******************************************-->
     <select id="isPayPasswordEmpty" resultType="map" >
-        SELECT * FROM  users WHERE user_id = #{userId} AND user_pay_password IS NOT NULL
+        SELECT * FROM  users WHERE user_id = #{user_id} AND user_pay_password IS NOT NULL
     </select>
 
 
 
+<!--********************************************使用动态sql更新用户信息*******************************************-->
     <update id="updateUserInfo" parameterType="map">
     UPDATE users
     <set>
