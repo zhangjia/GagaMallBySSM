@@ -5,24 +5,24 @@
 
 <mapper namespace="io.zhangjia.mall.mapper.WalletMapper">
 
-
+    <!--********************************************查询钱包信息*******************************************-->
     <select id="queryByUserId" resultType="map">
         SELECT *
         FROM wallet
-        WHERE user_id = #{userId}
+        WHERE user_id = #{user_id}
     </select>
 
-
+    <!--********************************************更新钱包金额*******************************************-->
     <update id="doUpdate">
         UPDATE wallet
         SET wallet_balance = wallet_balance + #{money}
-        WHERE user_id = #{userId}
+        WHERE user_id = #{user_id}
     </update>
-
+    <!--********************************************添加钱包记录*******************************************-->
 
     <insert id="doInsert">
         INSERT INTO wallet (user_id)
-        VALUES (#{userId})
+        VALUES (#{user_id})
     </insert>
 
 
