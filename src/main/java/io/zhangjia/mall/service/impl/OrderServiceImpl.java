@@ -36,8 +36,6 @@ public class OrderServiceImpl implements OrderService {
     public List<Map<String, Object>> getOrders(Integer userId) {
         if (userId != null && !"".equals(userId)) {
             List<Map<String, Object>> maps = orderMapper.queryByUserId(userId);
-
-
             for (Map<String, Object> map : maps) {
 //               获取地址编号
                 Integer addressId = Integer.parseInt(map.get("address_id").toString());

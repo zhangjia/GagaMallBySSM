@@ -73,7 +73,7 @@
                 ORDER BY t2.commodity_min_present_price DESC
             </when>
             <when test="order ==  5">
-                ORDER BY t1.commodity_update_time
+                ORDER BY t1.commodity_update_time DESC
             </when>
         </choose>
 
@@ -100,5 +100,20 @@
             commodity_specs_sales    = commodity_specs_sales + #{commodityCount}
         WHERE commodity_specs_id = #{commoditySpecsId}
     </update>
+
+
+
+    <insert id="doCommodityInsert" parameterType="map" useGeneratedKeys="true" keyProperty="commodity_id">
+        INSERT INTO commodity ( commodity_name, commodity_attribute, commodity_update_time, level1_menu_id, level2_menu_id)
+            VALUES (#{commodity_name}, #{commodity_attribute}, current_timestamp, #{level1_menu_id}, #{level2_menu_id});
+    </insert>
+
+    <insert id="doCommoditySpecsInsert" >
+        INSERT INTO commodity_specs (commodity_id,commodity_specs_value, commodity_specs_original_price, commodity_specs_last_price,
+                                     commodity_specs_present_price, commodity_specs_inventor,  commodity_specs_update_time)
+            VALUES (#{commodity_id},#{commodity_specs_value}, #{commodity_specs_original_price}, #{commodity_specs_last_price},
+                    #{commodity_specs_present_price}, #{commodity_specs_inventor}
+                    ,current_timestamp);
+    </insert>
 
 </mapper>

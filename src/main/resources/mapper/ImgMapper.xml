@@ -28,6 +28,11 @@
     </select>
 
 
+    <insert id="doInsert"  >
+        INSERT INTO img (img_url, img_belong, img_order, img_type)
+        VALUES (#{img_url}, #{img_belong},#{img_order},#{img_type});
+    </insert>
+
 
 
 </mapper>

@@ -218,7 +218,9 @@
 <div class="addres clearfix">
     <c:forEach var="address" items="${requestScope.userAddress}">
 
-        <div class="addre fl">
+        <div class="addre fl  <c:if test="${address.address_status == 2}"> on</c:if>">
+
+
             <p hidden>${address.address_id}</p>
             <div class="tit clearfix">
                 <p class="fl">${address.address_name}

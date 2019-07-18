@@ -47,4 +47,6 @@ public interface CommodityService {
      * @return
      */
     Map<String, Object> updateCount2CommodityDetail(String action, Integer userId, Integer commoditySpecsId,Integer count,Integer val);
+
+    Map<String, Object> addCommodity(Map<String, Object> maps);
 }

@@ -1,5 +1,6 @@
 package io.zhangjia.mall.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface ImgMapper {
      * @return
      */
     List<Map<String,Object>> queryCommodityDetailImgs(Integer commodityId);
+
+
+    Integer doInsert(@Param("img_url") String imgUrl, @Param("img_belong") Integer belong,
+                     @Param("img_order") Integer order/*顺序*/, @Param("img_type") String type);
 }

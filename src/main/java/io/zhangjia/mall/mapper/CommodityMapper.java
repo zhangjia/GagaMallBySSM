@@ -7,11 +7,23 @@ import java.util.Map;
 
 public interface CommodityMapper {
 
+    /*
+
+
+    int doCommodityInsert(Commodity commodity);
+    int doSKUInsert(List<Map<String,Object>> lists) ;
+
+    List<Commodity> queryCommodity4Index();
+    *
+    * */
+
     List<Map<String, Object>> query(Map<String, Object> params);
 
 //    List<Map<String, Object>> queryCommodityImgs(List<Map<String,Object>> commodities);
 
 
+    Integer doCommodityInsert(Map<String,Object> commodity);
+    Integer doCommoditySpecsInsert(Map<String,Object> commoditySpecs);
 
     /**
      * 根据指定规格查询该规则的相关数据

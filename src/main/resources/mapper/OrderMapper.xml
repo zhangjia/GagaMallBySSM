@@ -115,7 +115,7 @@
 
     <update id="doUpdateByDeliverGoods" >
         UPDATE orders
-        SET order_logistics = #{orderLogistics},
+        SET order_logistics = #{logistics},
             order_status    = 2
         WHERE order_id = #{orderId}
 

@@ -2,6 +2,7 @@ package io.zhangjia.mall.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import io.zhangjia.mall.service.CommodityService;
 import io.zhangjia.mall.service.MailCodeService;
 import io.zhangjia.mall.service.PhoneCodeService;
 import io.zhangjia.mall.service.UserService;
@@ -24,9 +25,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class UserController {
@@ -38,6 +37,10 @@ public class UserController {
 
     @Autowired
     private PhoneCodeService phoneCodeService;
+
+
+    @Autowired
+    private CommodityService commodityService;
 
 
     @GetMapping("/login")
@@ -184,23 +187,23 @@ public class UserController {
                                String birthday, String tel, String mail,
                                String password, String payPassword,
                                HttpSession session) {
-        System.out.println("nickname = [" + nickname + "], gender = [" + gender + "], birthday = [" + birthday + "], tel = [" + tel + "], mail = [" + mail + "], password = [" + password + "], payPassword = [" + payPassword );
+        System.out.println("nickname = [" + nickname + "], gender = [" + gender + "], birthday = [" + birthday + "], tel = [" + tel + "], mail = [" + mail + "], password = [" + password + "], payPassword = [" + payPassword);
         Map<String, Object> userBefore = (Map<String, Object>) session.getAttribute("user");
 
-        Map<String,Object> userAfter = new HashMap<>();
-        userAfter.put("user_id",userBefore.get("user_id"));
-        userAfter.put("user_password",password);
-        userAfter.put("user_pay_password",payPassword);
-        userAfter.put("user_tel",tel);
-        userAfter.put("user_mail",mail);
-        userAfter.put("user_nick",nickname);
-        userAfter.put("user_gender",gender);
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+        Map<String, Object> userAfter = new HashMap<>();
+        userAfter.put("user_id", userBefore.get("user_id"));
+        userAfter.put("user_password", password);
+        userAfter.put("user_pay_password", payPassword);
+        userAfter.put("user_tel", tel);
+        userAfter.put("user_mail", mail);
+        userAfter.put("user_nick", nickname);
+        userAfter.put("user_gender", gender);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
-            if(birthday != null) {
+            if (birthday != null) {
                 Date date = sdf.parse(birthday);
-                userAfter.put("user_birthday",date);
+                userAfter.put("user_birthday", date);
                 System.out.println("时间" + userAfter.get("user_birthday"));
             }
 
@@ -210,17 +213,35 @@ public class UserController {
         System.out.println("userAfter = " + userAfter);
         int i = userService.editUserInfo(userAfter);
 //        更新session信息
-        if(i == 1){
-            Map<String,Object> uid = new HashMap<>();
+        if (i == 1) {
+            Map<String, Object> uid = new HashMap<>();
             uid.put("userId", userAfter.get("user_id"));
-            session.setAttribute("user",userService.getUser(uid));
+            session.setAttribute("user", userService.getUser(uid));
         }
-        return "{\"success\":" + (i==1) + "}";
+        return "{\"success\":" + (i == 1) + "}";
     }
 
 
+    @GetMapping("/addCommodity")
+    @ResponseBody
+    public String addCommodity(String commodityName, Integer firstMenuId, Integer secMenuId,
+                               String jsonAttr, String skuRecords,String spt,String spxqt) {
+
+        Map<String, Object> commodity = new HashMap<>();
+        commodity.put("commodity_name", commodityName);
+        commodity.put("level1_menu_id", firstMenuId);
+        commodity.put("level2_menu_id", secMenuId);
 
 
+        commodity.put("jsonAttr", jsonAttr);
+        commodity.put("spt", spt);
+        commodity.put("spxqt", spxqt);
+        commodity.put("skuRecords", skuRecords);
+        System.out.println("进入了addCOm噢地啊是打发斯蒂芬’阿斯蒂芬阿斯蒂芬");
+        commodityService.addCommodity(commodity);
+        return "{\"success\":" + true + "}";
+
+    }
 
 
 }

@@ -9,7 +9,7 @@
 
         SELECT * FROM users
         <where>
-            users.user_status = 1
+            users.user_status !=0
             <if test="userId != null">
                 AND user_id = #{userId}
             </if>
