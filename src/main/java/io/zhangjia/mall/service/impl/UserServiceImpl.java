@@ -86,8 +86,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int editUserInformation(Map<String, Object> user) {
-        return userMapper.updateUserInformation(user);
+    public int editUserInfo(Map<String, Object> user) {
+        return userMapper.updateUserInfo(user);
     }
 
     @Override
@@ -123,6 +123,11 @@ public class UserServiceImpl implements UserService {
     public List<Map<String, Object>> queryUserAll() {
         Map<String, Object> queryUserAll = new HashMap<>();
         return userMapper.query(queryUserAll);
+    }
+
+    @Override
+    public Map<String, Object> getUser(Map<String, Object> params) {
+        return userMapper.query(params).get(0);
     }
 
 

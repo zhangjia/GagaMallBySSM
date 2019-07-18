@@ -47,6 +47,8 @@
             <mvc:mapping path="/orders"/>
             <mvc:mapping path="/order-detail"/>
             <mvc:mapping path="/recharge"/>
+            <mvc:mapping path="/setDefaultAddress"/>
+            <mvc:mapping path="/editUserInfo"/>
 
 <!--            <mvc:mapping path="/**"/>-->
 

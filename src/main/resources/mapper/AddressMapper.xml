@@ -18,8 +18,8 @@
     <insert id="doInsert">
         INSERT INTO address(user_id, address_name, province, city,
                             district, county, address_detail, address_postcode, address_tel)
-        VALUES (#{usre_id}, #{usre_id}, #{usre_id}, #{usre_id}, #{usre_id}, #{usre_id},
-                #{usre_id}, #{usre_id}, #{usre_id});
+        VALUES (#{userId}, #{name}, #{province}, #{city}, #{district}, #{county},
+                #{addressDetail}, #{postCode}, #{tel});
     </insert>
 
 
@@ -37,5 +37,6 @@
     <delete id="cancelDefaultAddress" >
         UPDATE address SET address_status = 1 WHERE address_status = 2 AND user_id = #{userId}
     </delete>
+
 
 </mapper>

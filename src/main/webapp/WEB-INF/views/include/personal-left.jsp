@@ -27,7 +27,7 @@
     </ul>
     <h4 style="font-weight: 900">账户管理</h4>
     <ul>
-        <li><a href="${path}/userInfo?userId=${sessionScope.user.userId}">个人信息</a></li>
+        <li><a href="${path}/userInfo?userId=${sessionScope.user.user_id}">个人信息</a></li>
     </ul>
 <%--    <c:if test="${sessionScope.user.userStatus == 2}">--%>
 <%--        <h4>商品管理</h4>--%>

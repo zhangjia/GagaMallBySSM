@@ -94,24 +94,24 @@
 							<p id="avatar">修改头像</p></a></div>
 						<div class="xx">
 							<h3 class="clearfix"><strong class="fl">基础资料</strong><a href="#" class="fr" id="edit1">编辑</a></h3>
-							<div>用户名：${sessionScope.user.userName}</div>
-							<div>昵  称：${sessionScope.user.userNick}</div>
-							<div>性  别：${sessionScope.user.userGender}</div>
+							<div>用户名：${sessionScope.user.user_name}</div>
+							<div>昵  称：${sessionScope.user.user_nick}</div>
+							<div>性  别：${sessionScope.user.user_gender}</div>
 							<div>等  级：<fmt:formatNumber
-									value="${sessionScope.user.userGrade /100}"
+									value="${sessionScope.user.user_exp / 100}"
 									type="NUMBER"/></div>
-							<div>生  日：<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DATE" /></div>
-							<div>手机号：${sessionScope.user.userTel}</div>
-							<div>邮  箱：${sessionScope.user.userMail}</div>
-							<div>注册时间：<fmt:formatDate value="${sessionScope.user.userRegisterTime}" type="both" /></div>
+							<div>生  日：<fmt:formatDate value="${sessionScope.user.user_birthday}" type="DATE" /></div>
+							<div>手机号：${sessionScope.user.user_tel}</div>
+							<div>邮  箱：${sessionScope.user.user_mail}</div>
+							<div>注册时间：<fmt:formatDate value="${sessionScope.user.user_register_time}" type="both" /></div>
 							<h3>高级设置</h3>
 							<!--<div><span class="fl">银行卡</span><a href="#" class="fr">管理</a></div>-->
 							<div><span class="fl">登录密码</span><a href="#" class="fr" id="edit2">修改</a></div>
-							<c:if test="${sessionScope.user.userPayPassword == null}">
+							<c:if test="${sessionScope.user.user_pay_password == null}">
 								<div><span class="fl">支付密码</span><a href="#" class="fr" id="edit3">添加</a></div>
 
 							</c:if>
-							<c:if test="${sessionScope.user.userPayPassword != null}">
+							<c:if test="${sessionScope.user.user_pay_password != null}">
 								<div><span class="fl">支付密码</span><a href="#" class="fr" id="edit4">修改</a></div>
 
 							</c:if>
@@ -131,7 +131,7 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">昵称</label>
 					<div class="layui-input-block">
-						<input type="text" name="nickname" required  lay-verify="required" placeholder="${sessionScope.user.userNick}" autocomplete="off" class="layui-input">
+						<input type="text" name="nickname" required  lay-verify="required" placeholder="${sessionScope.user.user_nick}" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 
@@ -140,7 +140,7 @@
 					<label class="layui-form-label">生日</label>
 					<div class="layui-input-block">
 						<input readonly="" type="text" class="layui-input" id="jia-user-birthday"
-placeholder="<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DATE" />">
+placeholder="<fmt:formatDate value="${sessionScope.user.user_birthday}" type="DATE" />">
 						<input type="hidden" class="jia-select-birthday" value="" name="birthday">
 					</div>
 				</div>
@@ -190,8 +190,8 @@ placeholder="<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DAT
 
 						console.log(data.field)
 						$.ajax({
-							url:"${path}/editUserInformation",
-							type:"get",
+							url:"${path}/editUserInfo",
+							type:"post",
 							data:{
 								nickname:data.field.nickname,
 								gender:data.field.sex,
@@ -247,11 +247,12 @@ placeholder="<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DAT
 
 					//监听提交
 					form.on('submit(jia-edit-user-password)', function(data){
-
+						console.log("修改密码")
 						console.log(data.field)
 						$.ajax({
-							url:"${path}/editUserPassword",
-							type:"get",
+							<%--url:"${path}/editUserPassword",--%>
+							url:"${path}/editUserInfo",
+							type:"post",
 							data:{
 								password:data.field.password
 							},
@@ -283,7 +284,7 @@ placeholder="<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DAT
 			<div class="layui-form-item">
 				<label class="layui-form-label">支付密码</label>
 				<div class="layui-input-block">
-					<input type="text" name="pay-password" required  lay-verify="required" placeholder="请输入支付密码" autocomplete="off" class="layui-input">
+					<input type="text" name="payPassword" required  lay-verify="required" placeholder="请输入支付密码" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
@@ -308,10 +309,11 @@ placeholder="<fmt:formatDate value="${sessionScope.user.userBirthday}" type="DAT
 
 					console.log(data.field)
 					$.ajax({
-						url:"${path}/editUserPayPassword",
-						type:"get",
+						<%--url:"${path}/editUserPayPassword",--%>
+						url:"${path}/editUserInfo",
+						type:"post",
 						data:{
-							pay-password:data.field.pay-password
+							payPassword:data.field.payPassword
 						},
 						success:function (res) {
 							if(res.success === true){

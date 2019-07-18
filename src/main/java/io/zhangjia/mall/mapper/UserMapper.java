@@ -17,11 +17,12 @@ public interface UserMapper {
     /**
      * 用户注册
      */
-    int doInsert(Map<String, Object> user);
+    Integer doInsert(Map<String, Object> user);
 
 
-    int updateUserInformation(Map<String, Object> user);
+    Integer updateUserInfo(Map<String, Object> user);
 
     Map<String,Object> isPayPasswordEmpty(Integer userId);
+
 
 }

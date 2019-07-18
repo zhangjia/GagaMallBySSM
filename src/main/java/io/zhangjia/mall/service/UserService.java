@@ -24,9 +24,11 @@ public interface UserService {
 
 	Map<String,Object> getUserInformation(String userName);
 //
-	int editUserInformation(Map<String,Object> user);
+	int editUserInfo(Map<String,Object> user);
 //
 	Map<String,Object> judgePayPassword(Integer userId, String RpayPassword);
 //
 	List<Map<String,Object>> queryUserAll();
+
+	Map<String,Object> getUser(Map<String,Object> params);
 }
