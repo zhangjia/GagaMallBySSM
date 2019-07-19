@@ -225,4 +225,12 @@ public class CommodityServiceImpl implements CommodityService {
 
         return results ;
     }
+
+    @Override
+    public List<Map<String, Object>> commodities4Index(Integer size) {
+        Map<String,Object> param = new HashMap<>();
+        param.put("size",size);
+
+        return  commodityMapper.query(param);
+    }
 }

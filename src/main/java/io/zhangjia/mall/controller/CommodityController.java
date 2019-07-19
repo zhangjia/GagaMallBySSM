@@ -30,10 +30,7 @@ public class CommodityController {
     private CommodityService commodityService;
 
 
-    @GetMapping("/index")
-    public String index(){
-        return "index";
-    }
+
 
     /**
      * 查询商品

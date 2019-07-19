@@ -37,18 +37,18 @@
         <ul class="clearfix" id="bott">
 <%--            <li><a href="index.jsp">首页${sessionScope.nav2}</a></li>--%>
             <li><a href="${path}/index">首页</a></li>
-            <c:forEach items="${requestScope.nav}" var="level1Menu">
+            <c:forEach items="${requestScope.nav}" var="nav">
 <%--            <c:forEach items="${sessionScope.firstNav}" var="firstNav">--%>
 
                 <li>
-                    <a href="commodities?level1MenuId=${level1Menu.level1MenuId}&page=1">${level1Menu.level1_menu_chinese_name}</a>
+                    <a href="commodities?level1MenuId=${nav.level1_menu_id}">${nav.level1_menu_chinese_name}</a>
 
                     <div class="sList">
                         <div class="wrapper  clearfix">
-                            <p hidden > ${level1Menu.level2Menu}</p>
-                            <c:forEach items="${level1Menu.level2Menu}" var="secNav">
+                            <p hidden > ${nav.level2_menu}</p>
+                            <c:forEach items="${nav.level2_menu}" var="secNav">
 
-                                <a href="commodities?level2MenuId=${secNav.level2_menu_id}&page=1">
+                                <a href="commodities?level2MenuId=${secNav.level2_menu_id}">
                                     <dl>
                                         <p hidden > ${secNav}</p>
                                         <dd>${secNav.level2_menu_chinese_name}</dd>

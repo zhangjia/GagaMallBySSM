@@ -7,9 +7,9 @@
 
     <resultMap id="level2MenuResultMap" type="map">
 
-        <id column="level1_menu_id" property="level1MenuId"/>
+        <id column="level1_menu_id" property="level1_menu_id"/>
 
-        <collection property="level2Menu"
+        <collection property="level2_menu"
                     ofType="map"
                     select="queryLevel2Menu"
                     column="level1_menu_id"/>

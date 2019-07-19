@@ -71,21 +71,21 @@
 <!------------------------------people------------------------------>
 <div class="people">
     <div class="wrapper">
-        <h2><img src="${path}/static/img/ih3.jpg"/></h2>
+<%--        <h2><img src="${path}/static/img/ih3.jpg"/></h2>--%>
         <div class="pList clearfix tran">
             <c:forEach items="${commodities4Index}" var="com" varStatus="i">
 
 
                 <c:if test="${i.count <= 4}">
-                    <a href="${path}/commodityDetail?commodityId=${com.commodityId}">
+                    <a href="${path}/commodityDetail?commodityId=${com.commodity_id}">
                         <dl>
                             <dt>
                                 <span class="abl"></span>
-                                <img style="width: 268px;height: auto" src="${com.commodityImg[0].IMG_URL}"/>
+                                <img class="jia-index-commodity-img"  src="${com.commodityImgs[0].img_url}"/>
                                 <span class="abr"></span>
                             </dt>
-                            <dd class="jia-index-commodity-name">${com.commodityName}</dd>
-                            <dd><span>￥${com.commodityMinPresentPrice}</span></dd>
+                            <dd class="jia-index-commodity-name">${com.commodity_name}</dd>
+                            <dd><span>￥${com.commodity_min_present_price}</span></dd>
                         </dl>
                     </a>
                 </c:if>
@@ -97,16 +97,16 @@
             <c:forEach items="${commodities4Index}" var="com" varStatus="i">
 
 
-                <c:if test="${i.count > 4 && i.count <=8}">
-                    <a href="${path}/commodityDetail?commodityId=${com.commodityId}">
+                <c:if test="${i.count > 4 and i.count <=8}">
+                    <a href="${path}/commodityDetail?commodityId=${com.commodity_id}">
                         <dl>
                             <dt>
                                 <span class="abl"></span>
-                                <img style="width: 268px;height: auto" src="${com.commodityImg[0].IMG_URL}"/>
+                                <img class="jia-index-commodity-img"  src="${com.commodityImgs[0].img_url}"/>
                                 <span class="abr"></span>
                             </dt>
-                            <dd class="jia-index-commodity-name">${com.commodityName}</dd>
-                            <dd><span>￥${com.commodityMinPresentPrice}</span></dd>
+                            <dd class="jia-index-commodity-name">${com.commodity_name}</dd>
+                            <dd><span>￥${com.commodity_min_present_price}</span></dd>
                         </dl>
                     </a>
                 </c:if>
@@ -118,15 +118,15 @@
 
 
                 <c:if test="${i.count > 8 && i.count <= 12}">
-                    <a href="${path}/commodityDetail?commodityId=${com.commodityId}">
+                    <a href="${path}/commodityDetail?commodityId=${com.commodity_id}">
                         <dl>
                             <dt>
                                 <span class="abl"></span>
-                                <img style="width: 268px;height: auto" src="${com.commodityImg[0].IMG_URL}"/>
+                                <img class="jia-index-commodity-img"  src="${com.commodityImgs[0].img_url}"/>
                                 <span class="abr"></span>
                             </dt>
-                            <dd class="jia-index-commodity-name">${com.commodityName}</dd>
-                            <dd><span>￥${com.commodityMinPresentPrice}</span></dd>
+                            <dd class="jia-index-commodity-name">${com.commodity_name}</dd>
+                            <dd><span>￥${com.commodity_min_present_price}</span></dd>
                         </dl>
                     </a>
                 </c:if>

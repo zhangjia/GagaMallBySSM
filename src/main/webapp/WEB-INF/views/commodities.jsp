@@ -7,7 +7,7 @@
 <head lang="en">
     <meta charset="utf-8"/>
     <title>商品列表</title>
-     <%@ include file="include/public-static-file.jsp" %>
+    <%@ include file="include/public-static-file.jsp" %>
     <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/proList.css"/>
 
@@ -207,37 +207,42 @@
     <%--			<a href="#"><img src=""></a>--%>
 </div>
 <!-----------------address------------------------------->
-<c:if test="${param.firstMenuId != null || param.secMenuId != null}">
-    <div class="address">
-        <div class="wrapper clearfix">
-            <a href="${path}/index">首页</a>
-<%--    ${requestScope.commodities[0]}--%>
-            <c:if test="${param.firstMenuId != null}">
-            <span>/</span>
-                <a href="${path}/commodities?firstMenuId=${requestScope.commodities[0].firstMenuId}&page=1">${requestScope.commodities[0].firstMenuChineseName}</a>
+<%--<c:if test="${param.level1MenuId != null || param.level2MenuId != null}">--%>
+<div class="address">
+    <div class="wrapper clearfix">
+        <a href="${path}/index">首页</a>
+
+        <c:forEach items="${requestScope.nav}" var="nav">
+            <c:if test="${param.level1MenuId == nav.level1_menu_id }">
+                <span>/</span>
+                <a href="${path}/commodities?level1MenuId=${param.level1MenuId}">${nav.level1_menu_chinese_name}</a>
             </c:if>
 
+            <c:forEach items="${nav.level2_menu}" var="nav2">
+                <c:if test="${param.level2MenuId == nav2.level2_menu_id}">
+                    <span>/</span>
+                    <a href="${path}/commodities?level1MenuId=${nav.level1_menu_id}">${nav.level1_menu_chinese_name}</a>
+                    <span>/</span>
+                    <a href="${path}/commodities?level2MenuId=${param.level2MenuId}">${nav2.level2_menu_chinese_name}</a>
+                </c:if>
+            </c:forEach>
 
-            <c:if test="${param.firstMenuId == null}">
-                <span>/</span>
-                <a href="${path}/commodities?firstMenuId=${requestScope.commodities[0].firstMenuId}&page=1">${requestScope.firstMenuChineseName}</a>
-                <span>/</span>
-                <a href="${path}/commodities?secMenuId=${requestScope.commodities[0].secMenuId}&page=1">${requestScope.commodities[0].secMenuChineseName}</a>
-            </c:if>
-        </div>
+
+        </c:forEach>
     </div>
-</c:if>
+</div>
+<%--</c:if>--%>
 <!-------------------current---------------------->
 <div class="current">
     <div class="wrapper clearfix">
-        <c:if test="${param.firstMenuId != null}">
-            <h3 class="fl">${requestScope.commodities[0].firstMenuChineseName}</h3>
+        <c:if test="${param.level1MenuId != null}">
+            <h3 class="fl">${requestScope.commodities[0].menu_chinese_name.level1_menu_chinese_name}</h3>
         </c:if>
 
-        <c:if test="${param.secMenuId != null}">
-            <h3 class="fl">${requestScope.commodities[0].secMenuChineseName}</h3>
+        <c:if test="${param.level2MenuId != null}">
+            <h3 class="fl">${requestScope.commodities[0].menu_chinese_name.level2_menu_chinese_name}</h3>
         </c:if>
-        <c:if test="${param.firstMenuId == null && param.secMenuId == null }">
+        <c:if test="${param.level1MenuId == null && param.level2MenuId == null }">
             <h3 class="fl">全部商品</h3>
         </c:if>
 
@@ -267,11 +272,21 @@
 
 
             <ul class="select">
-                 <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=5"><li class="">新品上市</li> </a>
-             <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=2"><li class="">>销量从高到低 </li> </a>
-            <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=1"><li class="">>销量从低到高</li>  </a>
-               <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=4"><li class="">>价格从高到低</li>  </a>
-              <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=3"><li class="">>价格从低到高 </li> </a>
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=5">
+                    <li class="">新品上市</li>
+                </a>
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=2">
+                    <li class="">>销量从高到低</li>
+                </a>
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=1">
+                    <li class="">>销量从低到高</li>
+                </a>
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=4">
+                    <li class="">>价格从高到低</li>
+                </a>
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=3">
+                    <li class="">>价格从低到高</li>
+                </a>
 
 
             </ul>
@@ -292,21 +307,21 @@
 
     <c:forEach items="${requestScope.commodities}" var="commodity">
         <li>
-<%--            <a href="${path}/commodityDetail?commodityId=${commodity.commodity_id}">--%>
+                <%--            <a href="${path}/commodityDetail?commodityId=${commodity.commodity_id}">--%>
             <a href="${path}/commodityDetail?commodityId=${commodity.commodity_id}">
                 <dl>
                     <dt>
                         <div>
                             <c:forEach items="${commodity.commodityImgs}" var="ct">
-                            <c:if test="${ct.img_order==1}">
-                                <img src="${ct.img_url}"
-                            </c:if>
-                        </c:forEach>
+                                <c:if test="${ct.img_order==1}">
+                                    <img src="${ct.img_url}"
+                                </c:if>
+                            </c:forEach>
 
 
                         </div>
                     </dt>
-<%--                    <dd>${commodity.commodity_name}</dd>--%>
+                        <%--                    <dd>${commodity.commodity_name}</dd>--%>
                     <dd>${commodity.commodity_name}</dd>
 
                     <span class="pro-price">￥${commodity.commodity_min_present_price}</span>
@@ -376,14 +391,22 @@
 
     <ul class="pagination">
 
-        <li class="page-item ${requestScope.pageNum == 1 ?"active" : ""}"><a class="page-link ip" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=1">首页</a></li>
+        <li class="page-item ${requestScope.pageNum == 1 ?"active" : ""}"><a class="page-link ip"
+                                                                             href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=1">首页</a>
+        </li>
         <c:forEach begin="1" end="${requestScope.pages}" varStatus="status">
             <%--下面参数中的所有if都必须放一行--%>
-            <li class="page-item  ${requestScope.pageNum == status.count ?"active" : ""}"><a class="page-link" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${status.count}">${status.count}</a></li>
+            <li class="page-item  ${requestScope.pageNum == status.count ?"active" : ""}"><a class="page-link"
+                                                                                             href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${status.count}">${status.count}</a>
+            </li>
         </c:forEach>
 
-        <li class="page-item ${requestScope.pageNum == requestScope.pages ? "active" : "" }"><a class="page-link ip" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${requestScope.pages}">尾页</a></li>
-        <li class="page-item ${requestScope.pageNum == requestScope.pages ? "active" : "" }"><a class="page-link ip" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if><c:if test="${param.page != null}">page=${param.page+1}</c:if><c:if test="${param.page == null}">page=2</c:if>">下一页</a></li>
+        <li class="page-item ${requestScope.pageNum == requestScope.pages ? "active" : "" }"><a class="page-link ip"
+                                                                                                href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${requestScope.pages}">尾页</a>
+        </li>
+        <li class="page-item ${requestScope.pageNum == requestScope.pages ? "active" : "" }"><a class="page-link ip"
+                                                                                                href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if><c:if test="${param.page != null}">page=${param.page+1}</c:if><c:if test="${param.page == null}">page=2</c:if>">下一页</a>
+        </li>
 
 
     </ul>

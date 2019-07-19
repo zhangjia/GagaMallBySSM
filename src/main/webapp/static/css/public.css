@@ -603,3 +603,11 @@ body {
 	white-space: nowrap;
 	width: 230px;
 }
+.jia-index-commodity-img {
+	width: 268px;
+	height:268px;
+	object-fit: cover;
+}
+.flex-direction-nav {
+	display: none;
+}

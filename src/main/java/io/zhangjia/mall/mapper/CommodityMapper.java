@@ -53,4 +53,6 @@ public interface CommodityMapper {
      */
     Integer updateCommoditySpecs4InventoryAndSales(@Param("commodity_specs_id") Integer commoditySpecsId , @Param("commodity_count") Integer commodityCount);
 
+
+    Map<String,Object> queryMenuNameByCommodity(Integer commodityId);
 }

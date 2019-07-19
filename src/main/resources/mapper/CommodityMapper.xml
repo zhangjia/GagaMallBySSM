@@ -8,6 +8,13 @@
 
     <resultMap id="commodityResultMap" type="map">
         <id column="commodity_id" property="commodity_id"/>
+
+        <association property="menu_chinese_name"
+                     javaType="map"
+                     select="queryMenuNameByCommodity"
+                     column="commodity_id" >
+        </association>
+
         <collection property="commodityImgs"
                     ofType="map"
                     select="io.zhangjia.mall.mapper.ImgMapper.queryCommodityImgs"
@@ -17,6 +24,16 @@
                     select="io.zhangjia.mall.mapper.ImgMapper.queryCommodityDetailImgs"
                     column="commodity_id"/>
     </resultMap>
+
+
+    <select id="queryMenuNameByCommodity" resultType="map" >
+        SELECT level1_menu_chinese_name,level2_menu_chinese_name
+        FROM level1_menu t1,
+             level2_menu t2,
+             commodity t3 WHERE
+             t1.level1_menu_id = t3.level1_menu_id AND t2.level2_menu_id = t3.level2_menu_id
+                 AND t3.commodity_id = #{commodity_id}
+    </select>
 
     <select id="query" resultMap="commodityResultMap">
         /*t1为商品表的所有商品，t2为每个商品规格表，将t1和t2关联，查询出
@@ -49,6 +66,9 @@
 
             <if test="level2_menu_id != null">
                 AND level2_menu_id = #{level2_menu_id}
+            </if>
+            <if test="size != null" >
+                LIMIT #{size}
             </if>
 
         </where>

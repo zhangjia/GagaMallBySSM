@@ -54,4 +54,7 @@ public interface CommodityService {
      * @return
      */
     Map<String, Object> addCommodity(Map<String, Object> maps);
+
+
+    List<Map<String,Object>> commodities4Index(Integer size);
 }
