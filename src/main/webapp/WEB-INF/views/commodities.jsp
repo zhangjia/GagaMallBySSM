@@ -9,6 +9,8 @@
     <title>商品列表</title>
     <%@ include file="include/public-static-file.jsp" %>
     <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+    <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
+    <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/proList.css"/>
 
     <script src="${path}/static/js/pro.js" type="text/javascript" charset="utf-8"></script>
@@ -37,10 +39,10 @@
         <%--                // 如果是在排序页面，点击上一页，则进入这里--%>
         <%--                var lo = location.toString();--%>
         <%--                //将当前页数减一--%>
-        <%--                lo = lo.replace(lo.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=${(param.page)-1}");--%>
+        <%--                lo = lo.replace(lo.slice(lo.indexOf("page="), lo.indexOf(("order"))), "page=${(param.page)-1}");--%>
         <%--                //将之前的order和值都删除--%>
-        <%--                // lo = lo.replace(lo.slice(lo.indexOf("&order")),"");--%>
-        <%--                &lt;%&ndash;location =  lo+ "&order=${param.order}";&ndash;%&gt;--%>
+        <%--                // lo = lo.replace(lo.slice(lo.indexOf("order")),"");--%>
+        <%--                &lt;%&ndash;location =  lo+ "order=${param.order}";&ndash;%&gt;--%>
         <%--                location = lo;--%>
         <%--            }--%>
 
@@ -62,9 +64,9 @@
         <%--            } else {--%>
         <%--                // 如果是在排序页面，点击下一页，则进入这里--%>
         <%--                var lo = location.toString();--%>
-        <%--                lo = lo.replace(lo.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=${(param.page)+1}");--%>
-        <%--                // lo = lo.replace(lo.slice(lo.indexOf("&order")),"");--%>
-        <%--                &lt;%&ndash;location =  lo+ "&order=${param.order}";&ndash;%&gt;--%>
+        <%--                lo = lo.replace(lo.slice(lo.indexOf("page="), lo.indexOf(("order"))), "page=${(param.page)+1}");--%>
+        <%--                // lo = lo.replace(lo.slice(lo.indexOf("order")),"");--%>
+        <%--                &lt;%&ndash;location =  lo+ "order=${param.order}";&ndash;%&gt;--%>
         <%--                location = lo;--%>
         <%--            }--%>
         <%--        }--%>
@@ -82,9 +84,9 @@
         <%--        } else {--%>
         <%--            // 如果是在排序页面，点击尾页，则进入这里--%>
         <%--            var lo = location.toString();--%>
-        <%--            lo = lo.replace(lo.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=${requestScope.commoditiesCount}");--%>
-        <%--            // lo = lo.replace(lo.slice(lo.indexOf("&order")),"");--%>
-        <%--            &lt;%&ndash;location =  lo+ "&order=${param.order}";&ndash;%&gt;--%>
+        <%--            lo = lo.replace(lo.slice(lo.indexOf("page="), lo.indexOf(("order"))), "page=${requestScope.commoditiesCount}");--%>
+        <%--            // lo = lo.replace(lo.slice(lo.indexOf("order")),"");--%>
+        <%--            &lt;%&ndash;location =  lo+ "order=${param.order}";&ndash;%&gt;--%>
         <%--            location = lo;--%>
         <%--        }--%>
 
@@ -97,14 +99,14 @@
         <%--        if (${param.order == null}) {--%>
         <%--            var lo = location.toString();--%>
 
-        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "page=1");--%>
+        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "");--%>
         <%--            location = lo;--%>
         <%--        } else {--%>
         <%--            // 如果是在排序页面，点击首页，则进入这里--%>
         <%--            var lo = location.toString();--%>
-        <%--            lo = lo.replace(lo.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=1");--%>
-        <%--            // lo = lo.replace(lo.slice(lo.indexOf("&order")),"");--%>
-        <%--            &lt;%&ndash;location =  lo+ "&order=${param.order}";&ndash;%&gt;--%>
+        <%--            lo = lo.replace(lo.slice(lo.indexOf("page="), lo.indexOf(("order"))), "");--%>
+        <%--            // lo = lo.replace(lo.slice(lo.indexOf("order")),"");--%>
+        <%--            &lt;%&ndash;location =  lo+ "order=${param.order}";&ndash;%&gt;--%>
         <%--            location = lo;--%>
         <%--        }--%>
 
@@ -117,47 +119,47 @@
         <%--        var lo = location.toString();--%>
 
 
-        <%--        if (lo.indexOf("&order") == -1) {--%>
+        <%--        if (lo.indexOf("order") == -1) {--%>
         <%--            // 直接访问列表时，不带order参数，如果此时点击排序，则进入这里--%>
         <%--            var lo = location.toString();--%>
         <%--            //只要是点击排序，就回到第一页--%>
-        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "page=1");--%>
-        <%--            location = lo + "&order=5";--%>
+        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "");--%>
+        <%--            location = lo + "order=5";--%>
         <%--        } else {--%>
         <%--            //如果已经点了排序，则url中带order参数，此时再次点击排序，则进入这里--%>
-        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("&order")), "");--%>
-        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=1");--%>
-        <%--            location = nowlocaion + "&order=5";--%>
+        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("order")), "");--%>
+        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("order"))), "");--%>
+        <%--            location = nowlocaion + "order=5";--%>
         <%--        }--%>
 
         <%--    });--%>
         <%--    /************************************点击按照价格排序**********************************/--%>
         <%--    $(".order-by-price").click(function () {--%>
         <%--        var lo = location.toString();--%>
-        <%--        if (lo.indexOf("&order") == -1) {--%>
+        <%--        if (lo.indexOf("order") == -1) {--%>
         <%--            var lo = location.toString();--%>
-        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "page=1");--%>
-        <%--            location = lo + "&order=3";--%>
+        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "");--%>
+        <%--            location = lo + "order=3";--%>
         <%--        } else {--%>
 
-        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("&order")), "");--%>
-        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=1");--%>
-        <%--            location = nowlocaion + "&order=3";--%>
+        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("order")), "");--%>
+        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("order"))), "");--%>
+        <%--            location = nowlocaion + "order=3";--%>
         <%--        }--%>
         <%--    });--%>
 
         <%--    /************************************点击按照价格降序排序**********************************/--%>
         <%--    $(".order-by-price-desc").click(function () {--%>
         <%--        var lo = location.toString();--%>
-        <%--        if (lo.indexOf("&order") == -1) {--%>
+        <%--        if (lo.indexOf("order") == -1) {--%>
         <%--            var lo = location.toString();--%>
-        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "page=1");--%>
-        <%--            location = lo + "&order=4";--%>
+        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "");--%>
+        <%--            location = lo + "order=4";--%>
         <%--        } else {--%>
 
-        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("&order")), "");--%>
-        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=1");--%>
-        <%--            location = nowlocaion + "&order=4";--%>
+        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("order")), "");--%>
+        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("order"))), "");--%>
+        <%--            location = nowlocaion + "order=4";--%>
         <%--        }--%>
         <%--    });--%>
 
@@ -165,30 +167,30 @@
         <%--    $(".order-by-sales").click(function () {--%>
 
         <%--        var lo = location.toString();--%>
-        <%--        if (lo.indexOf("&order") == -1) {--%>
+        <%--        if (lo.indexOf("order") == -1) {--%>
         <%--            var lo = location.toString();--%>
-        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "page=1");--%>
-        <%--            location = lo + "&order=1";--%>
+        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "");--%>
+        <%--            location = lo + "order=1";--%>
         <%--        } else {--%>
 
-        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("&order")), "");--%>
-        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=1");--%>
-        <%--            location = nowlocaion + "&order=1";--%>
+        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("order")), "");--%>
+        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("order"))), "");--%>
+        <%--            location = nowlocaion + "order=1";--%>
         <%--        }--%>
         <%--    });--%>
         <%--    /************************************点击按照销量降序排序**********************************/--%>
         <%--    $(".order-by-sales-desc").click(function () {--%>
         <%--        var lo = location.toString();--%>
-        <%--        if (lo.indexOf("&order") == -1) {--%>
+        <%--        if (lo.indexOf("order") == -1) {--%>
         <%--            var lo = location.toString();--%>
-        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "page=1");--%>
-        <%--            location = lo + "&order=2";--%>
+        <%--            lo = lo.replace(lo.slice(lo.indexOf("page=")), "");--%>
+        <%--            location = lo + "order=2";--%>
         <%--        } else {--%>
 
-        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("&order")), "");--%>
+        <%--            var nowlocaion = lo.replace(lo.slice(lo.indexOf("order")), "");--%>
         <%--            //切换排序方式的时候，回到第一页开始展示--%>
-        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("&order"))), "page=1");--%>
-        <%--            location = nowlocaion + "&order=2";--%>
+        <%--            nowlocaion = nowlocaion.replace(nowlocaion.slice(lo.indexOf("page="), lo.indexOf(("order"))), "");--%>
+        <%--            location = nowlocaion + "order=2";--%>
         <%--        }--%>
         <%--    });--%>
 
@@ -272,19 +274,19 @@
 
 
             <ul class="select">
-                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=5">
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>order=5">
                     <li class="">新品上市</li>
                 </a>
-                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=2">
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>order=2">
                     <li class="">>销量从高到低</li>
                 </a>
-                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=1">
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>order=1">
                     <li class="">>销量从低到高</li>
                 </a>
-                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=4">
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>order=4">
                     <li class="">>价格从高到低</li>
                 </a>
-                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>page=1&order=3">
+                <a href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if>order=3">
                     <li class="">>价格从低到高</li>
                 </a>
 
@@ -386,16 +388,16 @@
 <jsp:include page="include/right-sidebar.jsp"></jsp:include>
 <div class="msk"></div>
 
-<div class="page">
+<%--<div class="page">
 
 
     <ul class="pagination">
 
         <li class="page-item ${requestScope.pageNum == 1 ?"active" : ""}"><a class="page-link ip"
-                                                                             href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=1">首页</a>
+                                                                             href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>">首页</a>
         </li>
         <c:forEach begin="1" end="${requestScope.pages}" varStatus="status">
-            <%--下面参数中的所有if都必须放一行--%>
+            &lt;%&ndash;下面参数中的所有if都必须放一行&ndash;%&gt;
             <li class="page-item  ${requestScope.pageNum == status.count ?"active" : ""}"><a class="page-link"
                                                                                              href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${status.count}">${status.count}</a>
             </li>
@@ -410,7 +412,53 @@
 
 
     </ul>
-</div>
+</div>--%>
+<div id="demo2-2" style="text-align: center;"></div>
+<script>
+    function changeUrlArg(url, arg, val){
+        var pattern = arg+'=([^&]*)';
+        var replaceText = arg+'='+val;
+        return url.match(pattern) ? url.replace(eval('/('+ arg+'=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url+'&'+replaceText : url+'?'+replaceText);
+    }
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+
+
+
+        //调用分页
+        laypage.render({
+            elem: 'demo2-2'
+            ,count: '${requestScope.total}'
+            ,theme: '#FFB800',
+            limit:'${requestScope.pageSize}'
+            ,layout: ['count', 'prev', 'page', 'next', , 'refresh', 'skip']
+            ,curr:${param.page == null ? 1 : param.page}
+
+
+            ,
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+
+                //首次不执行
+                if(!first){
+                    var  lo =  location.toString();
+                    lo  = changeUrlArg(lo,"page",obj.curr)
+                    console.log(lo)
+                    location = lo;
+                    // console.log(lo)
+                    // console.log(lo.indexOf("?page="))
+                    // console.log(lo.slice(lo.indexOf("?page=")))
+                    // lo = lo.replace(lo.slice(lo.indexOf("?page=")), "");
+                    // console.log(lo)
+                    // location = lo + "?page=" + obj.curr
+                }
+            }
+        });
+
+    });
+</script>
 <!--footer-->
 <div class="footer">
     <div class="top">

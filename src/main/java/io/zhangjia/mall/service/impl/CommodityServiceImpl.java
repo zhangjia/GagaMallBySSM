@@ -55,7 +55,7 @@ public class CommodityServiceImpl implements CommodityService {
         }
 
         List<Map<String, Object>> commodities = commodityMapper.query(params);
-
+        System.out.println("fenye" + JSON.toJSONString(commodities));
         return commodities;
         /*
          * 未加 PageHelper.startPage(page,4之前，

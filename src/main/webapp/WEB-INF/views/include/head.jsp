@@ -62,7 +62,7 @@
             </c:forEach>
 
             <li>
-                <a href="${path}/commodities?page=1">全部商品</a>
+                <a href="${path}/commodities">全部商品</a>
 
             </li>
         </ul>

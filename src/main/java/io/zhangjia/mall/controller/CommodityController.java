@@ -55,12 +55,16 @@ public class CommodityController {
         if(commodities instanceof Page){
             Page productPage = (Page) commodities;
             System.out.println("CommodityController.list" + JSON.toJSONString(productPage));
+            System.out.println("CommodityController.list" + productPage);
             //当前页数
             int pageNum = productPage.getPageNum();
             //总页数
             int pages = productPage.getPages();
             model.addAttribute("pageNum",pageNum);
             model.addAttribute("pages",pages);
+            model.addAttribute("total",productPage.getTotal());
+            model.addAttribute("pageSize",productPage.getPageSize());
+
         }
         return "commodities";
     }
