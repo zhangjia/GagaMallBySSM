@@ -19,7 +19,7 @@ public interface OrderMapper {
      * @param userId
      * @return
      */
-    List<Map<String,Object>> queryByUserId(Integer userId);
+    List<Map<String,Object>> queryByUserId(@Param("user_id") Integer userId,@Param("order_id") Integer orderId);
 
     /**
      * 查询单个订单中的商品信息

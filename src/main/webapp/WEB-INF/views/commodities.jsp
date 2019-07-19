@@ -293,7 +293,7 @@
     <c:forEach items="${requestScope.commodities}" var="commodity">
         <li>
 <%--            <a href="${path}/commodityDetail?commodityId=${commodity.commodity_id}">--%>
-            <a href="${path}/commodityDetail?commodityId=${commodity.commodityId}">
+            <a href="${path}/commodityDetail?commodityId=${commodity.commodity_id}">
                 <dl>
                     <dt>
                         <div>

@@ -66,7 +66,6 @@
     <select id="queryOrderFreightPrice" resultType="double">
         select IF( (sum(cart.commodity_count * commodity_specs_present_price) &lt; 1000), 10,0)
         order_freight_price
-
         from commodity_specs,
         cart
         where commodity_specs.commodity_specs_id = cart.commodity_specs_id

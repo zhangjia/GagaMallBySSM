@@ -7,7 +7,7 @@
 
 
     <resultMap id="commodityResultMap" type="map">
-        <id column="commodity_id" property="commodityId"/>
+        <id column="commodity_id" property="commodity_id"/>
         <collection property="commodityImgs"
                     ofType="map"
                     select="io.zhangjia.mall.mapper.ImgMapper.queryCommodityImgs"
@@ -37,18 +37,18 @@
         <where>
             t1.commodity_id = t2.cid
             AND t1.commodity_status = 1
-            <if test="commodityId != null">
-                AND commodity_id = #{commodityId}
+            <if test="commodity_id != null">
+                AND commodity_id = #{commodity_id}
             </if>
-            <if test="commodityName != null">
-                AND commodity_name LIKE CONCAT('%',#{commodityName},'%')
+            <if test="commodity_name != null">
+                AND commodity_name LIKE CONCAT('%',#{commodity_name},'%')
             </if>
-            <if test="level1MenuId != null">
-                AND level1_menu_id = #{level1MenuId}
+            <if test="level1_menu_id != null">
+                AND level1_menu_id = #{level1_menu_id}
             </if>
 
-            <if test="level2MenuId != null">
-                AND level2_menu_id = #{level2MenuId}
+            <if test="level2_menu_id != null">
+                AND level2_menu_id = #{level2_menu_id}
             </if>
 
         </where>
@@ -81,14 +81,14 @@
 
     <select id="queryCommoditySpecs" resultType="map" >
 
-        SELECT * FROM commodity_specs WHERE commodity_specs_value = #{specs} AND commodity_specs_status = 1
+        SELECT * FROM commodity_specs WHERE commodity_specs_value = #{commodity_specs_value} AND commodity_specs_status = 1
 
     </select>
 
 
 
     <select id="queryCommoditySpecsInventory" resultType="int">
-        SELECT commodity_specs_inventor  FROM commodity_specs  WHERE  commodity_specs_id = #{commoditySpecsId}
+        SELECT commodity_specs_inventor  FROM commodity_specs  WHERE  commodity_specs_id = #{commodity_specs_id}
     </select>
 
 
@@ -96,9 +96,9 @@
 
     <update id="updateCommoditySpecs4InventoryAndSales" >
         UPDATE commodity_specs
-        SET commodity_specs_inventor = commodity_specs_inventor - #{commodityCount},
-            commodity_specs_sales    = commodity_specs_sales + #{commodityCount}
-        WHERE commodity_specs_id = #{commoditySpecsId}
+        SET commodity_specs_inventor = commodity_specs_inventor - #{commodity_count},
+            commodity_specs_sales    = commodity_specs_sales + #{commodity_count}
+        WHERE commodity_specs_id = #{commodity_specs_id}
     </update>
 
 

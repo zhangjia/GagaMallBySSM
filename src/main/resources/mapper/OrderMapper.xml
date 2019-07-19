@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.zhangjia.mall.mapper.OrderMapper">
-
+    <!--********************************************查询下单页面的商品信息*******************************************-->
     <select id="queryCommodities4Settlement" resultType="map" >
         SELECT *
         FROM cart,
@@ -22,7 +22,7 @@
         AND cart.commodity_specs_id IN (
 #  这里不能写collection=list
         <foreach item="commodity_specs_id"  collection="commodity_specs_id"  separator=",">
-           #{commoditySpecsId}
+           #{commodity_specs_id}
         </foreach>
         )
 
@@ -30,13 +30,58 @@
 
 
 
-
-    <select id="queryByUserId" resultType="map">
-        SELECT * FROM orders WHERE user_id = #{user_id} AND order_status != 0  ORDER BY order_create_time DESC;
+<!--********************************************查询用户的所有订单信息*******************************************-->
+    <select id="queryByUserId" resultMap="queryByUserIdResultMap">
+        SELECT * FROM orders WHERE user_id = #{user_id} AND order_status != 0
+         <if test="order_id != null">
+             AND order_id = #{order_id}
+         </if>
+         ORDER BY order_create_time DESC;
     </select>
 
+    <resultMap id="queryByUserIdResultMap" type="map">
+        <id column="order_id" property="order_id"/>
+        <association property="order_address"
+                     javaType="map"
+                    select="io.zhangjia.mall.mapper.AddressMapper.queryByAddressId"
+                    column="address_id">
+        </association>
+        <association property="order_pay_price"
+                     javaType="map"
+                    select="queryOrderPrice"
+                    column="order_id">
+        </association>
 
 
+        <association property="order_discount_price"
+                     javaType="map"
+                    select="queryOrderDiscountPrice"
+                    column="order_id">
+        </association>
+        <association property="order_original_price"
+                    javaType="map"
+                    select="queryOrderOriginalPrice"
+                    column="order_id" />
+
+        <collection property="order_detail"
+                    ofType="map"
+                    select="queryCommodityByOrderId"
+                    column="order_id">
+        </collection> <!--单标签也可以-->
+
+
+
+    </resultMap>
+    <!--
+    id: resultMap标签的标识。
+    type:返回值的全限定类名，或类型别名
+    子id元素 ，用于设置主键字段与领域模型属性的映射关系
+    column属性 ：指定SQL查询结果的字段名或字段别名
+
+    -->
+
+
+<!--********************************************查询订单详情中的信息*******************************************-->
     <select id="queryCommodityByOrderId" resultType="map">
         SELECT t2.* FROM ORDERS t1,order_detail t2
     WHERE t1.ORDER_ID = t2.ORDER_ID AND t1.ORDER_ID = #{order_id}
@@ -44,6 +89,7 @@
     </select>
 
 
+    <!--********************************************查询该订单需要支付的价格*******************************************-->
     <select id="queryOrderPrice" resultType="double">
         SELECT t2.order_freight_price + t1.price sumprice
         FROM (SELECT order_id,
@@ -55,20 +101,24 @@
              orders t2
         WHERE t1.order_id = t2.order_id
           AND t2.order_status != 0
+
+        /*总支付金额= 运费 + （原价 * 数量 - 优惠）*/
     </select>
 
 
+    <!--********************************************查询订单原价（商品原价 * 商品数量，没有优惠和运费）*******************************************-->
     <select id="queryOrderOriginalPrice" resultType="double">
-        SELECT order_id, SUM(order_detail_commodity_price * order_detail_commodity_count) original_price
+        SELECT /*order_id, */SUM(order_detail_commodity_price * order_detail_commodity_count) original_price
         FROM order_detail
         WHERE order_detail_status != 0
         GROUP BY order_id
         HAVING order_id = #{order_id}
+
     </select>
 
-
+    <!--********************************************查询订单的优惠价格*******************************************-->
     <select id="queryOrderDiscountPrice" resultType="double">
-        SELECT order_id, SUM(order_detail_discounts_price) discount_price
+        SELECT /*order_id,*/ SUM(order_detail_discounts_price) discount_price
         FROM order_detail
         WHERE order_detail_status != 0
         GROUP BY order_id
@@ -78,7 +128,7 @@
 
 
 
-
+    <!--********************************************添加订单*******************************************-->
     <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="order_id">
         INSERT INTO orders (user_id, address_id, order_logistics,
                             order_freight_price, order_pay_type, order_note, order_status)
@@ -87,7 +137,7 @@
 
     </insert>
 
-
+    <!--********************************************添加订单详情*******************************************-->
     <insert id="doInsert4Detail">
         INSERT INTO order_detail( order_id, commodity_specs_id, order_detail_commodity_name,
                                   order_detail_commodity_specs_value,
@@ -100,8 +150,13 @@
                  #{img_url},
                  #{commodity_specs_present_price}, #{order_detail_discount_price},
                 #{commodity_count})
-    </insert>
 
+    /*各种价格都是用queryCommodities4Settlement
+      方法从数据库拿到的，所以不存在前台修改的问题
+        TODO：优惠价格除外，这里设置是0
+      */
+    </insert>
+    <!--********************************************支付后修改订单信息*******************************************-->
     <update id="doUpdateByPay" >
         UPDATE orders
         SET order_pay_type = #{pay_type},
@@ -112,7 +167,7 @@
 
     </update>
 
-
+    <!--********************************************发货后修改订单信息*******************************************-->
     <update id="doUpdateByDeliverGoods" >
         UPDATE orders
         SET order_logistics = #{order_logistics},
@@ -121,7 +176,7 @@
 
     </update>
 
-
+    <!--********************************************下单页面计算各种支付价格*******************************************-->
     <select id="queryTotal" resultType="map">
         SELECT sum(cart.commodity_count) sum_commodity_count,
         sum(cart.commodity_count * commodity_specs.commodity_specs_present_price) sum_commodity_present_price,
@@ -137,6 +192,10 @@
             #{commodity_specs_id}
         </foreach>
         )
+    /*
+        物流价格是从queryOrderFreightPrice
+        中查询到的，所以安全
+    */
 
     </select>
 

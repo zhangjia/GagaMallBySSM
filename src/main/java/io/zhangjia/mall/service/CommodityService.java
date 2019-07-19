@@ -9,9 +9,6 @@ import java.util.Map;
  * 用户的业务层
  */
 public interface CommodityService {
-    /*List<Map<String,Object>> query(Integer commodityId,String commodityName,
-                                   Integer level1MenuId,Integer level2MenuId,
-                                   Integer order);  */
 
     /**
      * 查询商品
@@ -39,7 +36,10 @@ public interface CommodityService {
 
     /**
      * 在商品详情页更改个数
-     * @param action 添加还是喊出
+     * 场景1：点击  > 增加数量
+     * 场景2：点击 < 减少数量
+     * 场景3：input输入数量
+     * @param action 添加还是更改还是输入
      * @param userId 用户ID
      * @param commoditySpecsId 规格ID
      * @param count 个数
@@ -48,5 +48,10 @@ public interface CommodityService {
      */
     Map<String, Object> updateCount2CommodityDetail(String action, Integer userId, Integer commoditySpecsId,Integer count,Integer val);
 
+    /**
+     * 添加商品
+     * @param maps
+     * @return
+     */
     Map<String, Object> addCommodity(Map<String, Object> maps);
 }

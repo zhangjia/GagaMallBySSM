@@ -8,7 +8,9 @@ import java.util.Map;
 public interface CartMapper {
     /**
      * 更新购物车中的商品数量
-     * 场景1：从单个商品的详情页选择n个数量，添加到购物车
+     * 场景：添加购物车时使用，从单个商品的详情页选择n个数量，添加到购物车
+     * 如果添加时购物车已经有改商品，那么在原有数量的基础上 添加n个数量
+     * 如果添加时购物车没有该商品，那么直接添加n个数量到购物车
      * @param param
      * @return
      */
@@ -16,7 +18,7 @@ public interface CartMapper {
 
     /**
      * 更新购物车中商品的数量
-     * 场景1：在购物车中手动输入商品数量
+     * 场景：在购物车中手动输入商品数量
      * @param param
      * @return
      */

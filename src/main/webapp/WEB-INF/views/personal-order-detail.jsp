@@ -64,7 +64,7 @@
 							</c:if>
 								<h3>物流：${order.order_logistics}</h3>
 							</div>
-							<c:forEach items="${order.commodities}" var="commodity" >
+							<c:forEach items="${order.order_detail}" var="commodity" >
 							<div class="clearfix">
 								<a href="#" class="fl"><img class="spxqtsmall" src="${commodity.order_detail_commodity_img}"/></a>
 								<p class="settlement-ellipsis-order-detail">
@@ -72,7 +72,7 @@
                                     <a href="#">¥${commodity.order_detail_commodity_price}×${commodity.order_detail_commodity_count} </a>
 
                                  </p>
-                                <span class="sku-value">${commodity.order_detail_sku_value}</span>
+                                <span class="sku-value">${commodity.order_detail_commodity_specs_value}</span>
 
 							</div>
 							</c:forEach>
@@ -80,9 +80,9 @@
 						</div>
 						<div class="orderList1">
 							<h3>收货信息</h3>
-							<p>姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span>${order.address.address_name}</span></p>
-							<p>联系电话：<span>${order.address.address_tel}</span></p>
-							<p>收货地址：<span>${order.address.address_detail}</span></p>
+							<p>姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span>${order.order_address.address_name}</span></p>
+							<p>联系电话：<span>${order.order_address.address_tel}</span></p>
+							<p>收货地址：<span>${order.order_address.address_detail}</span></p>
 						</div>
 						<div class="orderList1">
 							<h3>支付方式/备注</h3>
@@ -90,11 +90,11 @@
 							<p>备注：<span>${order.order_note}</span></p>
 						</div>
 						<div class="orderList1 hei">
-							<h3><strong>商品原价：</strong><span>${order.originalprice}</span></h3>
+							<h3><strong>商品原价：</strong><span>${order.order_original_price}</span></h3>
 							<p>运费：<span>¥${order.order_freight_price}</span></p>
-							<p>优惠：<span>¥${order.order_detail_discounts_price}</span></p>
+							<p>优惠：<span>¥${order.order_discount_price}</span></p>
 
-							<p>实付金额：<span>¥${order.order_price}</span></p>
+							<p>实付金额：<span>¥${order.order_pay_price}</span></p>
 						</div>
 
 					</div>

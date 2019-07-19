@@ -36,9 +36,8 @@ public class Test {
 ////        List<Map<String,Object>> map = bean.queryUserId();
 //        System.out.println(JSON.toJSONString(bean.queryByUserId(1)));
 
-        Map<String,Object> map = new HashMap<>();
-
-        System.out.println(map == null );
-        System.out.println(map.isEmpty() );
+        OrderMapper bean = context.getBean(OrderMapper.class);
+        List<Map<String, Object>> maps = bean.queryByUserId(1,32);
+        System.out.println(JSON.toJSONString(maps));
     }
 }

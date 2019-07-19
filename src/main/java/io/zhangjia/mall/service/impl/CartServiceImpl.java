@@ -77,13 +77,13 @@ public class CartServiceImpl implements CarService {
 
         Map<String, Object> map = new HashMap<>();
 
-
-//思路整理：
-//             * 先获取当前商品的库存
-//             * 再获取当前商品在当前用户的购物车中数量
-//             * 如果购物车中的数量+1 大于 库存，则失败
-//             * 如果购物车中的数量-1 = 0 。则失败
-//             *
+            /*
+             *思路整理：
+             * 先获取当前商品的库存
+             * 再获取当前商品在当前用户的购物车中数量
+             * 如果购物车中的数量+1 大于 库存，则失败
+             * 如果购物车中的数量-1 = 0 。则失败
+             * */
 
 
 //        获取当前商品的库存
@@ -110,7 +110,7 @@ public class CartServiceImpl implements CarService {
                 if (commodityCount > commoditySpecsInventory) {
                     map.put("error", "超出库存");
                     Map<String,Object> m = new HashMap<>();
-                    m.put("commodity_count",commoditySpecsInventory);
+                    m.put("commodity_count",commoditySpecsInventory); //如果超出库存，则数量修改为库存值
                     m.put("user_id",userId);
                     m.put("commodity_specs_id",commoditySpecsId);
                     cartMapper.doUpdateCartCount(m);

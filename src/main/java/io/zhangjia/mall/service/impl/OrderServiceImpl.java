@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Map<String, Object>> getOrders(Integer userId) {
-        if (userId != null && !"".equals(userId)) {
+/*        if (userId != null && !"".equals(userId)) {
             List<Map<String, Object>> maps = orderMapper.queryByUserId(userId);
             for (Map<String, Object> map : maps) {
 //               获取地址编号
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
                 Integer orderId = Integer.parseInt(map.get("order_id").toString());
                 System.out.println("orderIdzz = " + orderId);
                 Double aDouble = orderMapper.queryOrderPrice(orderId);
-                map.put("order_price", aDouble);
+                map.put("order_pay_price", aDouble);
                 List<Map<String, Object>> maps1 = orderMapper.queryCommodityByOrderId(orderId);
                 map.put("commodities", maps1);
                 Double aDouble1 = orderMapper.queryOrderDiscountPrice(orderId);
@@ -56,12 +56,16 @@ public class OrderServiceImpl implements OrderService {
             return maps;
         } else {
             return null;
-        }
+        }*/
+
+        List<Map<String, Object>> maps = orderMapper.queryByUserId(userId,null);
+        System.out.println("jsonmaps" + JSON.toJSONString(maps));
+        return maps;
     }
 
     @Override
     public Map<String, Object> getOrder(Integer userId, Integer orderId) {
-        System.out.println("1userId = [" + userId + "], orderId = [" + orderId + "]");
+       /* System.out.println("1userId = [" + userId + "], orderId = [" + orderId + "]");
         List<Map<String, Object>> orders = getOrders(userId);
         for (Map<String, Object> m : orders) {
             System.out.println(("m" + JSON.toJSONString(m)));
@@ -72,7 +76,11 @@ public class OrderServiceImpl implements OrderService {
                 return m;
             }
         }
-        return null;
+        return null;*/
+
+        Map<String, Object> map = orderMapper.queryByUserId(userId, orderId).get(0);
+        System.out.println("liuwenlu" + JSON.toJSONString(map));
+        return map;
 
     }
 
@@ -93,9 +101,9 @@ public class OrderServiceImpl implements OrderService {
         int result = 1;
         if(userId != null && !"".equals(userId) &&
                 addressId != null && !"".equals(addressId)) {
-//            判断运费
-            Map<String, Object> total = getTotal(userId, commoditySpecsId);
-            System.out.println("1运费 = " + total);
+////            判断运费
+//            Map<String, Object> total = getTotal(userId, commoditySpecsId);
+//            System.out.println("1运费 = " + total);
             Double orderFreightPrice = cartMapper.queryOrderFreightPrice(userId, commoditySpecsId);
 
             //        1.向订单表插入数据
@@ -117,18 +125,14 @@ public class OrderServiceImpl implements OrderService {
             System.out.println("result0 = " + result);
 //        2.  向订单明细表插入数据
             List<Map<String, Object>> maps = orderMapper.queryCommodities4Settlement(userId, commoditySpecsId);
-//            List<Integer> commoditySpecsIds = new ArrayList<>();
             System.out.println("JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
             for (Map<String, Object> map : maps) {
                 map.put("order_id", params.get("order_id"));
 //            TODO：订单优惠金额，留着做优惠券和京豆使用
-                map.put("order_detail_discount_price", 10);
+                map.put("order_detail_discount_price", 0);
                 System.out.println("JSON.mapmapmapmap= " + JSON.toJSONString(map));
                 result *= orderMapper.doInsert4Detail(map);
                 System.out.println("result1 = " + result);
-//                SKUIDs.add(((BigDecimal) map.get("SKU_ID")).intValue() + "");
-//                commoditySpecsIds.add( (Integer)map.get("commodity_Id"));
-
 
 //                4. 更改库存和销量
                 result *= commodityMapper.updateCommoditySpecs4InventoryAndSales((Integer)map.get("commodity_specs_id"),

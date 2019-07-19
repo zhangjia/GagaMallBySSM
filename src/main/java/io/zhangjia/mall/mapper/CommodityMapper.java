@@ -21,6 +21,13 @@ public interface CommodityMapper {
      * @return
      */
     Integer doCommodityInsert(Map<String,Object> commodity);
+
+
+    /**
+     * 添加商品规格信息
+     * @param commoditySpecs
+     * @return
+     */
     Integer doCommoditySpecsInsert(Map<String,Object> commoditySpecs);
 
     /**
@@ -38,6 +45,12 @@ public interface CommodityMapper {
      */
     Integer queryCommoditySpecsInventory(Integer commoditySpecsId);
 
-    Integer updateCommoditySpecs4InventoryAndSales(@Param("commoditySpecsId") Integer commoditySpecsId , @Param("commodityCount") Integer commodityCount);
+    /**
+     * 更新商品规格的数量和库存
+     * @param commoditySpecsId
+     * @param commodityCount
+     * @return
+     */
+    Integer updateCommoditySpecs4InventoryAndSales(@Param("commodity_specs_id") Integer commoditySpecsId , @Param("commodity_count") Integer commodityCount);
 
 }

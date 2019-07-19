@@ -80,8 +80,6 @@ public class CommodityController {
         model.addAttribute("specs",specs);
         System.out.println("specs = " + specs);
         return "commodity-detail";
-//        return "test";
-
 
     }
 

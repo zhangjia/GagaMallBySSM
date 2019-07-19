@@ -89,10 +89,10 @@
 
                           <li>${order.order_pay_type}</li>
                       </ul>
-                      <p class="fr">订单金额：<span>${order.order_price}</span>元</p>
+                      <p class="fr">订单金额：<span>${order.order_pay_price}</span>元</p>
 
                   </div>
-                  <c:forEach items="${order.commodities}" var="commodity" >
+                  <c:forEach items="${order.order_detail}" var="commodity" >
                       <div class="shohou clearfix">
                           <a href="#" class="fl"><img src="${commodity.order_detail_commodity_img}"/></a>
 

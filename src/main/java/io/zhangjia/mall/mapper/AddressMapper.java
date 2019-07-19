@@ -24,6 +24,7 @@ public interface AddressMapper {
 
     /**
      * 根据收货地址ID查询该收货地址相关信息
+     * 场景1：做修改时的数据回显用
      * @param addressId
      * @return
      */

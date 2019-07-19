@@ -45,7 +45,7 @@ public class MoneyController {
                 System.out.println("heihei" + orderService.getOrder(userId,orderId));
 //                System.out.println("orderService.getOrder(user.getUserId()+\"\",orderId).get(\"ORDERPRICE\") = " + orderService.getOrder(userId,orderId).get("ORDERPRICE"));
 //                System.out.println("orderService.getOrder(user.getUserId()+\"\",orderId).get(\"ORDERPRICE\") = " + orderService.getOrder(userId,orderId).get("ORDERPRICE").getClass());
-                Double money = (Double)orderService.getOrder(userId,orderId).get("order_price");
+                Double money = (Double)orderService.getOrder(userId,orderId).get("order_pay_price");
                 System.out.println("jiajiajiamoney = " + money);
                 if(payType.equals("余额")){
                     result  = walletService.orderPayByBalance(userId, money,orderId);
@@ -57,7 +57,7 @@ public class MoneyController {
 
             } else {
 
-                Double money = (Double)orderService.getOrder(userId, Integer.parseInt(session.getAttribute("order_id").toString())).get("order_price");
+                Double money = (Double)orderService.getOrder(userId, Integer.parseInt(session.getAttribute("order_id").toString())).get("order_pay_price");
                 System.out.println("直接下单页的orderId是 = " + session.getAttribute("order_id"));
                 if(payType.equals("余额")){
                     result  = walletService.orderPayByBalance(userId, money, Integer.parseInt(session.getAttribute("order_id").toString()));
