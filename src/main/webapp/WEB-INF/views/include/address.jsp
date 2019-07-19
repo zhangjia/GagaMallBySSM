@@ -53,16 +53,18 @@
                    console.log(res);
                     $("input[placeholder='姓名']").val(res.address_name);
                     $("input[placeholder='手机号']").val(res.address_tel);
+                    $("input[name='status']").val(res.address_status);
                     $(".address-details").val(res.address_detail);
                     $(".postcode").val(res.address_postcode);
-                    $(".o-p-hide").text(res.province);
-                    $(".o-p-hide").val(res.province);
-                    $(".o-c-hide").text(res.city);
-                    $(".o-c-hide").val(res.city);
-                    $(".o-q-hide").text(res.district);
-                    $(".o-q-hide").val(res.district);
-                    $(".o-x-hide").text(res.county);
-                    $(".o-x-hide").val(res.county);
+
+                    // $(".o-p-hide").text(res.province);
+                    // $(".o-p-hide").val(res.province);
+                    // $(".o-c-hide").text(res.city);
+                    // $(".o-c-hide").val(res.city);
+                    // $(".o-q-hide").text(res.district);
+                    // $(".o-q-hide").val(res.district);
+                    // $(".o-x-hide").text(res.contry);
+                    // $(".o-x-hide").val(res.contry);
 
                 }
         });
@@ -76,6 +78,7 @@
             var name = $("input[placeholder='姓名']").val();
 
             var tel = $("input[placeholder='手机号']").val();
+            var status = $("input[name='status']").val();
 
             var detail = $(".address-details").val();
 
@@ -91,15 +94,18 @@
 
             var xian = $(".option-xian:selected").val();
             /*使用text不能直接==''，使用val可以*/
+            if(xian == '县') {
+                xian = null;
+            }
 
             var addressId = $(this).parent().siblings("p:hidden").text();
             console.log("id" + addressId)
 
-            console.log(xian.length > 1)
-            var detailedAddress = province + " " + city + " " + qu + " " + xian + " " + detail;
+
+
             if (name == '' || tel == '' || detail.length == 0 ||
                 postcode == '' || province == '' || city == '' || qu == '' || xian == ''
-                || province == '省份/自治区' || city == '城市/地区' || qu == '区' || xian == '县') {
+                || province == '省份/自治区' || city == '城市/地区' || qu == '区') {
                 layer.msg("地址不完整");
 
             } else {
@@ -110,12 +116,13 @@
                         name: name,
                         tel: tel,
                         postcode: postcode,
-                        detailedAddress: detailedAddress,
+                        detailedAddress: detail,
                         province: province,
                         city: city,
                         district: qu,
                         country: xian,
                         addressId:addressId,
+                        status:status
 
                     },
                     success: function (res) {
@@ -242,6 +249,7 @@
 
             </div>
             <div class="addCon">
+                <p>${address.province}  ${address.city} ${address.district} ${address.country}</p>
                 <p>${address.address_detail}</p>
                 <p>${address.address_tel}</p>
             </div>
@@ -256,6 +264,8 @@
 <div class="adddz editAddre">
     <form action="#" method="get" class="jia-address-form">
         <p hidden class="jia-address-id"></p>
+
+        <input type="hidden" name="status"/>
         <input type="text" placeholder="姓名" class="on" value="${re}"/>
         <input type="text" placeholder="手机号"/>
         <div class="city">

@@ -17,9 +17,12 @@
 
     <insert id="doInsert">
         INSERT INTO address(user_id, address_name, province, city,
-                            district, county, address_detail, address_postcode, address_tel)
-        VALUES (#{user_id}, #{address_name}, #{province}, #{city}, #{district}, #{county},
-                #{address_detail}, #{address_postcode}, #{address_tel});
+                            district, country, address_detail, address_postcode, address_tel,address_status)
+        VALUES (#{user_id}, #{address_name}, #{province}, #{city}, #{district}, #{country},
+                #{address_detail}, #{address_postcode}, #{address_tel},
+               <if test="address_status != null">#{address_status}</if>
+        <if test="address_status == null">1</if>
+               );
     </insert>
 
     <!--********************************************根据收货地址ID查询该收货地址相关信息*******************************************-->

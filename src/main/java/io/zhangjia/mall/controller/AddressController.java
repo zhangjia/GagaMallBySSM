@@ -31,7 +31,8 @@ public class AddressController {
     @ResponseBody
     public String addAddress(String name, String postcode, String tel, String province,
                              String city, String district, String country,
-                             String detailedAddress, Integer addressId, HttpSession session) {
+                             String detailedAddress, Integer addressId, Integer status,HttpSession session) {
+        System.out.println("name = [" + name + "], postcode = [" + postcode + "], tel = [" + tel + "], province = [" + province + "], city = [" + city + "], district = [" + district + "], country = [" + country + "], detailedAddress = [" + detailedAddress + "], addressId = [" + addressId + "]");
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
         Integer userId = Integer.parseInt(user.get("user_id").toString());
         Map<String, Object> params = new HashMap<>();
@@ -45,6 +46,7 @@ public class AddressController {
         params.put("country", country);
         params.put("address_detail", detailedAddress);
         params.put("address_id", addressId);
+        params.put("address_status", status);
         boolean result = addressService.addUserAddress(params);
         return "{\"success\":" + result + "}";
     }

@@ -82,7 +82,7 @@
 							<h3>收货信息</h3>
 							<p>姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span>${order.order_address.address_name}</span></p>
 							<p>联系电话：<span>${order.order_address.address_tel}</span></p>
-							<p>收货地址：<span>${order.order_address.address_detail}</span></p>
+							<p>收货地址：<span>${order.order_address.province} ${order.order_address.city}  ${order.order_address.district}  ${order.order_address.contry}${order.order_address.address_detail}</span></p>
 						</div>
 						<div class="orderList1">
 							<h3>支付方式/备注</h3>
@@ -107,31 +107,9 @@
 
 	<jsp:include page="include/right-sidebar.jsp"></jsp:include>
 		<!--footer-->
-		<div class="footer">
-			<div class="top">
-				<div class="wrapper">
-					<div class="clearfix">
-						<a href="#2" class="fl"><img src="${path}/static/img/foot1.png"/></a>
-						<span class="fl">7天无理由退货</span>
-					</div>
-					<div class="clearfix">
-						<a href="#2" class="fl"><img src="${path}/static/img/foot2.png"/></a>
-						<span class="fl">15天免费换货</span>
-					</div>
-					<div class="clearfix">
-						<a href="#2" class="fl"><img src="${path}/static/img/foot3.png"/></a>
-						<span class="fl">满599包邮</span>
-					</div>
-					<div class="clearfix">
-						<a href="#2" class="fl"><img src="${path}/static/img/foot4.png"/></a>
-						<span class="fl">手机特色服务</span>
-					</div>
-				</div>
-			</div>
-			<p class="dibu">最家家居&copy;2013-2017公司版权所有 京ICP备080100-44备0000111000号<br />
-			违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
-		</div>
-		<script src="${path}/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+	<jsp:include page="include/bottom.jsp"></jsp:include>
+
+	<script src="${path}/static/js/public.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${path}/static/js/user.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

@@ -7,10 +7,11 @@
 <head lang="en">
     <meta charset="utf-8"/>
     <title>商品列表</title>
-    <%@ include file="include/public-static-file.jsp" %>
-    <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
     <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
+    <%@ include file="include/public-static-file.jsp" %>
     <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+
     <link rel="stylesheet" type="text/css" href="${path}/static/css/proList.css"/>
 
     <script src="${path}/static/js/pro.js" type="text/javascript" charset="utf-8"></script>
@@ -210,9 +211,16 @@
 </div>
 <!-----------------address------------------------------->
 <%--<c:if test="${param.level1MenuId != null || param.level2MenuId != null}">--%>
-<div class="address">
-    <div class="wrapper clearfix">
+
+<%--</c:if>--%>
+<!-------------------current---------------------->
+<div class="current">
+    <div class="wrapper clearfix address">
         <a href="${path}/index">首页</a>
+        <c:if test="${param.level1MenuId == null and  param.level2MenuId == null}" >
+            <span>/</span>
+            <a href="${path}/commodities">全部商品</a>
+        </c:if>
 
         <c:forEach items="${requestScope.nav}" var="nav">
             <c:if test="${param.level1MenuId == nav.level1_menu_id }">
@@ -231,13 +239,7 @@
 
 
         </c:forEach>
-    </div>
-</div>
-<%--</c:if>--%>
-<!-------------------current---------------------->
-<div class="current">
-    <div class="wrapper clearfix">
-        <c:if test="${param.level1MenuId != null}">
+        <%--<c:if test="${param.level1MenuId != null}">
             <h3 class="fl">${requestScope.commodities[0].menu_chinese_name.level1_menu_chinese_name}</h3>
         </c:if>
 
@@ -246,7 +248,7 @@
         </c:if>
         <c:if test="${param.level1MenuId == null && param.level2MenuId == null }">
             <h3 class="fl">全部商品</h3>
-        </c:if>
+        </c:if>--%>
 
 
         <div class="fr choice">
@@ -459,31 +461,8 @@
 
     });
 </script>
-<!--footer-->
-<div class="footer">
-    <div class="top">
-        <div class="wrapper">
-            <div class="clearfix">
-                <a href="#2" class="fl"><img src="${path}/static/img/foot1.png"/></a>
-                <span class="fl">7天无理由退货</span>
-            </div>
-            <div class="clearfix">
-                <a href="#2" class="fl"><img src="${path}/static/img/foot2.png"/></a>
-                <span class="fl">15天免费换货</span>
-            </div>
-            <div class="clearfix">
-                <a href="#2" class="fl"><img src="${path}/static/img/foot3.png"/></a>
-                <span class="fl">满599包邮</span>
-            </div>
-            <div class="clearfix">
-                <a href="#2" class="fl"><img src="${path}/static/img/foot4.png"/></a>
-                <span class="fl">手机特色服务</span>
-            </div>
-        </div>
-    </div>
-    <p class="dibu">最家家居&copy;2013-2017公司版权所有 京ICP备080100-44备0000111000号<br/>
-        违法和不良信息举报电话：188-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
-</div>
+<jsp:include page="include/bottom.jsp"></jsp:include>
+
 
 </body>
 </html>
