@@ -383,6 +383,9 @@
         </c:forEach>
 
         <li class="page-item ${requestScope.pageNum == requestScope.pages ? "active" : "" }"><a class="page-link ip" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if>page=${requestScope.pages}">尾页</a></li>
+        <li class="page-item ${requestScope.pageNum == requestScope.pages ? "active" : "" }"><a class="page-link ip" href="${path}/commodities?<c:if test="${param.level1MenuId != null}" >level1MenuId=${param.level1MenuId}&</c:if><c:if test="${param.level2MenuId != null}" >level2MenuId=${param.level1MenuId}&</c:if><c:if test="${param.commodityName != null}" >commodityName=${param.commodityName}&</c:if><c:if test="${param.order != null}" >order=${param.order}&</c:if><c:if test="${param.page != null}">page=${param.page+1}</c:if><c:if test="${param.page == null}">page=2</c:if>">下一页</a></li>
+
+
     </ul>
 </div>
 <!--footer-->

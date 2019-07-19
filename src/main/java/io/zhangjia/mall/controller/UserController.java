@@ -39,6 +39,7 @@ public class UserController {
 
     /**
      * 打开登录页
+     *
      * @return
      */
     @GetMapping("/login")
@@ -48,28 +49,26 @@ public class UserController {
 
     /**
      * 点击登录按钮进行登录
+     *
      * @return
      */
     @PostMapping(value = "/login", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String doLogin(String userName, String userPassword, String uri, HttpSession session) {
         System.out.println("UserController.doLogin");
-        Map<String, Object> map = userService.login(userName, userPassword); //根据用户名和密码判断登录是否成功
+        Map<String, Object> map = userService.login(userName, userPassword);
         Map<String, Object> json = new HashMap<>();
         if (map.containsKey("user")) {
-            //登录成功，将用户信息存入session
-            session.setAttribute("user", map.get("user"));
+            session.setAttribute("user", map.get("user"));       //登录成功，将用户信息存入session
             json.put("result", true);
-            //不过不是直接登录，将原地址存入uri
             if (uri != null) {
-                json.put("uri", uri);
+                json.put("uri", uri);//如果不是直接登录，将原地址存入uri
             }
         } else {
             Object error = map.get("error");
             json.put("result", false);
             json.put("error", error);
         }
-
         String s = JSON.toJSONString(json);
         System.out.println("doLogins = " + s);
         return s;
@@ -82,40 +81,35 @@ public class UserController {
      */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        //销毁session
-        session.invalidate();
-        //去登录页面
-        return "redirect:index";
+        session.invalidate();//销毁session
+        return "redirect:index"; //去登录页面
     }
 
     /**
-     * 打开注册页
+     * 打开注册页     *
      * @return
      */
     @GetMapping("/register")
     public String register() {
-
         return "register";
     }
 
     /**
      * 点击注册按钮进行注册
+     *
      * @return
      */
     @PostMapping(value = "/register", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String doRegister(String userPassword, String action, String code, HttpSession session, HttpServletRequest request) {
 
-        System.out.println("调用了doRegisger");
-
         Map<String, Object> json = new HashMap<>();
         Map<String, Object> user = new HashMap<>();
 
-//        判断是不是手机号注册
-        if (action.equals("userTel")) {
+
+        if (action.equals("userTel")) {    //判断是不是手机号注册
             System.out.println("\"是手机号登录\" = " + "是手机号登录");
-//            判断输入的验证码是否正确
-            boolean isTruePhoneCode = !code.equals(session.getAttribute("phoneCode"));
+            boolean isTruePhoneCode = !code.equals(session.getAttribute("phoneCode"));// 判断输入的验证码是否正确
             if (isTruePhoneCode) {
                 System.out.println("\"不正确\" = " + "是手机号登录");
                 json.put("result", false);
@@ -126,11 +120,10 @@ public class UserController {
             }
         }
 
-//        判断是不是邮箱注册
-        if (action.equals("userMail")) {
+
+        if (action.equals("userMail")) {// 判断是不是邮箱注册
             System.out.println("\"是Mail登录\" = " + "是Mail登录");
-            //            判断输入的验证码是否正确
-            boolean isTrueMailCode = !code.equals(session.getAttribute("mailCode"));
+            boolean isTrueMailCode = !code.equals(session.getAttribute("mailCode"));  //判断输入的验证码是否正确
             if (isTrueMailCode) {
                 System.out.println("\"不正确\" = " + "是Mail录");
                 json.put("result", false);
@@ -152,9 +145,6 @@ public class UserController {
             session.setAttribute("user", map.get("user"));
             json.put("result", true);
             System.out.println("UserController.doregister");
-            /*if(uri != null){
-                json.put("uri",uri);
-            }*/
         } else {
             Object error = map.get("error");
             json.put("result", false);
@@ -165,6 +155,7 @@ public class UserController {
 
     /**
      * 获取邮件验证码
+     *
      * @param request
      * @return
      */
@@ -182,6 +173,7 @@ public class UserController {
 
     /**
      * 获取手机
+     *
      * @param request
      * @return
      */
@@ -243,9 +235,9 @@ public class UserController {
 
     @GetMapping(value = "/isTrueUserName", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String  isTrueUserName(String username,String action) {
-        Map<String, Object> trueUsername = userService.isTrueUsername(username,action);
-        System.out.println("JSON.toJSONString(trueUsername)"+ JSON.toJSONString(trueUsername));
+    public String isTrueUserName(String username, String action) {
+        Map<String, Object> trueUsername = userService.isTrueUsername(username, action);
+        System.out.println("JSON.toJSONString(trueUsername)" + JSON.toJSONString(trueUsername));
         return JSON.toJSONString(trueUsername);
     }
 
