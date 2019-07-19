@@ -31,4 +31,7 @@ public interface UserService {
 	List<Map<String,Object>> queryUserAll();
 
 	Map<String,Object> getUser(Map<String,Object> params);
+
+
+	Map<String,Object> isTrueUsername(String username,String action);
 }

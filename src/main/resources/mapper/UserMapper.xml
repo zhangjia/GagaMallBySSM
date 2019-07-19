@@ -18,6 +18,12 @@
             <if test="user_name != null">
                 AND user_name = #{user_name}
             </if>
+            <if test="user_mail != null">
+                AND user_mail = #{user_mail}
+            </if>
+            <if test="user_tel != null">
+                AND user_tel = #{user_tel}
+            </if>
             <if test="user_password != null">
                 AND user_password = #{user_password}
             </if>

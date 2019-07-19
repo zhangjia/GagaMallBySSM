@@ -15,9 +15,6 @@ import java.util.Map;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    //	private UserDao userDao = new UserDaoImpl();
-//	private WalletDao walletDao = new WalletDaoImpl();
-//	private IouDao iouDao = new IouDaoImpl();
     @Autowired
     private WalletMapper walletMapper;
     @Autowired
@@ -29,12 +26,11 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> login(String userName, String userPassword) {
         Map<String, Object> params = new HashMap<>();
         params.put("user_name", userName);
-        List<Map<String, Object>> users = userMapper.query(params);
+        List<Map<String, Object>> users = userMapper.query(params); //只根据用户名查询
 
 
         Map<String, Object> map = new HashMap<>();
-//        判断用户名是否存在
-        if (!users.isEmpty()) { //注意这里不能用user != null
+        if (!users.isEmpty()) { // 判断用户名是否存在注意这里不能用user != null
             Map<String, Object> user = users.get(0);
             if (user.get("user_name").equals(userName) && user.get("user_password").equals(userPassword)) {
                 map.put("user", user);
@@ -131,5 +127,42 @@ public class UserServiceImpl implements UserService {
         return userMapper.query(params).get(0);
     }
 
+    @Override
+    public Map<String, Object> isTrueUsername(String username,String action) {
+
+        Map<String,Object> param = new HashMap<>();
+        Map<String,Object> result = new HashMap<>();
+        if(action.equals("login")) {
+            param.put("user_name",username);
+        }
+        param.put(action,username);
+        List<Map<String, Object>> isTrueUserName = userMapper.query(param);
+
+
+        if(isTrueUserName.isEmpty()) {
+            if(action.equals("login")) {
+                result.put("error","用户名不存在哦！");
+            }
+
+        } else {
+            if(action.equals("user_name")) {
+                result.put("error","用户名已存在哦！");
+            }
+            if(action.equals("user_mail")) {
+                result.put("error","邮箱已存在哦！");
+            }
+            if(action.equals("user_tel")) {
+                result.put("error","手机号已存在哦！");
+            }
+
+        }
+        return result;
+    }
+//    TODO：注意，如果用户更改邮箱或者手机号，那么应该要求用户先修改
+    /*
+     * 思路整理，登录的时候，action为login，所以不影响
+     * 注册的时候，username可能为用户名、手机号、邮箱
+     * action可以为user_name,user_mail,user_phone        *
+     * */
 
 }

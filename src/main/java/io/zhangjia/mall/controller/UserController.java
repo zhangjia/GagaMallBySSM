@@ -31,29 +31,30 @@ import java.util.*;
 public class UserController {
     @Autowired
     private UserService userService;
-
     @Autowired
     private MailCodeService mailCodeService;
-
     @Autowired
     private PhoneCodeService phoneCodeService;
 
 
-    @Autowired
-    private CommodityService commodityService;
-
-
+    /**
+     * 打开登录页
+     * @return
+     */
     @GetMapping("/login")
     public String login() {
-
         return "login";
     }
 
+    /**
+     * 点击登录按钮进行登录
+     * @return
+     */
     @PostMapping(value = "/login", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String doLogin(String userName, String userPassword, String uri, Model model, HttpSession session) {
+    public String doLogin(String userName, String userPassword, String uri, HttpSession session) {
         System.out.println("UserController.doLogin");
-        Map<String, Object> map = userService.login(userName, userPassword);
+        Map<String, Object> map = userService.login(userName, userPassword); //根据用户名和密码判断登录是否成功
         Map<String, Object> json = new HashMap<>();
         if (map.containsKey("user")) {
             //登录成功，将用户信息存入session
@@ -74,7 +75,11 @@ public class UserController {
         return s;
     }
 
-
+    /**
+     * 退出登录
+     * @param session
+     * @return
+     */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         //销毁session
@@ -83,12 +88,20 @@ public class UserController {
         return "redirect:index";
     }
 
+    /**
+     * 打开注册页
+     * @return
+     */
     @GetMapping("/register")
     public String register() {
 
         return "register";
     }
 
+    /**
+     * 点击注册按钮进行注册
+     * @return
+     */
     @PostMapping(value = "/register", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String doRegister(String userPassword, String action, String code, HttpSession session, HttpServletRequest request) {
@@ -128,10 +141,6 @@ public class UserController {
             }
         }
 
-//        String uri = request.getParameter("uri");
-//        User user = new User(username,password,null,null,null,null,null,null,null,null,null,null);
-
-
         user.put("user_name", request.getParameter(action));
         user.put("user_password", userPassword);
 
@@ -154,7 +163,11 @@ public class UserController {
         return JSON.toJSONString(json);
     }
 
-
+    /**
+     * 获取邮件验证码
+     * @param request
+     * @return
+     */
     @GetMapping(value = "/getMailCode", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getMailCode(HttpServletRequest request) {
@@ -167,7 +180,11 @@ public class UserController {
         return "{\"success\":" + result + "}";
     }
 
-
+    /**
+     * 获取手机
+     * @param request
+     * @return
+     */
     @GetMapping(value = "/getPhoneCode", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getPhoneCode(HttpServletRequest request) {
@@ -180,6 +197,9 @@ public class UserController {
         return "{\"success\":" + result + "}";
     }
 
+    /**
+     * 修改用户信息
+     */
     @PostMapping(value = "/editUserInfo", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String editUserInfo(String nickname, String gender,
@@ -221,25 +241,12 @@ public class UserController {
     }
 
 
-    @GetMapping("/addCommodity")
+    @GetMapping(value = "/isTrueUserName", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String addCommodity(String commodityName, Integer firstMenuId, Integer secMenuId,
-                               String jsonAttr, String skuRecords,String spt,String spxqt) {
-
-        Map<String, Object> commodity = new HashMap<>();
-        commodity.put("commodity_name", commodityName);
-        commodity.put("level1_menu_id", firstMenuId);
-        commodity.put("level2_menu_id", secMenuId);
-
-
-        commodity.put("jsonAttr", jsonAttr);
-        commodity.put("spt", spt);
-        commodity.put("spxqt", spxqt);
-        commodity.put("skuRecords", skuRecords);
-        System.out.println("进入了addCOm噢地啊是打发斯蒂芬’阿斯蒂芬阿斯蒂芬");
-        commodityService.addCommodity(commodity);
-        return "{\"success\":" + true + "}";
-
+    public String  isTrueUserName(String username,String action) {
+        Map<String, Object> trueUsername = userService.isTrueUsername(username,action);
+        System.out.println("JSON.toJSONString(trueUsername)"+ JSON.toJSONString(trueUsername));
+        return JSON.toJSONString(trueUsername);
     }
 
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ import java.util.Map;
 public class CommodityController {
     @Autowired
     private CommodityService commodityService;
+
 
     @GetMapping("/index")
     public String index(){
@@ -107,6 +109,37 @@ public class CommodityController {
         Map<String, Object> stringObjectMap = commodityService.updateCount2CommodityDetail(action, userId, commoditySpecsId,count,val);
 
         return (JSON.toJSONString(stringObjectMap));
+
+    }
+    /**
+     * 添加商品
+     * @param commodityName
+     * @param firstMenuId
+     * @param secMenuId
+     * @param jsonAttr
+     * @param skuRecords
+     * @param spt
+     * @param spxqt
+     * @return
+     */
+    @GetMapping("/addCommodity")
+    @ResponseBody
+    public String addCommodity(String commodityName, Integer firstMenuId, Integer secMenuId,
+                               String jsonAttr, String skuRecords, String spt, String spxqt) {
+
+        Map<String, Object> commodity = new HashMap<>();
+        commodity.put("commodity_name", commodityName);
+        commodity.put("level1_menu_id", firstMenuId);
+        commodity.put("level2_menu_id", secMenuId);
+
+
+        commodity.put("jsonAttr", jsonAttr);
+        commodity.put("spt", spt);
+        commodity.put("spxqt", spxqt);
+        commodity.put("skuRecords", skuRecords);
+        System.out.println("进入了addCOm噢地啊是打发斯蒂芬’阿斯蒂芬阿斯蒂芬");
+        commodityService.addCommodity(commodity);
+        return "{\"success\":" + true + "}";
 
     }
 }

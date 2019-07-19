@@ -15,6 +15,7 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressMapper addressMapper;
 
+
     @Override
     public List<Map<String, Object>> getUserAddress(Integer userId) {
         List<Map<String, Object>> maps = addressMapper.queryByUserId(userId);

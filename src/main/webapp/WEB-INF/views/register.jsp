@@ -241,6 +241,7 @@
             $("input[name='code']").hide();
             $("input[name='userTel']").hide();
 
+            var action;
             $("select").change(function () {
 
                 $("small[data-bv-result='INVALID']").attr("style", 'display: none');
@@ -253,6 +254,7 @@
                     $("input[name='userTel']").hide();
                     $("input[name='userName']").attr("name", value);
                     $("input[name='userName']").show()
+                    action = 'userName';
 
                 }
                 if (value === 'userTel') {
@@ -263,6 +265,7 @@
                     $("input[name='code']").show();
                     $("input[name='userTel']").show();
                     $(".jia-register-get-code").show();
+                    action = 'userTel';
                 }
                 if (value === 'userMail') {
                     $("input[name='userName']").hide();
@@ -271,6 +274,7 @@
                     $("input[name='code']").show();
                     $("input[name='userMail']").show()
                     $(".jia-register-get-code").show();
+                    action = 'userMail';
                 }
             });
             /*---------------------------------选择用户名结束------------------------------------*/
@@ -327,8 +331,44 @@
 
 
             /*---------------------------------获取验证码结束------------------------------------*/
+            $("input[name='userTel']").blur(function () {
+                var username= $(this).val();
+                isTrueUserName(username,'user_tel');
+
+            });
+            $("input[name='userName']").blur(function () {
+                var username= $(this).val();
+                isTrueUserName(username,'user_name');
+
+            });
+            $("input[name='userMail']").blur(function () {
+                var username= $(this).val();
+                isTrueUserName(username,'user_mail');
+
+
+            });
 
         });
+
+
+        function isTrueUserName(username,action) {
+            $.ajax({
+                url: '${path}/isTrueUserName',
+                data: {
+                    username: username,
+                    action: action
+                },
+                success: function (res) {
+                    if (res.error != null) {
+                        layer.tips(res.error, '.jia-acc', {
+                            tips: [1, '#FF5722'],
+                            anim: 6,
+                            time: 800
+                        });
+                    }
+                }
+            })
+        }
     </script>
 
 </head>
