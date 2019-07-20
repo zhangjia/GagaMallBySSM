@@ -10,6 +10,8 @@
     <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
 </head>
 <script>
+
+
     layui.use('upload', function(){
         var $ = layui.jquery
             ,upload = layui.upload;
@@ -41,6 +43,40 @@
             }
         });
 
+        //多图片上传
+        upload.render({
+            elem: '#test2'
+            ,url: '${path}/upload'
+            ,multiple: true
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                });
+            }
+            ,done: function(res){
+
+
+                //上传完毕
+                if(res.success) {
+                    x(res.url)
+                    return layer.msg("上传成功")
+                }
+            }
+        });
+
+
+        function x(url) {
+            var htm = "";
+            htm += "    <div hidden class='layui-form-item'>";
+            htm += "    <label class='layui-form-label '>商品图</label>";
+            htm += "    <div class='layui-input-block'>";
+            htm += "<input type='text' name='spt' value='"+url+"' required lay-verify='required' placeholder='请输入标题' autocomplete='off' class='layui-input'>"
+            htm += "</div>";
+            htm += "</div>";
+
+            $(".jia-img-upload-hidde").before(htm);
+        }
 
 
     });
@@ -57,6 +93,16 @@
         <p id="demoText"></p>
     </div>
 </div>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend class="jia-img-upload-hidde">上传多张图片</legend>
+</fieldset>
 
+<div class="layui-upload">
+    <button type="button" class="layui-btn" id="test2">多图片上传</button>
+    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+        预览图：
+        <div class="layui-upload-list" id="demo2"></div>
+    </blockquote>
+</div>
 </body>
 </html>

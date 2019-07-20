@@ -85,7 +85,8 @@
         <div class="div-hello" style="padding: 15px;">
             <div>
                 <img style="margin-left: 150px"
-                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561435759814&di=3d9388291c38165dee3afda581558039&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201705%2F05%2F20170505211218_3x8fJ.gif" alt="">
+                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561435759814&di=3d9388291c38165dee3afda581558039&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201705%2F05%2F20170505211218_3x8fJ.gif"
+                     alt="">
             </div>
 
         </div>
@@ -93,7 +94,9 @@
 
             <form class="layui-form" action="">
                 <h2>添加商品</h2>
-
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>商品标题</legend>
+                </fieldset>
                 <div class="layui-form-item">
                     <label class="layui-form-label">标题</label>
                     <div class="layui-input-block">
@@ -101,7 +104,9 @@
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
-
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>商品分类</legend>
+                </fieldset>
                 <div class="layui-form-item">
                     <label class="layui-form-label">一级菜单</label>
                     <div class="layui-input-block">
@@ -110,7 +115,7 @@
                             <option value="">请选择</option>
                             <c:forEach items="${requestScope.nav}" var="nav" varStatus="i">
 
-                                <option value="${nav.level1MenuId}">${nav.level1_menu_chinese_name}</option>
+                                <option value="${nav.level1_menu_id}">${nav.level1_menu_chinese_name}</option>
                             </c:forEach>
 
                         </select>
@@ -126,34 +131,29 @@
                         </select>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">商品图</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="spt" required lay-verify="required" placeholder="请输入标题"
-                               autocomplete="off" class="layui-input">
-                    </div>
+
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>商品图片</legend>
+                </fieldset>
+                <div class="layui-upload">
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                        预览图：
+                        <div class="layui-upload-list" id="demo2"></div>
+                    </blockquote>
+                    <button type="button" class="layui-btn" id="jia-spt-upload">上传商品图</button>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">商品图</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="spt" required lay-verify="required" placeholder="请输入标题"
-                               autocomplete="off" class="layui-input">
-                    </div>
+
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>商品详情图片</legend>
+                </fieldset>
+                <div class="layui-upload">
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                        预览图：
+                        <div class="layui-upload-list" id="demo3"></div>
+                    </blockquote>
+                    <button type="button" class="layui-btn" id="jia-spxqt-upload">上传商品详情图</button>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">商品详情图</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="spxqt" required lay-verify="required" placeholder="请输入标题"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">商品详情图</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="spxqt" required lay-verify="required" placeholder="请输入标题"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
+
 
                 <div class="layui-form-item buttons">
                     <div class="layui-input-block">
@@ -273,6 +273,80 @@
 
     });
 
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+
+
+        //商品图上传
+        upload.render({
+            elem: '#jia-spt-upload'
+            , url: '${path}/upload'
+            , multiple: true
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo2').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img">')
+                });
+            }
+            , done: function (res) {
+                //上传完毕
+                if (res.success) {
+                    addSptUrl4Input(res.url)
+                    return layer.msg("上传成功")
+                }
+            }
+        });
+
+
+        //商品详情图上传
+        upload.render({
+            elem: '#jia-spxqt-upload'
+            , url: '${path}/upload'
+            , multiple: true
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo3').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img">')
+                });
+            }
+            , done: function (res) {
+                //上传完毕
+                if (res.success) {
+                    addSpxqtUrl4Input(res.url)
+                    return layer.msg("上传成功")
+                }
+            }
+        });
+
+
+        function addSptUrl4Input(url) {
+            var htm = "";
+            htm += "    <div hidden class='layui-form-item'>";
+            htm += "    <label class='layui-form-label '>商品图</label>";
+            htm += "    <div class='layui-input-block'>";
+            htm += "<input type='text' name='spt' value='" + url + "' required lay-verify='required' placeholder='请输入标题' autocomplete='off' class='layui-input'>"
+            htm += "</div>";
+            htm += "</div>";
+
+            $("#jia-spt-upload").before(htm);
+        }
+
+        function addSpxqtUrl4Input(url) {
+            var htm = "";
+            htm += "    <div hidden class='layui-form-item'>";
+            htm += "    <label class='layui-form-label '>商品详情图</label>";
+            htm += "    <div class='layui-input-block'>";
+            htm += "<input type='text' name='spxqt' value='" + url + "' required lay-verify='required' placeholder='请输入标题' autocomplete='off' class='layui-input'>"
+            htm += "</div>";
+            htm += "</div>";
+
+
+            $("#jia-spxqt-upload").before(htm);
+        }
+
+    });
+
     $(function () {
         <%--$(".deliverGoods").click(function () {--%>
         <%--    $.ajax({--%>
@@ -337,6 +411,8 @@
 
 
         $(".two").hide();
+
+
 
 
         // $(".shuxing").addClass("layui-btn-disabled");
@@ -661,13 +737,13 @@
                 // $(".secMenuValue").addClass(data.value).removeClass("secMenuValue");
                 //http://localhost:8888/ga/saveOrUpdateCommodity?commodityName=%E6%89%8B%E6%9C%BA&firstMenuId=%E6%95%B0%E7%A0%81%E4%BA%A7%E5%93%81&secMenuId=1&commodityImg=spt&commodityDetails=spxqt&spgg=A&spsx=1&spsx=2&spgg=B&spsx=3&sku-inventory0=1&sku-present-price0=1&sku-inventory1=2&sku-present-price1=2
                 <c:forEach items="${requestScope.nav}" var="nav" varStatus="i">
-                var fid = '${nav.level1MenuId}';
+                var fid = '${nav.level1_menu_id}';
                 console.log(fid)
 
                 if (fid == value) {
                     console.log("sec2")
 
-                    <c:forEach items="${nav.level2Menu}" var="secNav">
+                    <c:forEach items="${nav.level2_menu}" var="secNav">
                     var option = "<option value='${secNav.level2_menu_id}'>${secNav.level2_menu_chinese_name}</option>";
                     $(".secMenuValue").after(option);
                     </c:forEach>
