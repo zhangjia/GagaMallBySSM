@@ -39,4 +39,6 @@ public interface UserMapper {
     Map<String,Object> isPayPasswordEmpty(Integer userId);
 
 
+    String queryUserAvatarUrl(Integer userId);
+
 }

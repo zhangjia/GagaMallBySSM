@@ -29,4 +29,6 @@ public interface ImgMapper {
      */
     Integer doInsert(@Param("img_url") String imgUrl, @Param("img_belong") Integer belong,
                      @Param("img_order") Integer order/*顺序*/, @Param("img_type") String type);
+
+    Integer doUpdateImgStatus(@Param("img_belong") Integer imgBelong,@Param("img_type") String img_type);
 }

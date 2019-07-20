@@ -25,4 +25,6 @@ public interface UserService {
 
 
 	Map<String,Object> isTrueUsername(String username,String action);
+
+	Map<String,Object> editAvatar(String url,Integer userId);
 }

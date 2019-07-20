@@ -1,6 +1,7 @@
 package io.zhangjia.mall.service.impl;
 
 
+import io.zhangjia.mall.mapper.ImgMapper;
 import io.zhangjia.mall.mapper.IouMapper;
 import io.zhangjia.mall.mapper.UserMapper;
 import io.zhangjia.mall.mapper.WalletMapper;
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService {
     private IouMapper iouMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ImgMapper imgMapper;
 
     @Override
     public Map<String, Object> login(String userName, String userPassword) {
@@ -157,6 +160,17 @@ public class UserServiceImpl implements UserService {
 
         }
         return result;
+    }
+
+    @Override
+    public Map<String, Object> editAvatar(String url, Integer userId) {
+        System.out.println("url = [" + url + "], userId = [" + userId + "]");
+        Map<String,Object> map = new HashMap<>();
+        imgMapper.doUpdateImgStatus(userId,"用户头像");
+        Integer result = imgMapper.doInsert(url, userId, 1, "用户头像");
+         map.put("success",result == 1 ? true : false);
+        return  map;
+
     }
 //    TODO：注意，如果用户更改邮箱或者手机号，那么应该要求用户先修改
     /*

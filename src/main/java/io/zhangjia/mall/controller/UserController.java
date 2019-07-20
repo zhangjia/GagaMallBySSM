@@ -59,6 +59,7 @@ public class UserController {
         Map<String, Object> map = userService.login(userName, userPassword);
         Map<String, Object> json = new HashMap<>();
         if (map.containsKey("user")) {
+            System.out.println("JSON.toJSONString(map.get(\"user\")) = " + JSON.toJSONString(map.get("user")));
             session.setAttribute("user", map.get("user"));       //登录成功，将用户信息存入session
             json.put("result", true);
             if (uri != null) {
@@ -241,5 +242,19 @@ public class UserController {
         return JSON.toJSONString(trueUsername);
     }
 
+    @GetMapping(value = "/editAvatar", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String editAvatar(String url,HttpSession session) {
+        System.out.println("url = [" + url + "], session = [" + url + "]");
+        Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
+        Map<String, Object> map = userService.editAvatar(url, userId);
+        if((boolean)map.get("success")) {
+            System.out.println("进入boolean");
+            session.setAttribute("user", userService.getUser(user));
+        }
+        System.out.println("urJSON.toJSONString(map)l = [" + JSON.toJSONString(map) + "]");
+        return JSON.toJSONString(map);
+    }
 
 }

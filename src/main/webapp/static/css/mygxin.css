@@ -21,7 +21,7 @@
 	margin: 0 auto;
 }
 .Bott .zuo h3 p{
-	width: 70%;
+	width: 80%;
 	margin: 0 auto;
 }
 .Bott .zuo h3 p span{
@@ -78,7 +78,7 @@
 	width: 90px;
 	height: 90px;
 	border-radius: 45px;
-	border: 1px solid #e3e3e3;
+	/*border: 1px solid #e3e3e3;*/
 	padding: 1px;
 }
 .Bott .you .tx div p{

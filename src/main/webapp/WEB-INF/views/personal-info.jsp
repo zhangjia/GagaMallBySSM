@@ -83,15 +83,17 @@
 					<h2>个人信息</h2>
 					<div class="gxin">
 						<div class="tx"><a href="#">
-							<c:if test="${sessionScope.user.imgUrl == null}">
+							<c:if test="${sessionScope.user.user_avatar_url == null}">
 								<img class="jia-userAvatar" src="${path}/static/img/tx.png"/>
 
 							</c:if>
-							<c:if test="${sessionScope.user.imgUrl != null}">
-								<img class="jia-userAvatar" src="${sessionScope.user.imgUrl}"/>
+							<c:if test="${sessionScope.user.user_avatar_url != null}">
+								<img class="jia-userAvatar" src="${sessionScope.user.user_avatar_url}"/>
 
 							</c:if>
-							<p id="avatar">修改头像</p></a></div>
+
+
+							<p class="jia-userAvatar"><%--修改头像--%></p></a></div>
 						<div class="xx">
 							<h3 class="clearfix"><strong class="fl">基础资料</strong><a href="#" class="fr" id="edit1">编辑</a></h3>
 							<div>用户名：${sessionScope.user.user_name}</div>
@@ -334,17 +336,7 @@ placeholder="<fmt:formatDate value="${sessionScope.user.user_birthday}" type="DA
 			});
 		</script>
 	</div>
-		<!--修改头像-->
-		<div class="avatar">
-			<div class="clearfix"><a href="#" class="fr gb"><img src="${path}/static/img/icon4.png"/></a></div>
-			<h3>修改头像</h3>
-			<form action="#" method="get">
-				<h4>请上传图片</h4>
-				<input type="button" value="上传头像" />
-				<p>jpg或png，大小不超过2M</p>
-				<input type="submit" value="提交" />
-			</form>
-		</div>
+
 		
 		<!--返回顶部-->
 	<jsp:include page="include/right-sidebar.jsp"></jsp:include>

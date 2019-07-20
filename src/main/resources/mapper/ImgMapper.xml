@@ -33,6 +33,9 @@
         VALUES (#{img_url}, #{img_belong},#{img_order},#{img_type});
     </insert>
 
+    <update id="doUpdateImgStatus" >
+        UPDATE img SET img_status = 0 WHERE img_belong = #{img_belong} AND img_type=#{img_type}
+    </update>
 
 
 </mapper>

@@ -6,7 +6,11 @@
 <head lang="en">
     <meta charset="utf-8"/>
     <title>个人信息</title>
+
     <jsp:include page="include/public-static-file.jsp"/>
+    <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+    <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/mygxin.css"/>
     <script src="${path}/static/js/user.js" type="text/javascript" charset="utf-8"></script>
 
@@ -33,14 +37,16 @@
             <div class="tx clearfix">
                 <div class="fl clearfix">
                     <a href="#" class="fl">
-                        <c:if test="${sessionScope.user.imgUrl == null}">
+
+                        <c:if test="${sessionScope.user.user_avatar_url == null}">
                             <img class="jia-userAvatar" src="${path}/static/img/tx.jpg"/>
 
                         </c:if>
-                        <c:if test="${sessionScope.user.imgUrl != null}">
-                            <img class="jia-userAvatar" src="${sessionScope.user.imgUrl}"/>
+                        <c:if test="${sessionScope.user.user_avatar_url != null}">
+                            <img class="jia-userAvatar" src="${sessionScope.user.user_avatar_url}"/>
 
                         </c:if>
+
                     </a>
                     <p class="fl"><span>${sessionScope.user.user_name}</span><a href="${path}/userInfo?userId=${sessionScope.user.user_id}">修改个人信息></a></p>
                 </div>

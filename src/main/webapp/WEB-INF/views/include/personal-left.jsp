@@ -1,12 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+
+<script>
+    function editAvatar(url) {
+        $.ajax({
+            url:"${path}/editAvatar",
+            data:{
+                url:url
+            },
+            type:"get",
+            success:function (res) {
+               layer.msg("修改成功");
+
+            }
+        });
+    }
+
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            ,url: '${path}/upload'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('.jia-userAvatar').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                console.log(res)
+                //如果上传失败
+                if(res.success){
+                    editAvatar(res.url);
+                    return layer.msg('上传成功');
+                } else {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+
+
+    });
+</script>
 <h3 class="left-h3">
-    <c:if test="${sessionScope.user.imgUrl == null}">
-        <a href="#"><img class="jia-userAvatar" src="${path}/static/img/tx.jpg"/></a>
+
+    <c:if test="${sessionScope.user.user_avatar_url == null}">
+        <a id="test1" href="javascript:;"><img class="jia-userAvatar" src="${path}/static/img/tx.jpg"/></a>
     </c:if>
-    <c:if test="${sessionScope.user.imgUrl != null}">
-        <a href="#"><img class="jia-userAvatar" src="${sessionScope.user.imgUrl}"/></a>
+    <c:if test="${sessionScope.user.user_avatar_url != null}">
+        <a id="test1" href="javascript:;"><img class="jia-userAvatar" src="${sessionScope.user.user_avatar_url}"/></a>
     </c:if>
     <p class="clearfix"><span class="fl jia-person-username">[${sessionScope.user.user_nick}]</span><span class="fr"><a
             href="${path}/logout">[退出登录]</a></span></p>

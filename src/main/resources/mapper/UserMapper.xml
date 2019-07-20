@@ -7,7 +7,7 @@
 
 <!--********************************************使用动态sql进行多个条件查询*******************************************-->
 
-    <select id="query" resultType="map">
+    <select id="query" resultMap="queryResultMap">
 
         SELECT * FROM users
         <where>
@@ -34,6 +34,21 @@
 
         </where>
 
+    </select>
+
+    <resultMap id="queryResultMap" type="map">
+        <id column="user_id" property="user_id"/>
+
+        <association property="user_avatar_url"
+                     javaType="string"
+                     select="queryUserAvatarUrl"
+                     column="user_id" >
+        </association>
+
+    </resultMap>
+
+    <select id="queryUserAvatarUrl" resultType="string" >
+        SELECT img_url FROM img WHERE img_belong = #{user_id} AND img_type = '用户头像' AND img_status != 0
     </select>
 
 <!--********************************************添加用户*******************************************-->
