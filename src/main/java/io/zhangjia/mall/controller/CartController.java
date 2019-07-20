@@ -38,13 +38,13 @@ public class CartController {
     @GetMapping(value = "/addCart", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String addCart(String commoditySpecsValue,
-                          Integer commodityCount, HttpSession session) {
+                          Integer commodityCount, Integer commodityId,HttpSession session) {
 //        HttpSession session = request.getSession();
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
         Integer userId = Integer.parseInt(user.get("user_id").toString());
 
         //先根据json字符串判断是哪个sku表中的商品，并获取该商品的ID
-        Map<String, Object> commoditySpecs = commodityService.getCommoditySpecs(commoditySpecsValue);
+        Map<String, Object> commoditySpecs = commodityService.getCommoditySpecs(commoditySpecsValue,commodityId);
 
 
         Integer commoditySpecsId = (Integer) commoditySpecs.get("commodity_specs_id");

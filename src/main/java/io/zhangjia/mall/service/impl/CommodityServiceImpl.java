@@ -68,9 +68,9 @@ public class CommodityServiceImpl implements CommodityService {
 
 
     @Override
-    public Map<String, Object> getCommoditySpecs(String specs) {
+    public Map<String, Object> getCommoditySpecs(String specs, Integer commodityId) {
 
-        return commodityMapper.queryCommoditySpecs(specs);
+        return commodityMapper.queryCommoditySpecs(specs,commodityId);
     }
 
 

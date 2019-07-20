@@ -6,11 +6,11 @@
 <head lang="en">
     <meta charset="utf-8"/>
     <title>个人信息</title>
+    <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
 
     <jsp:include page="include/public-static-file.jsp"/>
     <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
     <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/mygxin.css"/>
     <script src="${path}/static/js/user.js" type="text/javascript" charset="utf-8"></script>
 

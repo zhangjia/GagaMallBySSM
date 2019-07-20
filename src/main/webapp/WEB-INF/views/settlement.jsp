@@ -69,6 +69,10 @@
                     $.ajax({
                         url: url,
                         type: "get",
+                        data:{
+                            type:'buyNow',
+                            commodityCount:'${param.commodityCount}'
+                        },
 
                         success: function (res) {
                             <%--location = "${path}/pay";--%>

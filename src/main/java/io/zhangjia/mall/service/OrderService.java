@@ -25,7 +25,7 @@ public interface OrderService {
      * @param userId
      */
     int submit(Integer userId, Integer addressId,
-               String orderPayType, String orderNote, Integer[] commoditySpecsId);
+               String orderPayType, String orderNote, Integer[] commoditySpecsId,Integer commodityCount);
 
     /**
      * 获取下单的商品
@@ -34,6 +34,7 @@ public interface OrderService {
      * @return
      */
     List<Map<String, Object>> getCarCommodities4Settlement(Integer userId,Integer[] commoditySpecsId);
+    List<Map<String, Object>> getCarCommodities4SettlementByBuyNow(Integer userId,Integer[] commoditySpecsId);
 
     /**
      * 计算总价
@@ -42,4 +43,7 @@ public interface OrderService {
      * @return
      */
     Map<String, Object> getTotal(Integer userId, Integer[] commoditySpecsId);
+
+
+    Map<String, Object> getTotalByBuyNow(Integer userId, Integer[] commoditySpecsId,Integer commodityCount);
 }

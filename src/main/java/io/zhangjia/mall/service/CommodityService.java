@@ -31,7 +31,7 @@ public interface CommodityService {
      * @param specs 用户的选择的规格
      * @return 该规格相关的数据
      */
-    Map<String,Object>  getCommoditySpecs(String specs);
+    Map<String,Object>  getCommoditySpecs(String specs,Integer commodityId);
 
 
     /**

@@ -102,6 +102,7 @@
     <select id="queryCommoditySpecs" resultType="map" >
 
         SELECT * FROM commodity_specs WHERE commodity_specs_value = #{commodity_specs_value} AND commodity_specs_status = 1
+        AND commodity_id = #{commodity_id}
 
     </select>
 

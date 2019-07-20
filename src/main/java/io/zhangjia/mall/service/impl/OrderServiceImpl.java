@@ -1,7 +1,6 @@
 package io.zhangjia.mall.service.impl;
 
 
-
 import com.alibaba.fastjson.JSON;
 import io.zhangjia.mall.mapper.AddressMapper;
 import io.zhangjia.mall.mapper.CartMapper;
@@ -31,7 +30,6 @@ public class OrderServiceImpl implements OrderService {
     private CommodityMapper commodityMapper;
 
 
-
     @Override
     public List<Map<String, Object>> getOrders(Integer userId) {
 /*        if (userId != null && !"".equals(userId)) {
@@ -58,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
             return null;
         }*/
 
-        List<Map<String, Object>> maps = orderMapper.queryByUserId(userId,null);
+        List<Map<String, Object>> maps = orderMapper.queryByUserId(userId, null);
         System.out.println("jsonmaps" + JSON.toJSONString(maps));
         return maps;
     }
@@ -86,10 +84,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Map<String, Object> getTotal(Integer userId, Integer[] commoditySpecsId) {
-        if(userId != null && !"".equals(userId)) {
+        if (userId != null && !"".equals(userId)) {
             System.out.println("catmmpawer == null " + cartMapper == null);
             Double orderFreightPrice = cartMapper.queryOrderFreightPrice(userId, commoditySpecsId);
-            return orderMapper.queryTotal(orderFreightPrice,userId,commoditySpecsId);
+            return orderMapper.queryTotal(orderFreightPrice, userId, commoditySpecsId);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Map<String, Object> getTotalByBuyNow(Integer userId, Integer[] commoditySpecsId, Integer commodityCount) {
+        if (userId != null && !"".equals(userId)) {
+            Double orderFreightPrice = cartMapper.queryOrderFreightPrice(userId, commoditySpecsId);
+            return orderMapper.queryTotalByBuyNow(orderFreightPrice, userId, commoditySpecsId, commodityCount);
         } else {
             return null;
         }
@@ -97,9 +105,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int submit(Integer userId, Integer addressId,
-                          String orderPayType, String orderNote, Integer[] commoditySpecsId) {
+                      String orderPayType, String orderNote, Integer[] commoditySpecsId, Integer commodityCount) {
+        System.out.println("1111111userId = [" + userId + "], addressId = [" + addressId + "], orderPayType = [" + orderPayType + "], orderNote = [" + orderNote + "], commoditySpecsId = [" + commoditySpecsId + "], commodityCount = [" + commodityCount + "]");
         int result = 1;
-        if(userId != null && !"".equals(userId) &&
+        if (userId != null && !"".equals(userId) &&
                 addressId != null && !"".equals(addressId)) {
 ////            判断运费
 //            Map<String, Object> total = getTotal(userId, commoditySpecsId);
@@ -118,47 +127,82 @@ public class OrderServiceImpl implements OrderService {
             params.put("order_pay_type", "未支付");
             params.put("order_note", orderNote);
             params.put("order_status", 4); //默认是待支付
-            params.put("order_id",null);
+            params.put("order_id", null);
             int orderId = orderMapper.doInsert(params);
             System.out.println("paramsJSON = " + JSON.toJSONString(params));
             result *= orderId;
             System.out.println("result0 = " + result);
 //        2.  向订单明细表插入数据
-            List<Map<String, Object>> maps = orderMapper.queryCommodities4Settlement(userId, commoditySpecsId);
+
+            List<Map<String, Object>> maps = new ArrayList<>();
+            if (commodityCount != null) { //如果是直接购买
+                maps = orderMapper.queryCommodities4SettlementByBuyNow(userId, commoditySpecsId);
+                System.out.println("ga1JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
+
+            } else {
+
+                maps = orderMapper.queryCommodities4Settlement(userId, commoditySpecsId);
+                System.out.println("ga2JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
+            }
             System.out.println("JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
             for (Map<String, Object> map : maps) {
                 map.put("order_id", params.get("order_id"));
 //            TODO：订单优惠金额，留着做优惠券和京豆使用
                 map.put("order_detail_discount_price", 0);
                 System.out.println("JSON.mapmapmapmap= " + JSON.toJSONString(map));
+
+                if (commodityCount != null) {
+                    map.put("commodity_count",commodityCount);
+                }
+
                 result *= orderMapper.doInsert4Detail(map);
                 System.out.println("result1 = " + result);
 
 //                4. 更改库存和销量
-                result *= commodityMapper.updateCommoditySpecs4InventoryAndSales((Integer)map.get("commodity_specs_id"),
-                        Integer.parseInt("" + map.get("commodity_count")));
-                System.out.println("result3 = " + result);
+
+                if (commodityCount != null) {
+                    result *= commodityMapper.updateCommoditySpecs4InventoryAndSales(Integer.parseInt(map.get("commodity_specs_id").toString()),
+                            commodityCount);
+
+                } else {
+                    result *= commodityMapper.updateCommoditySpecs4InventoryAndSales(Integer.parseInt( map.get("commodity_specs_id").toString()),
+                            Integer.parseInt("" + map.get("commodity_count")));
+                    System.out.println("result3 = " + result);
+                }
+
             }
-//        3. 删除购物车中的商品
-            System.out.println("orderserviceSKUIDs = " + commoditySpecsId);
-            result *= cartMapper.doDelete(userId, commoditySpecsId);
+            if (commodityCount == null) {
+//                3. 删除购物车中的商品
+                System.out.println("orderserviceSKUIDs = " + commoditySpecsId);
+                result *= cartMapper.doDelete(userId, commoditySpecsId);
+            }
+//
 //       如果插入成功，将id返回
-           if(result  != 0){
-               return Integer.parseInt(params.get("order_id").toString());
-           } else {
-               return  0;
-           }
+            if (result != 0) {
+                return Integer.parseInt(params.get("order_id").toString());
+            } else {
+                return 0;
+            }
 
         } else {
 
             return 0;
         }
     }
-    @Override
-    public List<Map<String, Object>> getCarCommodities4Settlement(Integer userId,Integer[] commoditySpecsId) {
 
-            System.out.println("uid = " + userId);
-            return orderMapper.queryCommodities4Settlement(userId,commoditySpecsId);
+    @Override
+    public List<Map<String, Object>> getCarCommodities4Settlement(Integer userId, Integer[] commoditySpecsId) {
+
+        System.out.println("uid = " + userId);
+        return orderMapper.queryCommodities4Settlement(userId, commoditySpecsId);
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getCarCommodities4SettlementByBuyNow(Integer userId, Integer[] commoditySpecsId) {
+
+        System.out.println("uid = " + userId);
+        return orderMapper.queryCommodities4SettlementByBuyNow(userId, commoditySpecsId);
 
     }
 }

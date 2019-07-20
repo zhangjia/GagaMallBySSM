@@ -87,9 +87,9 @@ public class CommodityController {
     @PostMapping(value = "/queryCommoditySpecs",produces = "application/json;charset=utf-8")
     @ResponseBody //如果不添加该注解，那么将会是json字符串.jsp
 
-    public String queryCommoditySpecs(String specs) {
+    public String queryCommoditySpecs(String specs,Integer commodityId) {
 
-        Map<String,Object>  maps = commodityService.getCommoditySpecs(specs);
+        Map<String,Object>  maps = commodityService.getCommoditySpecs(specs,commodityId);
         String s = JSON.toJSONString(maps);
         System.out.println("s = " + s);
         return s;

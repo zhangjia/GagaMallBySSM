@@ -5,6 +5,25 @@
 
 <mapper namespace="io.zhangjia.mall.mapper.OrderMapper">
     <!--********************************************查询下单页面的商品信息*******************************************-->
+    <select id="queryCommodities4SettlementByBuyNow" resultType="map" >
+        SELECT *
+        FROM
+        commodity_specs,
+        commodity,
+        img
+        WHERE img.img_type = '商品图'
+        AND img_belong = commodity.commodity_id
+        AND img_order = 1
+        AND commodity_specs.commodity_id = commodity.commodity_id
+        AND commodity_specs_id IN (
+#  这里不能写collection=list
+        <foreach item="commodity_specs_id"  collection="commodity_specs_id"  separator=",">
+           #{commodity_specs_id}
+        </foreach>
+        )
+
+    </select>
+
     <select id="queryCommodities4Settlement" resultType="map" >
         SELECT *
         FROM cart,
@@ -20,9 +39,9 @@
         AND cart.user_id = #{user_id}
         AND cart.commodity_specs_id = commodity_specs.commodity_specs_id
         AND cart.commodity_specs_id IN (
-#  这里不能写collection=list
+        #  这里不能写collection=list
         <foreach item="commodity_specs_id"  collection="commodity_specs_id"  separator=",">
-           #{commodity_specs_id}
+            #{commodity_specs_id}
         </foreach>
         )
 
@@ -83,7 +102,7 @@
 
 <!--********************************************查询订单详情中的信息*******************************************-->
     <select id="queryCommodityByOrderId" resultType="map">
-        SELECT t2.* FROM ORDERS t1,order_detail t2
+        SELECT t2.* FROM orders t1,order_detail t2
     WHERE t1.ORDER_ID = t2.ORDER_ID AND t1.ORDER_ID = #{order_id}
    AND t1.ORDER_STATUS != 0 AND t2.order_detail_status !=0;
     </select>
@@ -198,5 +217,20 @@
     */
 
     </select>
+
+    <select id="queryTotalByBuyNow" resultType="map">
+        SELECT #{commodity_count} sum_commodity_count,
+        #{commodity_count} * commodity_specs.commodity_specs_present_price sum_commodity_present_price,
+        #{commodity_count} * commodity_specs.commodity_specs_present_price + #{order_freight_price} sum_commodity_pay_price
+        FROM commodity_specs
+        WHERE commodity_specs_id IN(
+        <foreach item="commodity_specs_id" collection="commodity_specs_id" separator=",">
+            #{commodity_specs_id}
+        </foreach>
+        )
+
+
+    </select>
+
 
 </mapper>

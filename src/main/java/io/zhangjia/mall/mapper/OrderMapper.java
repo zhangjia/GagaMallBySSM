@@ -13,6 +13,7 @@ public interface OrderMapper {
      * @return
      */
     List<Map<String,Object>> queryCommodities4Settlement(@Param("user_id") Integer userId, @Param("commodity_specs_id") Integer[] commoditySpecsId);
+    List<Map<String,Object>> queryCommodities4SettlementByBuyNow(@Param("user_id") Integer userId, @Param("commodity_specs_id") Integer[] commoditySpecsId);
 
     /**
      * 根据用户ID查询其所有的订单
@@ -89,4 +90,9 @@ public interface OrderMapper {
      * @return
      */
     Map<String,Object> queryTotal(@Param("order_freight_price")Double orderFreightPrice ,@Param("user_id") Integer userId, @Param("commodity_specs_id") Integer[] commoditySpecsId);
+
+    Map<String,Object> queryTotalByBuyNow(@Param("order_freight_price")Double orderFreightPrice ,@Param("user_id") Integer userId,
+                                          @Param("commodity_specs_id") Integer[] commoditySpecsId,@Param("commodity_count") Integer commodityCount);
+
+
 }

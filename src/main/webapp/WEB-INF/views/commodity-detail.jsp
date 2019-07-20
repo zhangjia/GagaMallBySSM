@@ -69,7 +69,8 @@
                         url: "${path}/queryCommoditySpecs",
                         type: "post",
                         data: {
-                            specs: JSON.stringify(j)
+                            specs: JSON.stringify(j),
+                            commodityId:${param.commodityId}
                         },
                         success: function (res) {
 
@@ -78,6 +79,8 @@
                            $(".commodity-price").text('￥' + res.commodity_specs_present_price);
                            $(".inventory").text(res.commodity_specs_inventor);
                            $(".sale").text(res.commodity_specs_sales);
+
+                           $(".jia-commodity-detail-specs-id").val(res.commodity_specs_id);
                         }
                     });
                 } else {
@@ -107,7 +110,8 @@
                         type: "get",
                         data: {
                             commoditySpecsValue: commoditySpecsValue,
-                            commodityCount: commodityCount
+                            commodityCount: commodityCount,
+                            commodityId:${param.commodityId}
                         },
                         success: function (res) {
                             console.log(res);
@@ -218,6 +222,15 @@
                 } else {
                     $(thiss).siblings("input").val(--nowCartCount);
                 }
+            });
+
+            $(".jia-commodity-buy-now").click(function () {
+                var commodityCount = $(".jia-commodity-detail-num").val();
+                var commoditySpecsId = $(".jia-commodity-detail-specs-id").val();;
+                console.log(commodityCount)
+                console.log(commoditySpecsId)
+                console.log('${path}')
+                location = "${path}"+ "/settlement?commoditySpecsId=" + commoditySpecsId + "&commodityCount=" +commodityCount + "&type=buyNow";
             });
 
 
@@ -341,7 +354,8 @@
 
                 </div>
                 <div class="btns clearfix">
-                    <a href="#2"><p class="buy fl">立即购买</p></a>
+                    <input type="hidden" value="" class="jia-commodity-detail-specs-id">
+                    <a class="jia-commodity-buy-now" href="javascript:;"><p class="buy fl">立即购买</p></a>
                     <%--                    <a href="javascript:;"><p class="cart fr add-cart">加入购物车</p></a>--%>
                     <a href="javascript:;"><span class="add-cart">加入购物车</span></a>
                 </div>

@@ -30,7 +30,8 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/settlement")
-    public String settlement(Integer[] commoditySpecsId, HttpSession session, Model model) {
+    public String settlement(Integer[] commoditySpecsId, String type,Integer commodityCount,HttpSession session, Model model) {
+        System.out.println("commoditySpecsId = [" + commoditySpecsId + "], type = [" + type + "], session = [" + session + "], model = [" + model + "]");
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
         Integer userId = Integer.parseInt(user.get("user_id").toString());
 
@@ -38,14 +39,25 @@ public class OrderController {
         List<Map<String, Object>> userAddress = addressService.getUserAddress(userId);
         System.out.println("userAddressjson = " + JSON.toJSONString(userAddress));
         List<Map<String, Object>> commoditySpecs = orderService.getCarCommodities4Settlement(userId, commoditySpecsId);
+        List<Map<String, Object>> commoditySpecsByBuyNow = orderService.getCarCommodities4SettlementByBuyNow(userId, commoditySpecsId);
         System.out.println("commoditySKUsjson = " + JSON.toJSONString(commoditySpecs));
 
         Map<String, Object> total = orderService.getTotal(userId, commoditySpecsId);
+        Map<String, Object> totalByBuyNow = orderService.getTotalByBuyNow(userId, commoditySpecsId, commodityCount);
+        System.out.println("JSON.toJSONString(totalByBuyNow) = " + JSON.toJSONString(totalByBuyNow));
         System.out.println("total = " + total);
 
+
         model.addAttribute("userAddress", userAddress);
-        model.addAttribute("commoditySpecs", commoditySpecs);
+
+
+        if(("buyNow").equals(type)) { //如果是直接购买
+            model.addAttribute("commoditySpecs", commoditySpecsByBuyNow);
+            model.addAttribute("total", totalByBuyNow);
+        } else { //如果是从购物车下单
         model.addAttribute("total", total);
+            model.addAttribute("commoditySpecs", commoditySpecs);
+        }
 
         return "settlement";
 
@@ -54,13 +66,21 @@ public class OrderController {
 
     @GetMapping(value = "/placeOrder", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String placeOrder(Integer[] commoditySpecsId, Integer addressId, String note, HttpSession session) {
+    public String placeOrder(Integer[] commoditySpecsId, Integer addressId, String note, String type,Integer commodityCount, HttpSession session) {
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
         Integer userId = Integer.parseInt(user.get("user_id").toString());
         System.out.println("submitSKUIds = " + commoditySpecsId);
         System.out.println("addressIdsubmit = " + addressId);
         System.out.println("note = " + note);
-        Integer orderId = orderService.submit(userId, addressId, "未支付", note, commoditySpecsId);
+        Integer orderId;
+        if("buyNow".equals(type)) {
+            System.out.println("直接购买下单");
+            orderId  = orderService.submit(userId, addressId, "未支付", note, commoditySpecsId,commodityCount);
+
+        } else {
+            System.out.println("普通购买下单");
+             orderId = orderService.submit(userId, addressId, "未支付", note, commoditySpecsId,null);
+        }
         System.out.println("插入的订单记录ID是 = " + orderId);
 //        向session中插入订单Id
         session.setAttribute("order_id", orderId);
