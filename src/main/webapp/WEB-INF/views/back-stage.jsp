@@ -24,6 +24,27 @@
     <script src="${path}/static/js/public.js" type="text/javascript" charset="utf-8"></script>
     <script src="${path}/static/js/user.js" type="text/javascript" charset="utf-8"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+        .layui-upload {
+            margin-left: 110px;
+        }
+        .layui-quote-nm {
+            border-style: solid;
+            border-width: 1px 1px 1px 1px;
+            background: 0 0;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-color: #1E9FFF;;
+            color: #fff;
+        }
+
+        .layui-upload-list img{
+            width: 268px;
+            height:268px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <body class="layui-layout-body">
@@ -140,7 +161,7 @@
                         预览图：
                         <div class="layui-upload-list" id="demo2"></div>
                     </blockquote>
-                    <button type="button" class="layui-btn" id="jia-spt-upload">上传商品图</button>
+                    <button type="button" class="layui-btn layui-btn-normal" id="jia-spt-upload">上传商品图</button>
                 </div>
 
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
@@ -151,16 +172,27 @@
                         预览图：
                         <div class="layui-upload-list" id="demo3"></div>
                     </blockquote>
-                    <button type="button" class="layui-btn" id="jia-spxqt-upload">上传商品详情图</button>
+                    <button type="button" class="layui-btn layui-btn-normal" id="jia-spxqt-upload">上传商品详情图</button>
                 </div>
 
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>商品规格</legend>
+                </fieldset>
+                <div class="layui-form-item">
+                    <p hidden class="jia-spgg-add"></p>
+                    <label class="layui-form-label ">标题</label>
 
-                <div class="layui-form-item buttons">
                     <div class="layui-input-block">
-                        <button type="button" class="layui-btn  layui-btn-warm guige">添加规格</button>
-                        <button type="button" class="layui-btn  layui-btn-warm shuxing">添加属性</button>
-                        <button type="button" class="layui-btn  layui-btn-normal bianli">规格确定</button>
-                        <button class="layui-btn " lay-submit lay-filter="formDemo">立即提交</button>
+                        <button type="button" class="layui-btn  layui-btn-normal guige">添加规格</button>
+                        <button type="button" class="layui-btn  layui-btn-normal shuxing">添加属性</button>
+                        <button type="button" class="layui-btn  layui-btn-danger bianli">规格确定</button>
+                    </div>
+                </div>
+
+                <div class="layui-form-item buttons" style="text-align: center">
+                    <div class="layui-input-block">
+
+                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">立即提交</button>
                         <%--                        <button type="button " class="layui-btn  layui-btn-warm submits">提交</button>--%>
 
                         <button type="reset" class="layui-btn layui-btn-danger">重置</button>
@@ -434,7 +466,7 @@
                 htm += "</div>";
 
 
-                $('.buttons').before(htm);
+                $('.jia-spgg-add').before(htm);
             }
             // $(".guige").addClass("layui-btn-disabled");
 
