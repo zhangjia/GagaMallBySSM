@@ -95,4 +95,13 @@ public interface OrderMapper {
                                           @Param("commodity_specs_id") Integer[] commoditySpecsId,@Param("commodity_count") Integer commodityCount);
 
 
+   Integer doUpdate4OrderStatus(@Param("order_id")Integer orderId,
+                                @Param("order_status")Integer status,
+                                @Param("user_id")Integer userId);
+
+
+    Integer doUpdate4OrderDetailStatus(@Param("order_detail_id")Integer OrderDetailId,
+                                 @Param("order_detail_status")Integer status,
+                                 @Param("order_id")Integer orderId);
+
 }

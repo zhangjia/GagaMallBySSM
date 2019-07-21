@@ -46,4 +46,7 @@ public interface OrderService {
 
 
     Map<String, Object> getTotalByBuyNow(Integer userId, Integer[] commoditySpecsId,Integer commodityCount);
+
+
+    Integer doReceive(Integer orderId, Integer userId);
 }

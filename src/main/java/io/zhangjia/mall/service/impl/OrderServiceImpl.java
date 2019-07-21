@@ -104,6 +104,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Integer doReceive(Integer orderId, Integer userId) {
+       return orderMapper.doUpdate4OrderStatus(orderId,3,userId);
+    }
+
+    @Override
     public int submit(Integer userId, Integer addressId,
                       String orderPayType, String orderNote, Integer[] commoditySpecsId, Integer commodityCount) {
         System.out.println("1111111userId = [" + userId + "], addressId = [" + addressId + "], orderPayType = [" + orderPayType + "], orderNote = [" + orderNote + "], commoditySpecsId = [" + commoditySpecsId + "], commodityCount = [" + commodityCount + "]");

@@ -261,16 +261,19 @@
                                                 <a class="jia-id-myorder-pay" href="javascript:;">待发货</a>
                                             </c:if>
                                             <c:if test="${order.order_status == 2}">
-                                                <a href="myprod.html2">已发货</a>
+                                                <a href="myprod.html2">待收货</a>
                                             </c:if>
-                                            <c:if test="${order.order_status == 3}">
+                                            <c:if test="${order.order_status == 3 and commodity.order_detail_status!=6}">
                                                 <a href="myprod.html3">待评价</a>
                                             </c:if>
                                             <c:if test="${order.order_status == 4}">
                                                 <a href="javascript:;">待支付</a>
                                             </c:if>
                                             <c:if test="${order.order_status == 5}">
-                                                <a href="myprod.html">已关闭</a>
+                                                <a href="javascript:;">已关闭</a>
+                                            </c:if>
+                                            <c:if test="${order.order_status == 3 and commodity.order_detail_status==6}">
+                                                <a href="javascript:;">已完成</a>
                                             </c:if>
                                             <a href="${path}/orderDetails?orderId=${order.order_id}">订单详情</a>
                                         </p>

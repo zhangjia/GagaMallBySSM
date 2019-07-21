@@ -72,7 +72,7 @@
     <ul>
         <li><a href="${path}/cart">我的购物车</a></li>
         <li><a href="${path}/orders">我的订单</a></li>
-        <li><a href="myprod.jsp">评价晒单</a></li>
+        <li><a href="${path}/review">评价晒单</a></li>
     </ul>
     <h4 style="font-weight: 900">个人中心</h4>
     <ul>

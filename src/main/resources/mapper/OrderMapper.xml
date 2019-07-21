@@ -77,10 +77,14 @@
                     select="queryOrderDiscountPrice"
                     column="order_id">
         </association>
+
+
         <association property="order_original_price"
                     javaType="map"
                     select="queryOrderOriginalPrice"
                     column="order_id" />
+
+
 
         <collection property="order_detail"
                     ofType="map"
@@ -192,6 +196,21 @@
         SET order_logistics = #{order_logistics},
             order_status    = 2
         WHERE order_id = #{order_id}
+
+    </update>
+
+    <update id="doUpdate4OrderStatus" >
+        UPDATE orders
+        SET order_status  = #{order_status}
+        WHERE order_id = #{order_id} AND user_id = #{user_id}
+
+    </update>
+
+
+    <update id="doUpdate4OrderDetailStatus" >
+        UPDATE order_detail
+        SET order_detail_status  = #{order_detail_status}
+        WHERE order_detail_id = #{order_detail_id} AND order_id = #{order_id}
 
     </update>
 

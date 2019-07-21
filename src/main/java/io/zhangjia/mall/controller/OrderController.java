@@ -115,6 +115,14 @@ public class OrderController {
 
 
 
+    @GetMapping(value = "/doReceive", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String doReceive(Integer orderId,HttpSession session) {
+        Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
+        Integer userId = Integer.parseInt(user.get("user_id").toString());
+        Integer integer = orderService.doReceive(orderId, userId);
+        return "{\"success\":" + (integer== 1) + "}";
+    }
 
 
 

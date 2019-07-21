@@ -9,19 +9,29 @@
         <id column="review_id" property="review_id"/>
 
         <association property="uses"
-                    javaType="map"
+                     javaType="map"
                      select="io.zhangjia.mall.mapper.UserMapper.query"
-                     column="{user_id=user_id}" /><!--必须这么写，如果只写user_id的话，会报not getter，这种方式相当于传多个参数-->
+                     column="{user_id=user_id}"/><!--必须这么写，如果只写user_id的话，会报not getter，这种方式相当于传多个参数-->
 
         <association property="commoditySpecs"
                      javaType="map"
                      select="io.zhangjia.mall.mapper.CommodityMapper.queryCommoditySpecsBySpecsId"
-                     column="commodity_specs_id" />
+                     column="commodity_specs_id"/>
+
+        <association property="order"
+                     javaType="map"
+                     select="io.zhangjia.mall.mapper.OrderMapper.queryByUserId"
+                     column="{user_id=user_id,order_id=order_id}"/>
 
         <collection property="reviewImgs"
                     ofType="map"
                     select="io.zhangjia.mall.mapper.ImgMapper.queryReviewImgs"
                     column="review_id"/>
+
+        <collection property="orderDetail"
+                    ofType="map"
+                    select="io.zhangjia.mall.mapper.OrderMapper.queryCommodityByOrderId"
+                    column="order_id"/>
 
     </resultMap>
 
@@ -52,6 +62,19 @@
                 AND user_id = #{user_id}
             </if>
         </where>
+        ORDER BY review_time DESC
     </select>
+
+
+    <insert id="doInsert" parameterType="map" useGeneratedKeys="true" keyProperty="review_id">
+        INSERT INTO review (review_content, user_id, commodity_id,
+                            commodity_specs_id, order_id, review_grade,
+                            review_express, review_service, review_description,
+                            review_is_anonymity,order_detail_id)
+            VALUE (#{review_content}, #{user_id}, #{commodity_id},
+                   #{commodity_specs_id}, #{order_id}, #{review_grade},
+                   #{review_express}, #{review_service}, #{review_description},
+                   #{review_is_anonymity},#{order_detail_id});
+    </insert>
 
 </mapper>

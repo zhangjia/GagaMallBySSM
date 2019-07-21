@@ -8,8 +8,8 @@
 <head lang="en">
     <meta charset="utf-8"/>
     <style>
-        /*编辑个人信息*/
-        .bj-order-pay{
+
+        .bj-order-pay {
             width: 410px;
             position: fixed;
             top: 50%;
@@ -22,18 +22,61 @@
             padding: 15px;
             display: none;
         }
+
+
+        .bj-order-review {
+            width: 810px;
+            position: fixed;
+            top: 20%;
+            /*bottom: 20%;*/
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -400px;
+            z-index: 30;
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            display: none;
+        }
     </style>
     <title>最家</title>
     <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
-    <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
     <jsp:include page="include/public-static-file.jsp"></jsp:include>
+    <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/public.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/myorder.css"/>
 
     <script>
-     $(function () {
 
-     });
+        $(function () {
+
+            $(".jia-do-receive").click(function () {
+                console.log("aab")
+                var orderId = $(this).parent().parent().siblings(".word.clearfix").children("ul").children(".order-num").children("span").text();
+                ;
+                console.log(orderId);
+
+                layer.confirm('确认收货？', function (index) {
+                    $.ajax({
+                        url: "${path}/doReceive",
+                        data: {
+                            orderId: orderId
+                        },
+                        success: function (res) {
+
+                            if (res.success) {
+                                layer.msg('确认收货成功', {time: 1000, anim: 2, icon: 6});
+                                location.reload();
+                            }
+
+                        }
+                    });
+                    layer.close(index);
+                });
+
+            });
+
+        });
 
     </script>
 </head>
@@ -41,6 +84,7 @@
 <!------------------------------head------------------------------>
 <jsp:include page="include/head.jsp"></jsp:include>
 <jsp:include page="include/order-pay.jsp"></jsp:include>
+<jsp:include page="include/review.jsp"></jsp:include>
 
 <!------------------------------idea------------------------------>
 <div class="address mt">
@@ -58,13 +102,13 @@
     <div class="wrapper clearfix">
         <div class="zuo fl">
 
-<%--            <jsp:include page="include/personal-left.jsp" />--%>
-            <%@include file="include/personal-left.jsp"%>
+            <%--            <jsp:include page="include/personal-left.jsp" />--%>
+            <%@include file="include/personal-left.jsp" %>
         </div>
         <div class="you fl">
             <div class="my clearfix">
                 <h2 class="fl">我的订单</h2>
-<%--                <a href="#" class="fl">请谨防钓鱼链接或诈骗电话，了解更多&gt;</a>--%>
+                <%--                <a href="#" class="fl">请谨防钓鱼链接或诈骗电话，了解更多&gt;</a>--%>
             </div>
             <div class="dlist clearfix">
                 <ul class="fl clearfix" id="wa">
@@ -78,60 +122,68 @@
                     <input type="button" name="" id="id2" value=""/>
                 </form>
             </div>
-          <c:forEach items="${requestScope.orders}" var="order" varStatus="i">
-              <div class="dkuang">
-                  <p class="one"></p>
-                  <div class="word clearfix">
-                      <ul class="fl clearfix">
-                          <li><fmt:formatDate value="${order.order_create_time}" type="both" /></li>
-                          <li>${order.address.address_name}</li>
-                          <li class="order-num">订单号:<span>${order.order_id}</span></li>
+            <c:forEach items="${requestScope.orders}" var="order" varStatus="i">
+                <div class="dkuang">
+                    <p class="one"></p>
+                    <div class="word clearfix">
+                        <ul class="fl clearfix">
+                            <li><fmt:formatDate value="${order.order_create_time}" type="both"/></li>
+                            <li>${order.address.address_name}</li>
+                            <li class="order-num">订单号:<span>${order.order_id}</span></li>
 
-                          <li>${order.order_pay_type}</li>
-                      </ul>
-                      <p class="fr">订单金额：<span>${order.order_pay_price}</span>元</p>
 
-                  </div>
-                  <c:forEach items="${order.order_detail}" var="commodity" >
-                      <div class="shohou clearfix">
-                          <a href="#" class="fl"><img src="${commodity.order_detail_commodity_img}"/></a>
+                            <li>${order.order_pay_type}</li>
+                        </ul>
+                        <p class="fr">订单金额：<span>${order.order_pay_price}</span>元</p>
 
-                          <p class="fl">
-                      <span hidden>${commodity.order_detail_commodity_name}</span>
-                      <a href="#">${commodity.order_detail_commodity_name}
-                      </a>
-                              <a href="#">
-                                  <c:set var="string"
-                                      value="${fn:replace(fn:replace(fn:replace(fn:replace(commodity.order_detail_commodity_specs_value, '\"', ''), '{', ''), '}', ''), ',', '')}">
-                                  </c:set>
-                                      ${string}
-                              </a>
+                    </div>
+                    <c:forEach items="${order.order_detail}" var="commodity">
+                        <div class="shohou clearfix">
+                            <a href="#" class="fl"><img src="${commodity.order_detail_commodity_img}"/></a>
 
-                              <a href="#">¥${commodity.order_detail_commodity_price}×${commodity.order_detail_commodity_count}</a></p>
+                            <p class="fl">
+                                <span hidden>${commodity.order_detail_commodity_name}</span>
+                                <a href="#">${commodity.order_detail_commodity_name}
+                                </a>
+                                <a href="#">
+                                    <c:set var="string"
+                                           value="${fn:replace(fn:replace(fn:replace(fn:replace(commodity.order_detail_commodity_specs_value, '\"', ''), '{', ''), '}', ''), ',', '')}">
+                                    </c:set>
+                                        ${string}
+                                </a>
 
-                          <p class="fr">
-                              <c:if test="${order.order_status == 1}">
-                                  <a href="myprod.html1">待发货</a>
-                              </c:if>
-                              <c:if test="${order.order_status == 2}">
-                                  <a href="myprod.html2">已发货</a>
-                              </c:if>
-                              <c:if test="${order.order_status == 3}">
-                                  <a href="myprod.html3">待评价</a>
-                              </c:if>
-                              <c:if test="${order.order_status == 4}">
-                                      <a class ="jia-id-myorder-pay" href="javascript:;">待支付</a>
-                              </c:if>
-                              <c:if test="${order.order_status == 5}">
-                                  <a href="myprod.html">已关闭</a>
-                              </c:if>
-                              <a href="${path}/orderDetail?orderId=${order.order_id}">订单详情</a>
-                          </p>
-                      </div>
-                  </c:forEach>
+                                <a href="#">¥${commodity.order_detail_commodity_price}×${commodity.order_detail_commodity_count}</a>
+                            </p>
+<%--                            <li class="order-commodity-id"><span>${commodity.commodity_specs_id}</span></li>--%>
+                            <li hidden class="order-commodity-specs-id"><span>${commodity.commodity_specs_id}</span></li>
+                            <li hidden class="order-detail-id"><span>${commodity.order_detail_id}</span></li>
+                            <p class="fr">
 
-              </div>
-          </c:forEach>
+                                <c:if test="${order.order_status == 1}">
+                                    <a href="javascript:;">待发货</a>
+                                </c:if>
+                                <c:if test="${order.order_status == 2}">
+                                    <a class="jia-do-receive" href="javascript:;">待收货</a>
+                                </c:if>
+                                <c:if test="${order.order_status == 3 and commodity.order_detail_status!=6 }">
+                                    <a class="jia-id-myorder-review" href="javascript:;">待评价</a>
+                                </c:if>
+                                <c:if test="${order.order_status == 4}">
+                                    <a class="jia-id-myorder-pay" href="javascript:;">待支付</a>
+                                </c:if>
+                                <c:if test="${order.order_status == 5}">
+                                    <a href="myprod.html">已关闭</a>
+                                </c:if>
+                                <c:if test="${order.order_status == 3 and commodity.order_detail_status==6}">
+                                    <a href="javascript:;">已完成</a>
+                                </c:if>
+                                <a href="${path}/orderDetail?orderId=${order.order_id}">订单详情</a>
+                            </p>
+                        </div>
+                    </c:forEach>
+
+                </div>
+            </c:forEach>
 
             <div class="fenye clearfix">
                 <a href="#"><img src="${path}/static/img/zuo.jpg"/></a>
@@ -142,7 +194,7 @@
     </div>
 </div>
 <!--返回顶部-->
-                              <jsp:include page="include/right-sidebar.jsp"></jsp:include>
+<jsp:include page="include/right-sidebar.jsp"></jsp:include>
 <!--footer-->
 <jsp:include page="include/bottom.jsp"></jsp:include>
 

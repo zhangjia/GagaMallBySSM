@@ -45,12 +45,12 @@
 
                     <div class="sList">
                         <div class="wrapper  clearfix">
-                            <p hidden > ${nav.level2_menu}</p>
+
                             <c:forEach items="${nav.level2_menu}" var="secNav">
 
                                 <a href="commodities?level2MenuId=${secNav.level2_menu_id}">
                                     <dl>
-                                        <p hidden > ${secNav}</p>
+
                                         <dd>${secNav.level2_menu_chinese_name}</dd>
                                     </dl>
                                 </a>

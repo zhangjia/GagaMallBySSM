@@ -439,7 +439,17 @@
                 <div class="per clearfix">
                     <img class="fl jia-review-avatar" src="${review.uses.user_avatar_url}">
                     <div class="perR fl">
-                        <span>${review.uses.user_name}</span>
+                        <span>
+
+                            <c:if test="${review.review_is_anonymity == 0}">
+                                ${review.uses.user_name}
+                            </c:if>
+
+                              <c:if test="${review.review_is_anonymity != 0}">
+                                  匿名用户
+                              </c:if>
+
+                        </span>
                          <span style="margin-left: 20px;color: red;">
                              <c:if test="${review.review_grade == 3}" >
                                 [ 好评 ]
