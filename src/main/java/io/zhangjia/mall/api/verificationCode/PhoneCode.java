@@ -8,6 +8,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Random;
 
@@ -30,7 +31,7 @@ public class PhoneCode {
         request.putQueryParameter("PhoneNumbers", tel);
         request.putQueryParameter("SignName", "嘎嘎商城");
         request.putQueryParameter("TemplateCode", "SMS_168725713");
-        String random = String.valueOf(new Random().nextInt(9999) + 100);
+        String random = RandomStringUtils.random(4, "0123456789");
         request.putQueryParameter("TemplateParam", "{\"code\":\"" + random + "\"}");
         try {
             CommonResponse response = client.getCommonResponse(request);

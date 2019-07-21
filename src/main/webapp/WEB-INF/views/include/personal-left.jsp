@@ -11,7 +11,7 @@
             },
             type:"get",
             success:function (res) {
-               layer.msg("修改成功");
+                layer.msg('修改成功', {time: 1500, anim: 2, icon: 6});
 
             }
         });
@@ -36,7 +36,7 @@
                 //如果上传失败
                 if(res.success){
                     editAvatar(res.url);
-                    return layer.msg('上传成功');
+                    return;
                 } else {
                     return layer.msg('上传失败');
                 }

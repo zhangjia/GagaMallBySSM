@@ -185,7 +185,7 @@
                     //上传完毕
                     if (res.success) {
                         addReviewImgUrl4Input(res.url)
-                        return layer.msg("上传成功")
+                        return  layer.msg('上传成功', {time: 1000, anim: 2, icon: 6});
                     }
                 }
             });

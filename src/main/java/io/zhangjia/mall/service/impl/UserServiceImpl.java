@@ -96,7 +96,9 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> result = new HashMap<>();
         if (userId != null && !"".equals(userId) && payPassword != null && !"".equals(payPassword)) {
             System.out.println("大狗熊");
-            if (userMapper.isPayPasswordEmpty(userId).isEmpty()) {
+            Map<String, Object> payPasswordEmpty = userMapper.isPayPasswordEmpty(userId);
+//            if (payPasswordEmpty.isEmpty()) {
+            if (payPasswordEmpty == null) {
                 System.out.println("用户未设置密码");
 
                 result.put("error", "未设置支付密码");

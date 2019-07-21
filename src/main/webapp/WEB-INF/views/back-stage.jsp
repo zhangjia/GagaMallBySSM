@@ -181,7 +181,7 @@
                 </fieldset>
                 <div class="layui-form-item">
                     <p hidden class="jia-spgg-add"></p>
-                    <label class="layui-form-label ">标题</label>
+                    <label class="layui-form-label "></label>
 
                     <div class="layui-input-block">
                         <button type="button" class="layui-btn  layui-btn-normal guige">添加规格</button>
@@ -342,7 +342,7 @@
                 //上传完毕
                 if (res.success) {
                     addSptUrl4Input(res.url)
-                    return layer.msg("上传成功")
+                    return    layer.msg('上传成功', {time: 1000, anim: 2, icon: 6});
                 }
             }
         });
@@ -363,7 +363,7 @@
                 //上传完毕
                 if (res.success) {
                     addSpxqtUrl4Input(res.url)
-                    return layer.msg("上传成功")
+                    return  layer.msg('上传成功', {time: 1000, anim: 2, icon: 6});
                 }
             }
         });
@@ -808,7 +808,11 @@
                     type: "get",
                     data: datas,
                     success: function (res) {
-                        layer.msg("添加成功")
+
+                        layer.msg('添加成功', {time: 1000, anim: 2, icon: 6},function () {
+                            location.reload();
+
+                        });
                     }
                 });
 

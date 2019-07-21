@@ -41,7 +41,7 @@
 
 
 <!-------------------------banner--------------------------->
-<div class="block_home_slider">
+<div class="block_home_slider" style="margin-bottom: 100px">
     <div id="home_slider" class="flexslider">
         <ul class="slides">
             <li>
@@ -69,7 +69,7 @@
 
 
 <!------------------------------people------------------------------>
-<div class="people">
+<div hidden class="people">
     <div class="wrapper">
 <%--        <h2><img src="${path}/static/img/ih3.jpg"/></h2>--%>
         <div class="pList clearfix tran">

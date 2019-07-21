@@ -15,7 +15,7 @@
             </div>
             <div class="clearfix">
                 <a href="#2" class="fl"><img src="${path}/static/img/foot3.png"/></a>
-                <span class="fl">满599包邮</span>
+                <span class="fl">满1000包邮</span>
             </div>
             <div class="clearfix">
                 <a href="#2" class="fl"><img src="${path}/static/img/foot4.png"/></a>
@@ -23,6 +23,6 @@
             </div>
         </div>
     </div>
-    <p class="dibu">最家家居&copy;2013-2017公司版权所有 京ICP备080100-44备0000111000号<br/>
-        违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
+    <p class="dibu">张甲&copy;嘎嘎商城 基于SSM框架<br/>
+        违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均摘自网络，仅供学习使用</p>
 </div>

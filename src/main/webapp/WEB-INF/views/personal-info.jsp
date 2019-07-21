@@ -201,8 +201,11 @@ placeholder="<fmt:formatDate value="${sessionScope.user.user_birthday}" type="DA
 							},
 							success:function (res) {
 								if(res.success === true){
-									layer.msg("修改成功")
-									location.reload();
+									layer.msg('修改成功', {time: 1000, anim: 2, icon: 6},function () {
+										location.reload();
+									});
+
+
 								} else {
 									layer.msg("修改失败")
 								}
@@ -260,8 +263,10 @@ placeholder="<fmt:formatDate value="${sessionScope.user.user_birthday}" type="DA
 							},
 							success:function (res) {
 								if(res.success === true){
-									layer.msg("修改成功")
-									location = "${path}/logout";
+									layer.msg('修改成功', {time: 1000, anim: 2, icon: 6},function () {
+										location = "${path}/logout";
+									});
+
 								} else {
 									layer.msg("修改失败")
 								}
@@ -319,8 +324,10 @@ placeholder="<fmt:formatDate value="${sessionScope.user.user_birthday}" type="DA
 						},
 						success:function (res) {
 							if(res.success === true){
-								layer.msg("修改成功");
-								location.reload()
+								layer.msg('修改成功', {time: 1000, anim: 2, icon: 6},function () {
+									location.reload()
+								});
+
 							} else {
 								layer.msg("修改失败")
 							}

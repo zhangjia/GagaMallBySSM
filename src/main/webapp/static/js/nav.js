@@ -3,7 +3,8 @@ $(function(){
 	$(window).scroll(function(){
 		var ws=$(window).scrollTop();
 		var lo = location.toString().indexOf("commodities");
-		if( lo != -1) {
+		var lo2 = location.toString().indexOf("index");
+		if( lo != -1 || lo2 != -1) {
 			if(ws>600){
 				// $(".head").addClass("ding").css({"background":"rgba(255,255,255,"+ws/300+")"});
 				$(".head").addClass("ding");

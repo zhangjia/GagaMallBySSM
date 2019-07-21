@@ -104,9 +104,9 @@
                             //成功，跳转到index.jsp
                             layer.msg('注册成功', {time: 1000, anim: 2, icon: 6}, function () {
                                 if (res.uri) {
-                                    // location = res.uri;
+                                    location = res.uri;
                                 } else {
-                                    <%--location = "${path}/login";--%>
+                                    location = "${path}/login";
                                 }
                             })
 
@@ -219,7 +219,7 @@
                     code: {
                         validators: {
                             stringLength: {
-                                min: 4,
+                                min: 1,
                                 max: 4,
                                 message: '请输入四位验证码'
                             },

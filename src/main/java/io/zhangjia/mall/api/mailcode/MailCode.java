@@ -8,6 +8,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Random;
 
@@ -42,7 +43,7 @@ public class MailCode {
             //可以给多个收件人发送邮件，收件人之间用逗号分开，批量发信建议使用BatchSendMailRequest方式
             //request.setToAddress("邮箱1,邮箱2");
             request.setSubject("嘎嘎商城验证码");
-            String random = String.valueOf(new Random().nextInt(9999) + 100);
+            String random = RandomStringUtils.random(4, "0123456789");
             request.setHtmlBody("您的验证码是" + random + ",不能告诉其他人鸭！");
             SingleSendMailResponse httpResponse = client.getAcsResponse(request);
             return random;

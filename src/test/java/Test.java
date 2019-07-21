@@ -2,6 +2,7 @@ import com.alibaba.fastjson.JSON;
 import io.zhangjia.mall.mapper.*;
 import io.zhangjia.mall.service.MenuService;
 import io.zhangjia.mall.service.impl.MenuServiceImpl;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -35,11 +36,6 @@ public class Test {
 ////        List<Map<String, Object>> map = bean.queryById(1);
 ////        List<Map<String,Object>> map = bean.queryUserId();
 //        System.out.println(JSON.toJSONString(bean.queryByUserId(1)));
-
-        ReviewMapper bean = context.getBean(ReviewMapper.class);
-        Map<String,Object> map = new HashMap<>();
-        map.put("commodity_id",3);
-        List<Map<String, Object>> maps = bean.query(map);
-        System.out.println(JSON.toJSONString(maps));
+        System.out.println(RandomStringUtils.random(4, "0123456789"));
     }
 }

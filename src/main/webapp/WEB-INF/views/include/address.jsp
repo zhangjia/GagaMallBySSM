@@ -130,7 +130,7 @@
                             console.log($(".jia-address-id").text() + "d ")
 
                             if($(".jia-address-id").text() != '0'){
-                                layer.msg("修改成功")
+                                layer.msg('修改成功', {time: 1000, anim: 2, icon: 6});
                             } else{
                                 layer.msg("添加成功")
                             }
