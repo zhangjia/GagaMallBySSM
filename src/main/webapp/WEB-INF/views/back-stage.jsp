@@ -94,6 +94,7 @@
                     <a href="javascript:;">网站设置</a>
                     <dl class="layui-nav-child">
                         <dd><a class="fysz" href="javascript:;">分页设置</a></dd>
+                        <dd><a class="mgcsz" href="javascript:;">敏感词设置</a></dd>
                     </dl>
                 </li>
 
@@ -200,7 +201,7 @@
                 </div>
             </form>
         </div>
-        <div class="div-setting" style="padding: 15px;">
+        <div class="div-fysz" style="padding: 15px;">
             <div class="layui-tab-item layui-show ">
                 分页：
                 <input style="width:200px; display: inline-block;margin-top: 20px;margin-left:20px"
@@ -211,6 +212,19 @@
             </div>
 
         </div>
+        <div class="div-mgcsz" style="padding: 15px;">
+            <fieldset class="layui-elem-field layui-field-title" >
+                <legend>敏感词设置</legend>
+            </fieldset>
+            <div class="layui-form-item layui-form-text" style="margin-top:5px">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <textarea name="mgc"  placeholder="请输入敏感词，用英文,隔开" class="layui-textarea">${requestScope.sensitiveWords}</textarea>
+                </div>
+            </div>
+            <button style="margin-left: 111px;" type="button" class="layui-btn layui-btn-warm jia-admin-setting-mgc-save">保存</button>
+        </div>
+
         <div class="div-ddfh" style="padding: 15px;">
             <jsp:include page="include/deliver-goods .jsp"></jsp:include>
             <div style="background:white" class="Bott">
@@ -420,28 +434,65 @@
 
         });
 
+        $(".jia-admin-setting-mgc-save").click(function () {
+            var mgc = $("textarea[name='mgc']").val();
+            console.log(mgc)
+            $.ajax({
+                url: "${path}/sensitiveWord",
+                type: 'get',
+                data: {
+                    sensitiveWord:mgc
+                },
+                success: function (res) {
+                    console.log(res)
+                    if (res.success === true) {
+
+                        layer.msg('设置成功', {
+                            time: 1000
+                        })
+                    } else {
+                        layer.msg("设置失败");
+
+                    }
+                }
+            })
+
+        });
+
 
         $(".div-sptj").hide();
-        $(".div-setting").hide();
+        $(".div-fysz").hide();
         $(".div-ddfh").hide();
+        $(".div-mgcsz").hide();
         $(".sptj").click(function () {
             $(".div-sptj").show();
             $(".div-hello").hide();
-            $(".div-setting").hide();
+            $(".div-fysz").hide();
             $(".div-ddfh").hide();
+            $(".div-mgcsz").hide();
         });
         $(".fysz").click(function () {
-            $(".div-setting").show();
+            $(".div-fysz").show();
             $(".div-sptj").hide();
             $(".div-hello").hide();
             $(".div-ddfh").hide();
+            $(".div-mgcsz").hide();
+        });
+
+        $(".mgcsz").click(function () {
+            $(".div-fysz").hide();
+            $(".div-sptj").hide();
+            $(".div-hello").hide();
+            $(".div-ddfh").hide();
+            $(".div-mgcsz").show();
         });
 
         $(".deliverGoods").click(function () {
             $(".div-ddfh").show();
-            $(".div-setting").hide();
+            $(".div-fysz").hide();
             $(".div-sptj").hide();
             $(".div-hello").hide();
+            $(".div-mgcsz").hide();
         });
 
 

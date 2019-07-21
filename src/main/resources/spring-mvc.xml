@@ -67,6 +67,12 @@
             <mvc:mapping path="/addressManage"/>
             <ref bean="addressInterceptor" />
         </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/review"/>
+            <mvc:mapping path="/commodityDetail"/>
+            <ref bean="sensitiveWordInterceptor" />
+        </mvc:interceptor>
     </mvc:interceptors>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>

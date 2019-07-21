@@ -88,6 +88,7 @@ public class CommodityController {
         Map<String,Object> params = new HashMap<>();
         params.put("commodity_id",commodityId);
         List<Map<String, Object>> maps = reviewService.queryReview(params);
+        System.out.println("review2JSON.toJSONString(maps) = " + JSON.toJSONString(maps));
         model.addAttribute("reviews",maps);
         return "commodity-detail";
 

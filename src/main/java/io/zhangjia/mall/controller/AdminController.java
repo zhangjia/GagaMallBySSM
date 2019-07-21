@@ -61,6 +61,10 @@ public class AdminController {
         Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
         List<Map<String, Object>> orders = deliverGoodsService.getUnShippedOrders();
         model.addAttribute("orders", orders);
+
+        String sensitiveWords = siteSettingsService.getValue("敏感词");
+        System.out.println("sensitiveWords = " + sensitiveWords);
+        model.addAttribute("sensitiveWords", sensitiveWords);
         System.out.println("orders-json" + JSON.toJSONString(orders));
         if (Integer.parseInt(user.get("user_status").toString()) != 2) {
             return "index";
@@ -90,6 +94,14 @@ public class AdminController {
         return ("{\"success\":" + (i == 1) + "}");
 
 
+    }
+
+    @GetMapping(value = "/sensitiveWord", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String sensitiveWord(String sensitiveWord) {
+
+        Integer result = siteSettingsService.editValue("敏感词", sensitiveWord);
+        return "{\"success\":" + (result == 1) + "}";
     }
 
 }
