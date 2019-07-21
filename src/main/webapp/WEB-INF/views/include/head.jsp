@@ -65,6 +65,17 @@
                 <a href="${path}/commodities">全部商品</a>
 
             </li>
+    <li>
+        <a href="https://zhangjia.io/1153.html" target="_blank">网站简介</a>
+
+    </li>
+    <c:if test="${sessionScope.user.user_status == 2}">
+        <li>
+            <a href="${path}/admin" target="_blank">网站后台</a>
+
+        </li>
+    </c:if>
+
         </ul>
     </div>
 </div>
