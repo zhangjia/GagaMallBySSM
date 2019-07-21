@@ -41,10 +41,21 @@
     </style>
     <title>最家</title>
     <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
-    <jsp:include page="include/public-static-file.jsp"></jsp:include>
+<%--    <jsp:include page="include/public-static-file.jsp"></jsp:include>--%>
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/public.css"/>
+
+    <%-------------------------------------------------------js----------------------------------------------%>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
     <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
+
+    <script src="${pageContext.request.contextPath}/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/static/js/nav.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/public.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/myorder.css"/>
+
+    <script src="${path}/static/js/user.js" type="text/javascript" charset="utf-8"></script>
 
     <script>
 
@@ -198,7 +209,5 @@
 <!--footer-->
 <jsp:include page="include/bottom.jsp"></jsp:include>
 
-<script src="${path}/static/js/public.js" type="text/javascript" charset="utf-8"></script>
-<script src="${path}/static/js/user.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

@@ -8,8 +8,14 @@
     <meta charset="utf-8"/>
     <title>商品列表</title>
     <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
-    <%@ include file="include/public-static-file.jsp" %>
+<%--    <%@ include file="include/public-static-file.jsp" %>--%>
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/public.css"/>
+
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/static/js/nav.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
 
     <link rel="stylesheet" type="text/css" href="${path}/static/css/proList.css"/>
