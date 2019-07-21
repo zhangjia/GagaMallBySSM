@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import io.zhangjia.mall.service.CommodityService;
+import io.zhangjia.mall.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,9 @@ import java.util.Map;
 public class CommodityController {
     @Autowired
     private CommodityService commodityService;
+
+    @Autowired
+    private ReviewService reviewService;
 
 
 
@@ -80,6 +84,11 @@ public class CommodityController {
         JSONObject specs = JSON.parseObject(commodityAttribute);
         model.addAttribute("specs",specs);
         System.out.println("specs = " + specs);
+
+        Map<String,Object> params = new HashMap<>();
+        params.put("commodity_id",commodityId);
+        List<Map<String, Object>> maps = reviewService.queryReview(params);
+        model.addAttribute("reviews",maps);
         return "commodity-detail";
 
     }

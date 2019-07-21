@@ -36,8 +36,10 @@ public class Test {
 ////        List<Map<String,Object>> map = bean.queryUserId();
 //        System.out.println(JSON.toJSONString(bean.queryByUserId(1)));
 
-        OrderMapper bean = context.getBean(OrderMapper.class);
-        List<Map<String, Object>> maps = bean.queryByUserId(1,32);
+        ReviewMapper bean = context.getBean(ReviewMapper.class);
+        Map<String,Object> map = new HashMap<>();
+        map.put("commodity_id",3);
+        List<Map<String, Object>> maps = bean.query(map);
         System.out.println(JSON.toJSONString(maps));
     }
 }

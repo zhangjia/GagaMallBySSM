@@ -84,7 +84,7 @@
 					<div class="gxin">
 						<div class="tx"><a href="#">
 							<c:if test="${sessionScope.user.user_avatar_url == null}">
-								<img class="jia-userAvatar" src="${path}/static/img/tx.png"/>
+								<img class="jia-userAvatar" src="${path}/static/img/tx.jpg"/>
 
 							</c:if>
 							<c:if test="${sessionScope.user.user_avatar_url != null}">

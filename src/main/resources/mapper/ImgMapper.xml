@@ -27,6 +27,28 @@
         </where>
     </select>
 
+    <select id="queryReviewImgs" resultType="map">
+
+        SELECT img_url, img_order, img_type,img_belong
+        FROM img
+        <where>
+            img_status = 1
+            AND img_belong = #{review_id}
+            AND img_type = '评价图'
+        </where>
+    </select>
+
+    <select id="queryAvatarImgs" resultType="map">
+
+        SELECT img_url, img_order, img_type,img_belong
+        FROM img
+        <where>
+            img_status = 1
+            AND img_belong = #{user_id}
+            AND img_type = '用户头像'
+        </where>
+    </select>
+
     <!--********************************************添加图片*******************************************-->
     <insert id="doInsert"  >
         INSERT INTO img (img_url, img_belong, img_order, img_type)

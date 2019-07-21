@@ -19,6 +19,11 @@ public interface ImgMapper {
      */
     List<Map<String,Object>> queryCommodityDetailImgs(Integer commodityId);
 
+
+    List<Map<String,Object>> queryReviewImgs(Integer commodityId);
+
+    Map<String,Object> queryAvatarImgs(Integer userId);
+
     /**
      * 插入图片
      * @param imgUrl

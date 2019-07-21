@@ -44,6 +44,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 if(queryString != null){
                     requestURI += ("?" + queryString);
                 }
+                System.out.println("gagaurl = " + request.getContextPath() + "/login?uri=" + requestURI);
                 response.sendRedirect(request.getContextPath() + "/login?uri=" + requestURI);
             }
             return false;

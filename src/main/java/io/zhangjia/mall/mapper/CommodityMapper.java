@@ -38,6 +38,8 @@ public interface CommodityMapper {
      */
     Map<String, Object> queryCommoditySpecs(@Param("commodity_specs_value") String specs,@Param("commodity_id")Integer commodityId);
 
+    Map<String, Object> queryCommoditySpecsBySpecsId(Integer commoditySpecsId);
+
     /**
      * 根据某个商品规格查询该商品的库存
      * @param commoditySpecsId

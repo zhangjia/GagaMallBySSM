@@ -1,5 +1,7 @@
 package io.zhangjia.mall.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +13,7 @@ public interface UserMapper {
      * @param params  多个条件
      * @return 用户信息
      */
-    List<Map<String, Object>> query(Map<String, Object> params);
+    List<Map<String, Object>> query( Map<String, Object> params);
 //    Map<String, Object> query(Map<String, Object> params);
 
     /**

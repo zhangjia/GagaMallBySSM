@@ -2,20 +2,44 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .jia-review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .jia-review-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+
+    </style>
     <meta charset="UTF-8">
     <title>详情页</title>
     <link rel="stylesheet" type="text/css" href="${path}/static/layui/css/layui.css"/>
-    <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
+
     <jsp:include page="include/public-static-file.jsp"/>
+    <script src="${path}/static/layui/layui.js " type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/proList.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/static/css/pro-detail.css"/>
     <script src="${path}/static/js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
     <script src="${path}/static/js/pro.js" type="text/javascript" charset="utf-8"></script>
     <script src="${path}/static/js/cart.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+
+        layer.photos({
+            photos: '#jia-review-photos'
+            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
+
+
         jQuery(".bottom").slide({
             titCell: ".hd ul",
             mainCell: ".bd .likeList",
@@ -74,13 +98,13 @@
                         },
                         success: function (res) {
 
-                           console.log(res);
+                            console.log(res);
                             commoditySpecsId = res.commodity_specs_id;
-                           $(".commodity-price").text('￥' + res.commodity_specs_present_price);
-                           $(".inventory").text(res.commodity_specs_inventor);
-                           $(".sale").text(res.commodity_specs_sales);
+                            $(".commodity-price").text('￥' + res.commodity_specs_present_price);
+                            $(".inventory").text(res.commodity_specs_inventor);
+                            $(".sale").text(res.commodity_specs_sales);
 
-                           $(".jia-commodity-detail-specs-id").val(res.commodity_specs_id);
+                            $(".jia-commodity-detail-specs-id").val(res.commodity_specs_id);
                         }
                     });
                 } else {
@@ -194,10 +218,13 @@
             });
 
 
+
+
             $(".jia-commodity-detail-num").keyup(function () {
                 var length = $(".sku").length;
                 if ($(".sku dd.active").length != length) {
                     layer.alert("请先选择商品规格")
+                    $(this).val(1)
                 } else {
                     var val = $(this).val();
                     console.log("val" + val)
@@ -214,6 +241,7 @@
             });
 
 
+
             $(".cart-sub").click(function () {
                 var thiss = $(this);
                 var nowCartCount = $(this).siblings("input").val();
@@ -225,12 +253,37 @@
             });
 
             $(".jia-commodity-buy-now").click(function () {
-                var commodityCount = $(".jia-commodity-detail-num").val();
-                var commoditySpecsId = $(".jia-commodity-detail-specs-id").val();;
-                console.log(commodityCount)
-                console.log(commoditySpecsId)
-                console.log('${path}')
-                location = "${path}"+ "/settlement?commoditySpecsId=" + commoditySpecsId + "&commodityCount=" +commodityCount + "&type=buyNow";
+                var length = $(".sku").length;
+                if ($(".sku dd.active").length != length) {
+                    layer.alert("请先选择商品规格")
+
+                } else {
+
+                    if('${sessionScope.user}' == ''){
+                        console.log("a")
+
+                        location = "${path}/login?uri=/commodityDetail?commodityId=${param.commodityId}"
+                    } else {
+                        var commodityCount = $(".jia-commodity-detail-num").val();
+                        var commoditySpecsId = $(".jia-commodity-detail-specs-id").val();
+
+                        console.log(commodityCount)
+                        console.log(commoditySpecsId)
+                        console.log('${path}')
+                        location.replace("${path}" + "/settlement?commoditySpecsId=" + commoditySpecsId + "&commodityCount=" + commodityCount + "&type=buyNow");
+
+                    }
+
+                }
+                <%--$.ajax({--%>
+                <%--    url:"${path}/settlement",--%>
+                <%--    type:"get",--%>
+                <%--    data:{--%>
+                <%--        commoditySpecsId:$(".jia-commodity-detail-specs-id").val(),--%>
+                <%--        commodityCount:$(".jia-commodity-detail-num").val(),--%>
+                <%--        type:'buyNow'--%>
+                <%--    }--%>
+                <%--});--%>
             });
 
 
@@ -382,122 +435,44 @@
 
             </div>
             <div class="eva">
+                <c:forEach items="${requestScope.reviews}" var="review" >
                 <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per01.jpg">
+                    <img class="fl jia-review-avatar" src="${review.uses.user_avatar_url}">
                     <div class="perR fl">
-                        <p>馨***呀</p>
-                        <p>不好意思评价晚了，产品很好，价格比玻璃品便宜，没有我担心的杂色，发货快，包装好，全5分</p>
-                        <div class="clearfix">
-                            <p><img src="${path}/static/img/temp/eva01.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva02.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva03.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva04.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva05.jpg"></p>
-                        </div>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per02.jpg">
-                    <div class="perR fl">
-                        <p>么***周</p>
-                        <p>花瓶超级棒，我看图以为是光面的，收货发现是磨砂，但感觉也超有质感，很喜欢。磨砂上面还有点纹路，不过觉得挺自然的，不影响美观。包装也很好，绝对不会磕碎碰坏，好评！</p>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per01.jpg">
-                    <div class="perR fl">
-                        <p>馨***呀</p>
-                        <p>不好意思评价晚了，产品很好，价格比玻璃品便宜，没有我担心的杂色，发货快，包装好，全5分</p>
-                        <div class="clearfix">
-                            <p><img src="${path}/static/img/temp/eva01.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva02.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva03.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva04.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva05.jpg"></p>
-                        </div>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per02.jpg">
-                    <div class="perR fl">
+                        <span>${review.uses.user_name}</span>
+                         <span style="margin-left: 20px;color: red;">
+                             <c:if test="${review.review_grade == 3}" >
+                                [ 好评 ]
+                             </c:if>
+                             <c:if test="${review.review_grade == 2}" >
+                                 [ 中评 ]
+                             </c:if>
+                             <c:if test="${review.review_grade == 1}" >
+                                 [ 差评 ]
+                             </c:if>
+                         </span>
+                        <p>${review.review_content}</p>
 
-                        <p>么***周</p>
-                        <p>花瓶超级棒，我看图以为是光面的，收货发现是磨砂，但感觉也超有质感，很喜欢。磨砂上面还有点纹路，不过觉得挺自然的，不影响美观。包装也很好，绝对不会磕碎碰坏，好评！</p>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per01.jpg">
-                    <div class="perR fl">
-                        <p>馨***呀</p>
-                        <p>不好意思评价晚了，产品很好，价格比玻璃品便宜，没有我担心的杂色，发货快，包装好，全5分</p>
-                        <div class="clearfix">
-                            <p><img src="${path}/static/img/temp/eva01.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva02.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva03.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva04.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva05.jpg"></p>
+
+                        <div  class="layer-photos-demo">
+                            <c:forEach items="${review.reviewImgs}" var="img" >
+                                <img class="jia-review-img" layer-src="${img.img_url}" src="${img.img_url}" alt="图片名">
+                            </c:forEach>
                         </div>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
+
+                        <script>
+
+                            layer.photos({
+                                photos: '.layer-photos-demo'
+                                ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                            });
+                        </script>
+
+                        <p><span><fmt:formatDate value="${review.review_time}" type="both" /></span><span>${review.commoditySpecs.commodity_specs_value}</span></p>
                     </div>
                 </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per02.jpg">
-                    <div class="perR fl">
-                        <p>么***周</p>
-                        <p>花瓶超级棒，我看图以为是光面的，收货发现是磨砂，但感觉也超有质感，很喜欢。磨砂上面还有点纹路，不过觉得挺自然的，不影响美观。包装也很好，绝对不会磕碎碰坏，好评！</p>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per01.jpg">
-                    <div class="perR fl">
-                        <p>馨***呀</p>
-                        <p>不好意思评价晚了，产品很好，价格比玻璃品便宜，没有我担心的杂色，发货快，包装好，全5分</p>
-                        <div class="clearfix">
-                            <p><img src="${path}/static/img/temp/eva01.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva02.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva03.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva04.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva05.jpg"></p>
-                        </div>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per02.jpg">
-                    <div class="perR fl">
-                        <p>么***周</p>
-                        <p>花瓶超级棒，我看图以为是光面的，收货发现是磨砂，但感觉也超有质感，很喜欢。磨砂上面还有点纹路，不过觉得挺自然的，不影响美观。包装也很好，绝对不会磕碎碰坏，好评！</p>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per01.jpg">
-                    <div class="perR fl">
-                        <p>馨***呀</p>
-                        <p>不好意思评价晚了，产品很好，价格比玻璃品便宜，没有我担心的杂色，发货快，包装好，全5分</p>
-                        <div class="clearfix">
-                            <p><img src="${path}/static/img/temp/eva01.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva02.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva03.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva04.jpg"></p>
-                            <p><img src="${path}/static/img/temp/eva05.jpg"></p>
-                        </div>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
-                <div class="per clearfix">
-                    <img class="fl" src="${path}/static/img/temp/per02.jpg">
-                    <div class="perR fl">
-                        <p>么***周</p>
-                        <p>花瓶超级棒，我看图以为是光面的，收货发现是磨砂，但感觉也超有质感，很喜欢。磨砂上面还有点纹路，不过觉得挺自然的，不影响美观。包装也很好，绝对不会磕碎碰坏，好评！</p>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
-                    </div>
-                </div>
+                </c:forEach>
+
             </div>
         </div>
     </div>

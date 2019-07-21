@@ -7,7 +7,7 @@
 
 <!--********************************************使用动态sql进行多个条件查询*******************************************-->
 
-    <select id="query" resultMap="queryResultMap">
+  <select id="query" resultMap="queryResultMap">
 
         SELECT * FROM users
         <where>
@@ -35,6 +35,8 @@
         </where>
 
     </select>
+
+
 
     <resultMap id="queryResultMap" type="map">
         <id column="user_id" property="user_id"/>

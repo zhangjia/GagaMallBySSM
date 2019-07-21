@@ -103,6 +103,14 @@
 
         SELECT * FROM commodity_specs WHERE commodity_specs_value = #{commodity_specs_value} AND commodity_specs_status = 1
         AND commodity_id = #{commodity_id}
+      <!--SELECT * FROM commodity_specs
+      <where>
+          commodity_specs_status = 1 AND commodity_id = #{commodity_id}
+          <if test="commodity_specs_value != null">
+              AND commodity_specs_value = #{commodity_specs_value}
+          </if>
+      </where>-->
+
 
     </select>
 
@@ -112,6 +120,9 @@
         SELECT commodity_specs_inventor  FROM commodity_specs  WHERE  commodity_specs_id = #{commodity_specs_id}
     </select>
 
+    <select id="queryCommoditySpecsBySpecsId" resultType="map">
+        SELECT *  FROM commodity_specs  WHERE  commodity_specs_id = #{commodity_specs_id}
+    </select>
 
 
 
