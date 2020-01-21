@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.1.8.RELEASE</version>
+            <version>5.2.0.RELEASE</version>
             <!--会自动添加以下依赖
             Maven: org.springframework:spring-web:5.1.8.RELEASE
             Maven: org.springframework:spring-webmvc:5.1.8.RELEASE
